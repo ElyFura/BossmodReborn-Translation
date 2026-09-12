@@ -96,6 +96,60 @@ quelltextgeschürfter Übersetzungsdateien aus: Schlüssel, die zur Laufzeit nie
 Nebeneffekt: der englische Text stammt aus der **installierten** BossMod-Version, nicht aus einem
 Arbeitsbaum, der davon abweichen kann.
 
+## Milestone 2: Kampfhinweise
+
+Die einzige Ebene, die IL-Patching braucht. Hinweise sind String-Literale in über 800 Aufrufstellen und
+werden jeden Frame neu berechnet — es gibt keine Datenstruktur zum Umschreiben.
+
+### Erst prüfen, dann bauen
+
+Ob Harmony unter .NET 10 und über die ALC-Grenze funktioniert, war die Frage, an der der ganze Milestone
+hing. Das lässt sich ohne Spiel beantworten: eine Stellvertreter-Assembly in einen eigenen
+`AssemblyLoadContext` laden — so wie Dalamud es mit jedem Plugin tut — und patchen. Geprüft wurden fünf
+Dinge, alle mit Harmony 2.4.2 auf .NET 10.0.5 erfolgreich:
+
+1. Postfix auf einer öffentlichen Methode, die eine `List<T>`-Ableitung zurückgibt
+2. Postfix auf einer Methode, die **vorher schon** JIT-kompiliert wurde
+3. Postfix auf einem Override einer virtuellen Property
+4. Override-Erkennung per Assembly-Scan und Patch jedes Treffers
+5. `UnpatchAll` stellt das Original wieder her (nötig für `/bmrtl off` und das Entladen)
+
+### Warum die zusammenführenden Methoden
+
+`BossComponent.TextHints.Add` sieht wie der natürliche einzige Funnel aus, ist aber ein Expression-Body-
+Einzeiler, den der JIT in seine Aufrufer inlinet — und ein Patch auf einer inlinten Methode läuft nie. Die
+`Calculate*`-Methoden iterieren über die Komponenten und sind keine Inlining-Kandidaten.
+
+Virtuelle Member brauchen jeden Override einzeln: ein Patch auf der Basis-Deklaration fängt eine Unterklasse
+nicht ab, die sie überschreibt. Daher der Assembly-Scan für `ZoneModule.CalculateGlobalHints` und die 59
+`PrePullHints`-Overrides.
+
+### Die Falle bei `PrePullHints`
+
+Alle 59 Overrides geben `_prePullHints` zurück — ein **Feld**, kein neu erzeugtes Array. Ein
+In-Place-Schreiben hätte BossMods Hinweis-Arrays dauerhaft überschrieben, ohne Rückweg. Der Postfix klont
+deshalb, bevor er schreibt. Dass es ein Feld ist, stand nicht in der Signatur; das kam erst beim Nachsehen
+im Quellcode heraus.
+
+### Textabgeleitete Schlüssel — die eine Ausnahme
+
+Hinweise haben keinen Ort. Es gibt nichts Stabiles zum Verankern, also ist der Schlüssel der englische Text
+selbst (`hint/Stay together!`). Preis: eine Umformulierung stromaufwärts verwaist den Schlüssel, statt Drift
+zu melden — der neue Wortlaut erscheint dann als neu beobachteter Hinweis in `/bmrtl extract`.
+
+### Interpolierte Hinweise: beobachten statt aufzählen
+
+220 Aufrufe sind interpoliert und existieren in der Assembly nicht als einzelnes Literal. Sie brauchen
+geordnete Regex-Regeln (`$hintPatterns`), und die Regeln müssen gegen real gesehene Hinweise geschrieben
+werden. Deshalb protokolliert der `HintTranslator` jeden Hinweis, der durchläuft.
+
+Zwei Eigenschaften, die aus dem Per-Frame-Aufruf folgen: ein Fehlschlag muss so billig sein wie ein Treffer
+(einmal erfolglos gegen Dictionary und alle Muster geprüft, wird das Ergebnis gemerkt), und die
+Beobachtungsliste ist begrenzt.
+
+Ein Nebenfund beim Extrahieren: `$"..."` **ohne** Platzhalter kompiliert zu einem gewöhnlichen String. Alle
+`$`-Aufrufe zu überspringen hätte 16 feste Hinweise stillschweigend verloren.
+
 ## Der Shape-Checker
 
 `tools/ShapeCheck` liest die installierte `BossModReborn.dll` über einen `MetadataLoadContext` — also nur
@@ -110,6 +164,11 @@ Drei Prüfungen:
 * **Verwaiste Schlüssel.** `SeedChecks` baut aus den Attribut-Blobs dieselben Schlüssel nach, die
   `ConfigMetadataPatcher` zur Laufzeit erzeugt, und meldet jeden Eintrag in `de.json`, den es dort nicht
   gibt. Exit-Code 1.
+* **Kampfhinweise.** Deren Schlüssel enthalten den englischen Text, also werden sie gegen die Literale der
+  Assembly geprüft. Dabei ist eine Falle: Literale liegen UTF-16LE im #US-Heap, aber nichts garantiert einen
+  geraden Byte-Offset — die Datei nur ab Offset 0 zu dekodieren verliert jedes Literal auf einem ungeraden.
+  Der erste Anlauf meldete deshalb 267 von 636 Hinweisen als verschwunden. Geprüft werden jetzt beide
+  Ausrichtungen.
 * **Drift.** Existiert der Schlüssel noch, aber der mitgeschriebene `en`-Wert weicht vom aktuellen Text ab,
   ist die Übersetzung überholt. Warnung; mit `--strict` ein Fehler.
 
@@ -157,18 +216,11 @@ Dump ist deshalb JSON.
 
 ## Milestone 2 und 3
 
-**Milestone 2 — Kampfhinweise.** 543 eindeutige feste und 238 interpolierte `hints.Add(...)`-Literale. Das
-braucht Harmony. Tragfähiger Ansatzpunkt sind die öffentlichen `BossModule.CalculateHintsForRaidMember`
-und `CalculateGlobalHints` (Postfix auf der zurückgegebenen Liste) statt der Einzeiler
-`TextHints.Add` — die inlinet der JIT zu wahrscheinlich weg. Interpolierte Hinweise brauchen
-Mustervergleich mit Platzhaltern statt 1:1-Nachschlagen. Offene Vorfrage: Verhalten von `Lib.Harmony`
-unter `net10.0` und Patch-Zeitpunkt früh genug vor dem ersten JIT der aufrufenden Methoden.
-
 **Milestone 3 — restliche UI.** 87 Dateien, darunter 314 `TextUnformatted`, 162 `Button`, 72 `Checkbox`.
 Praktikabel nur über einen Harmony-Transpiler, der in den UI-Typen jedes `ldstr` durch `ldstr` +
 `Translate(string)` ersetzt, mit Rückfall auf das Original bei fehlendem Eintrag.
 
-Beide Schichten sind invasiver als Milestone 1 und sollten getrennt schaltbar bleiben.
+Milestone 3 ist invasiver als 1 und 2 und sollte getrennt schaltbar bleiben.
 
 ## Schriftzeichen
 

@@ -59,6 +59,21 @@ public sealed class StatusWindow : Window
         {
             ImGui.TextDisabled($"Override-Datei aktiv: {file}");
         }
+
+        ImGui.Spacing();
+        if (_engine.HintsPatchedMethods > 0)
+        {
+            ImGui.TextUnformatted($"Kampfhinweise: {_engine.HintsPatchedMethods} Methoden gepatcht, {_engine.HintsObserved} Hinweise bisher gesehen");
+            ImGui.TextDisabled("Interpolierte Hinweise lassen sich nicht vorab auflisten — sie tauchen erst im Kampf auf.");
+        }
+        else
+        {
+            ImGui.TextUnformatted("Kampfhinweise: nicht gepatcht (Hinweise bleiben englisch)");
+        }
+        foreach (var failure in _engine.HintPatchFailures)
+        {
+            ImGui.TextDisabled("    " + failure);
+        }
     }
 
     private void DrawActions()

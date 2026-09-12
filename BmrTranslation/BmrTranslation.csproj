@@ -43,6 +43,9 @@
 
   <ItemGroup>
     <PackageReference Include="DalamudPackager" Version="15.0.0" />
+    <!-- Combat hints are string literals inside 800+ call sites; only IL patching reaches them.
+         Verified on this runtime and across the ALC boundary before adopting (see docs/ARCHITECTURE.md). -->
+    <PackageReference Include="Lib.Harmony" Version="2.4.2" />
     <Reference Include="Dalamud">
       <HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
       <Private>false</Private>
@@ -61,7 +64,8 @@
 
   <Target Name="CleanupOutput" AfterTargets="Build" BeforeTargets="DalamudPackage">
     <ItemGroup>
-      <_ExtraOutputFiles Include="$(OutputPath)*" Exclude="$(OutputPath)BmrTranslation.*" />
+      <!-- 0Harmony.dll must survive: it is a real runtime dependency, not build clutter -->
+      <_ExtraOutputFiles Include="$(OutputPath)*" Exclude="$(OutputPath)BmrTranslation.*;$(OutputPath)0Harmony.dll" />
     </ItemGroup>
     <Delete Files="@(_ExtraOutputFiles)" />
   </Target>

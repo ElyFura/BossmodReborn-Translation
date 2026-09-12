@@ -16,6 +16,8 @@ if (args.Contains("--help") || args.Contains("-h"))
           --strict           treat drift warnings as failures
           --missing          dump the undecided keys with their English text as JSON, and exit
           --all              dump every derivable key, decided or not (to revise existing entries)
+          --hints <src>      extract fixed combat-hint literals from a BossMod source tree, verified
+                             against the installed assembly, as a merge-ready JSON dump
         """);
     return 0;
 }
@@ -48,6 +50,11 @@ using var mlc = new MetadataLoadContext(new PathAssemblyResolver(probe.Distinct(
 var asm = mlc.LoadFromAssemblyPath(bmrPath);
 Console.Error.WriteLine($"version:  {asm.GetName().Name} {asm.GetName().Version}");
 
+if (Arg("--hints") is { } hintSource)
+{
+    return HintExtraction.Run(hintSource, bmrPath, Console.Out, new Report(Console.Error));
+}
+
 if (args.Contains("--missing") || args.Contains("--all"))
 {
     SeedChecks.DumpMissing(asm, seedPath, Console.Out, all: args.Contains("--all"));
@@ -58,7 +65,7 @@ var report = new Report();
 ShapeChecks.Run(asm, report);
 if (seedPath != null)
 {
-    SeedChecks.Run(asm, seedPath, report);
+    SeedChecks.Run(asm, seedPath, report, bmrPath);
 }
 return report.Summarise(strict);
 

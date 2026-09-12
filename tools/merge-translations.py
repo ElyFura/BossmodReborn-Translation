@@ -45,6 +45,13 @@ def load_batch(path):
             print(f"  line {number}: no '{SEP}' separator, skipped", file=sys.stderr)
             continue
         key, translation = (part.strip() for part in line.split(SEP, 1))
+        # hint keys embed the English text, and two BossMod hints contain a real newline, so the key
+        # needs the same \n escape the translation has. Config keys never contain backslashes.
+        key = key.replace("\\n", "\n")
+        # a key wrapped in double quotes is taken verbatim - needed for the one hint that ends in a
+        # space ("Order: "), which stripping the line would otherwise eat
+        if len(key) >= 2 and key[0] == '"' and key[-1] == '"':
+            key = key[1:-1]
         if key in result:
             print(f"  line {number}: duplicate key {key}", file=sys.stderr)
         if translation == "=":
@@ -58,20 +65,23 @@ def load_batch(path):
 
 
 def load_existing(path):
-    """Existing language file -> (notes, {key: (de, en)})."""
+    """Existing language file -> (metadata, {key: (de, en)}).
+
+    Every "$"-prefixed key is metadata and is passed through untouched, so adding one ($hintPatterns,
+    say) does not require touching this tool.
+    """
     if not path.exists():
-        return None, {}
+        return {}, {}
     data = json.loads(path.read_text(encoding="utf-8"))
-    notes = data.get("$notes")
-    entries = {}
+    meta, entries = {}, {}
     for key, value in data.items():
         if key.startswith("$"):
-            continue
-        if isinstance(value, str):
+            meta[key] = value
+        elif isinstance(value, str):
             entries[key] = (value, None)
         else:
             entries[key] = (value.get("de"), value.get("en"))
-    return notes, entries
+    return meta, entries
 
 
 def group_of(key):
@@ -80,10 +90,13 @@ def group_of(key):
     return parts[1].split("+")[0] if len(parts) > 1 else parts[0]
 
 
-def render(notes, entries):
+def render(meta, entries):
     lines = ["{"]
-    if notes:
-        lines.append(f"  {json.dumps('$notes', ensure_ascii=False)}: {json.dumps(notes, ensure_ascii=False)},")
+    for key, value in meta.items():
+        rendered = json.dumps(value, ensure_ascii=False, indent=2)
+        # keep nested metadata readable by re-indenting it one level in
+        rendered = rendered.replace(chr(10), chr(10) + "  ")
+        lines.append(f"  {json.dumps(key, ensure_ascii=False)}: {rendered},")
         lines.append("")
 
     ordered = sorted(entries.items())
@@ -123,7 +136,7 @@ def main():
 
     english = load_english(args.missing)
     batch = load_batch(args.batch)
-    notes, entries = load_existing(target)
+    meta, entries = load_existing(target)
 
     added = updated = skipped = 0
     for key, translation in batch.items():
@@ -137,7 +150,7 @@ def main():
             added += 1
         entries[key] = (translation, english[key])
 
-    target.write_text(render(notes, entries), encoding="utf-8")
+    target.write_text(render(meta, entries), encoding="utf-8")
     print(f"{target.name}: {added} added, {updated} updated, {skipped} skipped, {len(entries)} total")
     return 1 if skipped else 0
 

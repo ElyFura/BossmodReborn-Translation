@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Text.Json;
 
 namespace BmrTranslation.Translation;
@@ -23,9 +24,14 @@ public sealed class TranslationTable
 {
     private readonly Dictionary<string, TranslationEntry> _entries = new(StringComparer.Ordinal);
 
+    private readonly List<HintPattern> _hintPatterns = [];
+
     public int Count => _entries.Count;
     public string? UserFile { get; private set; }
     public List<string> LoadErrors { get; } = [];
+
+    // ordered: first match wins, so a narrow rule can be placed above a broad one
+    public IReadOnlyList<HintPattern> HintPatterns => _hintPatterns;
 
     public static TranslationTable Load(string language, DirectoryInfo configDir)
     {
@@ -67,6 +73,11 @@ public sealed class TranslationTable
             using var doc = JsonDocument.Parse(json, new JsonDocumentOptions { CommentHandling = JsonCommentHandling.Skip, AllowTrailingCommas = true });
             foreach (var prop in doc.RootElement.EnumerateObject())
             {
+                if (prop.Name == "$hintPatterns")
+                {
+                    MergeHintPatterns(prop.Value, origin);
+                    continue;
+                }
                 if (prop.Name.StartsWith('$'))
                 {
                     continue; // reserved for metadata such as "$schema" / "$notes"
@@ -81,6 +92,37 @@ public sealed class TranslationTable
         catch (Exception ex)
         {
             LoadErrors.Add($"{origin}: {ex.Message}");
+        }
+    }
+
+    // "$hintPatterns": [ { "en": "^Stack with (.+)$", "de": "Mit $1 stacken" } ]
+    //
+    // Interpolated hints cannot be matched by an exact lookup, so they need rules. A bad regex must not
+    // take the whole file down with it, hence per-entry error reporting.
+    private void MergeHintPatterns(JsonElement array, string origin)
+    {
+        if (array.ValueKind != JsonValueKind.Array)
+        {
+            LoadErrors.Add($"{origin}: $hintPatterns must be an array");
+            return;
+        }
+        foreach (var item in array.EnumerateArray())
+        {
+            var en = item.TryGetProperty("en", out var enProp) ? enProp.GetString() : null;
+            var de = item.TryGetProperty("de", out var deProp) ? deProp.GetString() : null;
+            if (string.IsNullOrEmpty(en) || string.IsNullOrEmpty(de))
+            {
+                LoadErrors.Add($"{origin}: $hintPatterns entry needs both 'en' and 'de'");
+                continue;
+            }
+            try
+            {
+                _hintPatterns.Add(new HintPattern(en, de, new Regex(en, RegexOptions.Compiled | RegexOptions.CultureInvariant)));
+            }
+            catch (ArgumentException ex)
+            {
+                LoadErrors.Add($"{origin}: invalid hint pattern '{en}': {ex.Message}");
+            }
         }
     }
 

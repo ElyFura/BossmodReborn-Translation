@@ -5,10 +5,10 @@ Deutsche Übersetzung für [BossMod Reborn](https://github.com/FFXIV-CombatRebor
 als Datei. Die Übersetzung tauscht die Strings zur Laufzeit im Speicher und stellt beim Entladen wieder
 das englische Original her.
 
-## Status: Milestone 1
+## Status: Milestone 1 + 2
 
-Übersetzt wird alles, was BossMod datengetrieben in seine Metadaten legt — ohne IL-Patching, ohne Hooks,
-ohne Harmony:
+Die Konfigurationsebene kommt ohne IL-Patching aus — BossMod legt sie datengetrieben in Metadaten ab.
+Die Kampfhinweise nicht: die sind String-Literale in über 800 Aufrufstellen und brauchen Harmony.
 
 | Bereich | Umfang | Zustand |
 | --- | --- | --- |
@@ -20,7 +20,8 @@ ohne Harmony:
 | Tab-Leiste des Einstellungsfensters | 5 Tabs | ✅ |
 | Statusfenster (Abdeckung, Drift, Export) | `/bmrtl` bzw. Zahnrad in der Plugin-Liste | ✅ |
 | Konfigurations-Übersetzung | 913 Schlüssel, alle entschieden | ✅ 542 deutsch, 371 bewusst englisch |
-| Kampfhinweise (`hints.Add(...)`) | 543 feste + 238 interpolierte | ⏳ Milestone 2 |
+| Kampfhinweise (`hints.Add(...)`) | 636 feste Literale | ✅ alle übersetzt (Harmony) |
+| Interpolierte Kampfhinweise | 220 Aufrufe | ✅ 59 Regex-Muster |
 | Übrige ImGui-Literale in der UI | 87 Dateien | ⏳ Milestone 3 |
 
 **Die Konfigurationsebene ist vollständig abgearbeitet:** alle 913 Schlüssel sind entschieden — 542
@@ -49,6 +50,37 @@ Ohne diese Unterscheidung würde die Zahl offener Schlüssel nie auf null gehen 
 aussagen. `/bmrtl` und `tools/ShapeCheck` zählen beide Kategorien getrennt.
 
 Wer es anders haben will, ändert `de.json` — keine Codeänderung nötig.
+
+## Kampfhinweise (Milestone 2)
+
+636 feste Hinweise sind übersetzt — von „Raus aus der AoE!" bis zu den langen Blue-Mage-Empfehlungen der
+Variant-Dungeons. Das ist die einzige Ebene, die IL-Patching braucht: Hinweise sind Literale in über 800
+Aufrufstellen und werden jeden Frame neu berechnet, es gibt also keine Daten zum Umschreiben.
+
+Gepatcht werden die **zusammenführenden** Methoden, nicht die einzelnen `Add`-Aufrufe:
+
+| Ziel | deckt ab |
+| --- | --- |
+| `BossModule.CalculateHintsForRaidMember` | alle Spielerhinweise aller Komponenten |
+| `BossModule.CalculateGlobalHints` | alle raidweiten Hinweise |
+| `ZoneModule.CalculateGlobalHints` | Duty-Automatisierung (virtuell: jeder Override) |
+| `BossModule.PrePullHints` | Pre-Pull-Notizen (virtuell: alle 59 Overrides) |
+
+### Interpolierte Hinweise
+
+Rund ein Viertel der Hinweise ist interpoliert — `hints.Add($"Stack with {name}")`. Für die kann ein exakter
+Treffer nie funktionieren, deshalb gibt es geordnete Regex-Regeln in `$hintPatterns`:
+
+```json
+{ "en": "^Target (.+)!$", "de": "$1 anvisieren!" }
+```
+
+Ein exakter Eintrag gewinnt immer gegen ein Muster, eine engere Regel steht über einer breiteren. Die 59
+mitgelieferten Muster deckeln die häufigen Formen (`Order: …`, `Target …!`, `… counters physical damage!`).
+
+**Interpolierte Wortlaute lassen sich nicht vorab auflisten** — sie existieren in der Assembly nicht als
+einzelnes Literal. Deshalb protokolliert das Plugin jeden Hinweis, der durchläuft, und `/bmrtl extract`
+gibt die unübersetzten zurück. Wer spielt, sammelt sie also ein; das Statusfenster zeigt den Zähler.
 
 ## Installation
 

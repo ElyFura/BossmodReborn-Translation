@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Text;
 using System.Text.Json;
 
 namespace ShapeCheck;
@@ -19,6 +20,11 @@ public static class SeedChecks
     // key prefixes that cannot be derived from metadata alone: enum display names live in generated tables
     // and autorotation names are built by module constructors at runtime
     private static readonly string[] RuntimeOnlyPrefixes = ["ui.tab/", "enum/", "rot/"];
+
+    private const string HintPrefix = "hint/";
+
+    private static string Shorten(string text)
+        => text.Length <= 70 ? text : text[..70] + "...";
 
     // dumps untranslated config keys with their English text, so a translation batch can be prepared
     // without launching the game (the in-game /bmrtl extract additionally covers the runtime-only keys
@@ -49,7 +55,7 @@ public static class SeedChecks
         output.WriteLine();
     }
 
-    public static void Run(Assembly asm, string seedPath, Report report)
+    public static void Run(Assembly asm, string seedPath, Report report, string? assemblyPath = null)
     {
         report.Section("Resources/" + Path.GetFileName(seedPath));
 
@@ -72,9 +78,39 @@ public static class SeedChecks
         var orphans = 0;
         var drifted = 0;
         var keptEnglish = 0;
+        var hints = 0;
+        var hintOrphans = 0;
+
+        // Hint keys embed the English text, so they are checked against the assembly's literals rather
+        // than against derived config keys.
+        //
+        // String literals are stored UTF-16LE, but nothing guarantees a literal starts on an even byte
+        // offset - so decoding the file once from offset 0 misses every literal that happens to sit on an
+        // odd one. Both alignments are decoded, and a hint counts as present if either contains it.
+        string[]? assemblyText = null;
+        if (assemblyPath != null && File.Exists(assemblyPath))
+        {
+            var bytes = File.ReadAllBytes(assemblyPath);
+            assemblyText =
+            [
+                Encoding.Unicode.GetString(bytes),
+                Encoding.Unicode.GetString(bytes, 1, bytes.Length - 1)
+            ];
+        }
 
         foreach (var (key, entry) in seed)
         {
+            if (key.StartsWith(HintPrefix, StringComparison.Ordinal))
+            {
+                ++hints;
+                var text = key[HintPrefix.Length..];
+                if (assemblyText != null && !assemblyText.Any(t => t.Contains(text, StringComparison.Ordinal)))
+                {
+                    report.Fail($"hint no longer present in BossMod: {Shorten(text)}");
+                    ++hintOrphans;
+                }
+                continue;
+            }
             if (RuntimeOnlyPrefixes.Any(p => key.StartsWith(p, StringComparison.Ordinal)))
             {
                 ++runtimeOnly;
@@ -106,6 +142,12 @@ public static class SeedChecks
             report.Check(true, $"{checkedKeys} config key(s) present with matching English source");
         }
         report.Info($"{runtimeOnly} key(s) not statically verifiable (enum / autorotation / tab labels)");
+        if (hints > 0)
+        {
+            report.Check(hintOrphans == 0, assemblyText != null
+                ? $"{hints} combat hint(s) still present in the installed assembly"
+                : $"{hints} combat hint(s) not checked (assembly path unavailable)");
+        }
 
         // coverage counts only what is actually meant to become German
         var translatable = english.Count - keptEnglish;

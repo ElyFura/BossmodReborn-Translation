@@ -34,5 +34,11 @@ public static class Keys
     // config window tab, e.g. ui.tab/Settings
     public static string Tab(string originalName) => "ui.tab/" + originalName;
 
+    // Combat hint, keyed by the English text - the one place where a location-derived key is impossible:
+    // hints are literals scattered across 800+ call sites with nothing stable to anchor to. The cost is
+    // that an upstream rewording orphans the key instead of reporting drift; it then reappears as a newly
+    // observed hint in /bmrtl extract.
+    public static string Hint(string english) => "hint/" + english;
+
     private static string Name(Type type) => type.FullName ?? type.Name;
 }

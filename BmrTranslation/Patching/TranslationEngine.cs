@@ -18,6 +18,8 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
     private TranslationTable _table = new();
     private PatchSession? _session;
     private ConfigUiPatcher? _uiPatcher;
+    private HintTranslator? _hints;
+    private HintPatcher? _hintPatcher;
     private DateTime _nextSweep;
     private string? _lastAttachError;
 
@@ -86,6 +88,20 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
         StrategyPatcher.Apply(bmr, _session);
         Sweep();
 
+        // combat hints are the one layer that needs IL patching; keep it last so a Harmony problem
+        // cannot cost us the config translation that already succeeded
+        _hints = new HintTranslator(_table);
+        _hintPatcher = new HintPatcher(bmr, _hints);
+        try
+        {
+            _hintPatcher.Apply();
+        }
+        catch (Exception ex)
+        {
+            Service.Log.Error(ex, "hint patching failed - config stays translated, hints stay English");
+            _hintPatcher = null;
+        }
+
         Service.Log.Information($"attached to BossModReborn {bmr.Version}: {_session.Applied} strings translated, {_session.Missing} without translation");
     }
 
@@ -117,6 +133,9 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
 
     private void Revert()
     {
+        _hintPatcher?.Dispose();
+        _hintPatcher = null;
+        _hints = null;
         _session?.Revert();
         _session = null;
         _uiPatcher = null;
@@ -134,10 +153,37 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
             return _lastAttachError ?? "waiting for BossMod Reborn";
         }
         var user = _table.UserFile != null ? $", override file {_table.UserFile}" : "";
-        return $"BossModReborn {_bmr.Version} | {_table.Count} entries in '{Language}' | {_session.Applied} applied, {_session.KeptEnglish} kept English, {_session.Missing} missing, {_session.Stale} stale{user}";
+        var hints = _hintPatcher != null
+            ? $" | hints: {_hintPatcher.PatchedMethods} patched methods, {_hints?.ObservedCount ?? 0} seen"
+            : " | hints: not patched";
+        return $"BossModReborn {_bmr.Version} | {_table.Count} entries in '{Language}' | {_session.Applied} applied, {_session.KeptEnglish} kept English, {_session.Missing} missing, {_session.Stale} stale{hints}{user}";
     }
 
-    public IReadOnlyCollection<CatalogueEntry> Catalogue => _session?.Catalogue ?? [];
+    // config keys from the sweep, plus every hint seen in play so far - the only way to discover the
+    // interpolated hint wordings, which cannot be enumerated from the assembly
+    public IReadOnlyCollection<CatalogueEntry> Catalogue
+    {
+        get
+        {
+            var config = _session?.Catalogue ?? [];
+            if (_hints == null)
+            {
+                return config;
+            }
+            var combined = new List<CatalogueEntry>(config);
+            foreach (var english in _hints.Observed)
+            {
+                var entry = _table.Lookup(Keys.Hint(english));
+                combined.Add(new CatalogueEntry(Keys.Hint(english), english, entry?.Text,
+                    Stale: false, KeptEnglish: entry != null && entry.Text == null, Origin: "hint"));
+            }
+            return combined;
+        }
+    }
+
+    public int HintsPatchedMethods => _hintPatcher?.PatchedMethods ?? 0;
+    public int HintsObserved => _hints?.ObservedCount ?? 0;
+    public IReadOnlyList<string> HintPatchFailures => _hintPatcher?.Failures ?? [];
 
     public string? BossModVersion => _bmr?.Version;
     public int EntryCount => _table.Count;

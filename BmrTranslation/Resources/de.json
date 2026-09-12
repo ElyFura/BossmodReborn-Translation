@@ -1,6 +1,245 @@
 {
   "$notes": "German translations for BossMod Reborn. Keys are location-derived (see Translation/Keys.cs). The 'en' value records the English text this translation was written against; when BossMod changes it, /bmrtl status reports the entry as stale. Run /bmrtl extract in game to dump every translatable key of the installed BossMod version.",
 
+  "$hintPatterns": [
+    {
+      "en": "^Debuff order: (.*)$",
+      "de": "Debuff-Reihenfolge: $1"
+    },
+    {
+      "en": "^Bait order: (.*)$",
+      "de": "Bait-Reihenfolge: $1"
+    },
+    {
+      "en": "^Tether break order: (.*)$",
+      "de": "Reihenfolge der Verbindungsbrüche: $1"
+    },
+    {
+      "en": "^Your order: (.*)$",
+      "de": "Deine Reihenfolge: $1"
+    },
+    {
+      "en": "^Order: (.*)$",
+      "de": "Reihenfolge: $1"
+    },
+    {
+      "en": "^Target: (.*)$",
+      "de": "Ziel: $1"
+    },
+    {
+      "en": "^Target (.+)!$",
+      "de": "$1 anvisieren!"
+    },
+    {
+      "en": "^Untethered bait: (.*)$",
+      "de": "Bait ohne Verbindung: $1"
+    },
+    {
+      "en": "^Tether: (.*)$",
+      "de": "Verbindung: $1"
+    },
+    {
+      "en": "^Debuff: (.*)$",
+      "de": "Debuff: $1"
+    },
+    {
+      "en": "^Group: (.*)$",
+      "de": "Gruppe: $1"
+    },
+    {
+      "en": "^Glitch: (.*)$",
+      "de": "Glitch: $1"
+    },
+    {
+      "en": "^Element: (.*)$",
+      "de": "Element: $1"
+    },
+    {
+      "en": "^Pattern: (.*)$",
+      "de": "Muster: $1"
+    },
+    {
+      "en": "^Rotation: (.*)$",
+      "de": "Rotation: $1"
+    },
+    {
+      "en": "^Stored: (.*)$",
+      "de": "Gespeichert: $1"
+    },
+    {
+      "en": "^Trinity: (.*)$",
+      "de": "Trinity: $1"
+    },
+    {
+      "en": "^Swap: (.*)$",
+      "de": "Tausch: $1"
+    },
+    {
+      "en": "^Swaps: (.*)$",
+      "de": "Tausche: $1"
+    },
+    {
+      "en": "^Top: (.*)$",
+      "de": "Oben: $1"
+    },
+    {
+      "en": "^Suggestion: Stay! \\(Total weight west: (.*)$",
+      "de": "Vorschlag: Bleiben! (Gesamtgewicht Westen: $1"
+    },
+    {
+      "en": "^Spread! \\(debuff: (.*)$",
+      "de": "Verteilen! (Debuff: $1"
+    },
+    {
+      "en": "^Bait (.+)!$",
+      "de": "$1 baiten!"
+    },
+    {
+      "en": "^Bait (.+)$",
+      "de": "$1 baiten"
+    },
+    {
+      "en": "^Pull (.+)!$",
+      "de": "$1 ziehen!"
+    },
+    {
+      "en": "^Pull (.+)$",
+      "de": "$1 ziehen"
+    },
+    {
+      "en": "^Kill (.+)!$",
+      "de": "$1 töten!"
+    },
+    {
+      "en": "^Kill (.+)$",
+      "de": "$1 töten"
+    },
+    {
+      "en": "^Cleanse (.+)!$",
+      "de": "$1 entfernen!"
+    },
+    {
+      "en": "^Cleanse (.+)$",
+      "de": "$1 entfernen"
+    },
+    {
+      "en": "^Dispel (.+) with Eerie Soundwave!$",
+      "de": "$1 mit 'Eerie Soundwave' entfernen!"
+    },
+    {
+      "en": "^Dispel (.+)!$",
+      "de": "$1 entfernen!"
+    },
+    {
+      "en": "^Dispel (.+)$",
+      "de": "$1 entfernen"
+    },
+    {
+      "en": "^Destroy fetters on (.+)!$",
+      "de": "Fesseln an $1 zerstören!"
+    },
+    {
+      "en": "^Heal to full (.+)! \\(Doom\\)$",
+      "de": "$1 voll heilen! (Doom)"
+    },
+    {
+      "en": "^Use Esuna on (.+)$",
+      "de": "'Esuna' auf $1"
+    },
+    {
+      "en": "^Use duty action to teleport to the (.+)$",
+      "de": "Duty-Aktion nutzen, um zum $1 zu teleportieren"
+    },
+    {
+      "en": "^Targets two (.+)$",
+      "de": "Trifft zwei $1"
+    },
+    {
+      "en": "^The next (.+)$",
+      "de": "Als nächstes $1"
+    },
+    {
+      "en": "^You were (.+)$",
+      "de": "Du wurdest $1"
+    },
+    {
+      "en": "^Heart enrage in: (.+)$",
+      "de": "Heart-Enrage in: $1"
+    },
+    {
+      "en": "^Nail enrage in: (.+)$",
+      "de": "Nail-Enrage in: $1"
+    },
+    {
+      "en": "^Usurper HP: (.*)$",
+      "de": "Usurper-HP: $1"
+    },
+    {
+      "en": "^Water in (.+)$",
+      "de": "Wasser in $1"
+    },
+    {
+      "en": "^Wicked wheel in ~(.+)$",
+      "de": "Wicked Wheel in ca. $1"
+    },
+    {
+      "en": "^Tankbuster x(.+)$",
+      "de": "Tankbuster x$1"
+    },
+    {
+      "en": "^Tankbuster (.+)$",
+      "de": "Tankbuster $1"
+    },
+    {
+      "en": "^(.+) will reflect all magic damage!$",
+      "de": "$1 spiegelt allen magischen Schaden!"
+    },
+    {
+      "en": "^(.+) will reflect all physical damage!$",
+      "de": "$1 spiegelt allen physischen Schaden!"
+    },
+    {
+      "en": "^(.+) is immune to physical damage!$",
+      "de": "$1 ist immun gegen physischen Schaden!"
+    },
+    {
+      "en": "^(.+) is immune to magical damage!$",
+      "de": "$1 ist immun gegen magischen Schaden!"
+    },
+    {
+      "en": "^(.+) is immune to magic damage! \\(Destroy crystal to remove buff\\)$",
+      "de": "$1 ist immun gegen magischen Schaden! (Kristall zerstören, um den Buff zu entfernen)"
+    },
+    {
+      "en": "^(.+) counters physical damage!$",
+      "de": "$1 kontert physischen Schaden!"
+    },
+    {
+      "en": "^(.+) counters magical damage!$",
+      "de": "$1 kontert magischen Schaden!"
+    },
+    {
+      "en": "^(.+) is about to be fettered!$",
+      "de": "$1 wird gleich gefesselt!"
+    },
+    {
+      "en": "^(.+) will drain all your MP, kill it fast!$",
+      "de": "$1 saugt dein gesamtes MP ab, töte es schnell!"
+    },
+    {
+      "en": "^(.+) will do multiple raidwides, kill it fast!$",
+      "de": "$1 macht mehrere Raidwides, töte es schnell!"
+    },
+    {
+      "en": "^(.+) tether$",
+      "de": "$1-Verbindung"
+    },
+    {
+      "en": "^(.+) after jumps$",
+      "de": "$1 nach den Sprüngen"
+    }
+  ],
+
   "cfg.node/BossMod.AI.AIConfig": { "de": "Automatische Bewegung", "en": "Automovement" },
 
   "cfg.node/BossMod.ActionTweaksConfig": { "de": "Aktions-Anpassungen", "en": "Action tweaks" },
@@ -1000,6 +1239,1278 @@
   "cfg/BossMod.ZoneModuleConfig/TransparentMode/label": { "de": "Gebietsmodul-Fenster transparent machen", "en": "Make zone module windows transparent" },
   "cfg/BossMod.ZoneModuleConfig/TransparentMode/tooltip": { "de": "Entfernt den schwarzen Rahmen um die Gebietsmodul-Fenster; funktioniert nicht, wenn du den Radar auf einen anderen Monitor verschiebst", "en": "Removes the black window around zone module windows; this will not work if you move the radar to a different monitor" },
   "cfg/BossMod.ZoneModuleConfig/UseDash/label": { "de": "Sprint-Fähigkeiten zur Navigation nutzen ('Smudge', 'Elusive Jump' usw.)", "en": "Use dash abilities for navigation (Smudge, Elusive Jump, etc)" },
+
+  "hint/3 single target hits + DoTs": { "de": "3 Einzelziel-Treffer + DoTs", "en": "3 single target hits + DoTs" },
+
+  "hint/4x Raidwide!": { "de": "4x Raidwide!", "en": "4x Raidwide!" },
+
+  "hint/A way to quickly heal yourself to full is mandatory and a ranged fire ability such as Mustard Bomb and Flying Sardine for interrupts are highly recommended.": { "de": "Eine Möglichkeit, sich schnell voll zu heilen, ist Pflicht; eine Feuer-Fernkampffähigkeit wie 'Mustard Bomb' und 'Flying Sardine' zum Unterbrechen sind sehr empfehlenswert.", "en": "A way to quickly heal yourself to full is mandatory and a ranged fire ability such as Mustard Bomb and Flying Sardine for interrupts are highly recommended." },
+
+  "hint/About to be knocked into danger!": { "de": "Wirst in die Gefahr gestoßen!", "en": "About to be knocked into danger!" },
+
+  "hint/About to be knocked into tear!": { "de": "Wirst in den Riss gestoßen!", "en": "About to be knocked into tear!" },
+
+  "hint/About to be knocked into wall!": { "de": "Wirst in die Wand gestoßen!", "en": "About to be knocked into wall!" },
+
+  "hint/Additionally Exuviation and earth spells are recommended for act 2.": { "de": "Für Akt 2 sind zusätzlich 'Exuviation' und Erd-Zauber empfehlenswert.", "en": "Additionally Exuviation and earth spells are recommended for act 2." },
+
+  "hint/Adds spawning soon!": { "de": "Adds spawnen gleich!", "en": "Adds spawning soon!" },
+
+  "hint/Aim away from boss!": { "de": "Weg vom Boss ausrichten!", "en": "Aim away from boss!" },
+
+  "hint/Aim away from comets!": { "de": "Weg von den Kometen ausrichten!", "en": "Aim away from comets!" },
+
+  "hint/Aim away from other tears!": { "de": "Weg von den anderen Rissen ausrichten!", "en": "Aim away from other tears!" },
+
+  "hint/Aim away from wall!": { "de": "Weg von der Wand ausrichten!", "en": "Aim away from wall!" },
+
+  "hint/Aim bomb into quicksand!": { "de": "Bombe in den Treibsand ausrichten!", "en": "Aim bomb into quicksand!" },
+
+  "hint/Aim charge at a keg!": { "de": "Charge auf ein Fass ausrichten!", "en": "Aim charge at a keg!" },
+
+  "hint/Aim for green safe spot!": { "de": "Auf den grünen Safespot ausrichten!", "en": "Aim for green safe spot!" },
+
+  "hint/Aim for safe spot!": { "de": "Auf den Safespot ausrichten!", "en": "Aim for safe spot!" },
+
+  "hint/Aim into AOEs!": { "de": "In die AoEs ausrichten!", "en": "Aim into AOEs!" },
+
+  "hint/Aim monitor!": { "de": "Monitor ausrichten!", "en": "Aim monitor!" },
+
+  "hint/Aim outside of the AOE!": { "de": "Nach außerhalb der AoE ausrichten!", "en": "Aim outside of the AOE!" },
+
+  "hint/Aim spread away from raid!": { "de": "Spread weg vom Raid ausrichten!", "en": "Aim spread away from raid!" },
+
+  "hint/Aim stack away from spreads!": { "de": "Stack weg von den Spreads ausrichten!", "en": "Aim stack away from spreads!" },
+
+  "hint/Aim to break tether!": { "de": "So ausrichten, dass die Verbindung bricht!", "en": "Aim to break tether!" },
+
+  "hint/Aim to hit partner!": { "de": "So ausrichten, dass der Partner getroffen wird!", "en": "Aim to hit partner!" },
+
+  "hint/Aim towards safe zone!": { "de": "Zur sicheren Zone ausrichten!", "en": "Aim towards safe zone!" },
+
+  "hint/Aim towards tornado!": { "de": "Zum Tornado ausrichten!", "en": "Aim towards tornado!" },
+
+  "hint/All opponents in this stage are weak to lightning. The Ram's Voice and Ultravibration combo can be used in act 2.": { "de": "Alle Gegner in dieser Stufe sind anfällig gegen Blitz. In Akt 2 lässt sich die Kombo aus 'Ram's Voice' und 'Ultravibration' nutzen.", "en": "All opponents in this stage are weak to lightning. The Ram's Voice and Ultravibration combo can be used in act 2." },
+
+  "hint/Alternatively you can cleanse the debuff with Exuviation.": { "de": "Alternativ kannst du den Debuff mit 'Exuviation' entfernen.", "en": "Alternatively you can cleanse the debuff with Exuviation." },
+
+  "hint/Applies On Fire to Lyon. Use Dispell to remove it": { "de": "Belegt Lyon mit 'On Fire'. Mit 'Dispell' entfernen", "en": "Applies On Fire to Lyon. Use Dispell to remove it" },
+
+  "hint/Applies Pyretic - STOP everything until it runs out!": { "de": "Belegt mit Pyretikum — ALLES anhalten, bis es abläuft!", "en": "Applies Pyretic - STOP everything until it runs out!" },
+
+  "hint/Apply backwards march debuff": { "de": "Rückwärts-Marsch-Debuff auftragen", "en": "Apply backwards march debuff" },
+
+  "hint/Apply doom & march debuffs": { "de": "Doom- & Marsch-Debuffs auftragen", "en": "Apply doom & march debuffs" },
+
+  "hint/Apply fowards march debuff": { "de": "Vorwärts-Marsch-Debuff auftragen", "en": "Apply fowards march debuff" },
+
+  "hint/Apply left march debuff": { "de": "Links-Marsch-Debuff auftragen", "en": "Apply left march debuff" },
+
+  "hint/Apply march debuffs": { "de": "Marsch-Debuffs auftragen", "en": "Apply march debuffs" },
+
+  "hint/Apply right march debuff": { "de": "Rechts-Marsch-Debuff auftragen", "en": "Apply right march debuff" },
+
+  "hint/As soon as he starts casting Web go to the edge to bait Meteor, then use Loom to escape.": { "de": "Sobald er 'Web' wirkt, an den Rand gehen, um 'Meteor' zu baiten, dann mit 'Loom' entkommen.", "en": "As soon as he starts casting Web go to the edge to bait Meteor, then use Loom to escape." },
+
+  "hint/At the start of the fight Rebekkah will cast Reflect. This will reflect all magic damage back to you.": { "de": "Zu Kampfbeginn wirkt Rebekkah 'Reflect'. Das spiegelt allen magischen Schaden auf dich zurück.", "en": "At the start of the fight Rebekkah will cast Reflect. This will reflect all magic damage back to you." },
+
+  "hint/Attack from unshielded side!": { "de": "Von der ungeschützten Seite angreifen!", "en": "Attack from unshielded side!" },
+
+  "hint/Attack target from unshielded side!": { "de": "Ziel von der ungeschützten Seite angreifen!", "en": "Attack target from unshielded side!" },
+
+  "hint/Attack the arcane sphere with the green circle around it!": { "de": "Die Arkansphäre mit dem grünen Kreis angreifen!", "en": "Attack the arcane sphere with the green circle around it!" },
+
+  "hint/Attack the head! (Attacking the tail will reflect damage onto you)": { "de": "Den Kopf angreifen! (Der Schwanz spiegelt Schaden auf dich zurück)", "en": "Attack the head! (Attacking the tail will reflect damage onto you)" },
+
+  "hint/Attack the tail! (Attacking the head will reflect damage onto you)": { "de": "Den Schwanz angreifen! (Der Kopf spiegelt Schaden auf dich zurück)", "en": "Attack the tail! (Attacking the head will reflect damage onto you)" },
+
+  "hint/Autorotation will not attack if boss HP is between 15 and 16% - press buttons manually when ready to start burst": { "de": "Die Autorotation greift zwischen 15 und 16 % Boss-HP nicht an — drücke manuell, wenn du den Burst starten willst", "en": "Autorotation will not attack if boss HP is between 15 and 16% - press buttons manually when ready to start burst" },
+
+  "hint/Avoid bait!": { "de": "Bait meiden!", "en": "Avoid bait!" },
+
+  "hint/Avoid baiting dark!": { "de": "Nicht Dunkel baiten!", "en": "Avoid baiting dark!" },
+
+  "hint/Avoid baiting fire!": { "de": "Nicht Feuer baiten!", "en": "Avoid baiting fire!" },
+
+  "hint/Avoid baiting jump!": { "de": "Nicht den Sprung baiten!", "en": "Avoid baiting jump!" },
+
+  "hint/Avoid baiting!": { "de": "Nicht baiten!", "en": "Avoid baiting!" },
+
+  "hint/Avoid breaking windows!": { "de": "Keine Fenster zerbrechen!", "en": "Avoid breaking windows!" },
+
+  "hint/Avoid clipping crystals!": { "de": "Kristalle nicht streifen!", "en": "Avoid clipping crystals!" },
+
+  "hint/Avoid clipping irrelevant players!": { "de": "Unbeteiligte Spieler nicht streifen!", "en": "Avoid clipping irrelevant players!" },
+
+  "hint/Avoid intersecting bird hitboxes!": { "de": "Vogel-Hitboxen nicht schneiden!", "en": "Avoid intersecting bird hitboxes!" },
+
+  "hint/Avoid intersecting egg hitboxes!": { "de": "Ei-Hitboxen nicht schneiden!", "en": "Avoid intersecting egg hitboxes!" },
+
+  "hint/Avoid intersecting rock hitboxes!": { "de": "Fels-Hitboxen nicht schneiden!", "en": "Avoid intersecting rock hitboxes!" },
+
+  "hint/Avoid intersecting safe rock hitboxes!": { "de": "Hitboxen der sicheren Felsen nicht schneiden!", "en": "Avoid intersecting safe rock hitboxes!" },
+
+  "hint/Avoid intersecting zombies hitboxes!": { "de": "Zombie-Hitboxen nicht schneiden!", "en": "Avoid intersecting zombies hitboxes!" },
+
+  "hint/Avoid orbs": { "de": "Kugeln meiden", "en": "Avoid orbs" },
+
+  "hint/Avoid other meteors!": { "de": "Andere Meteore meiden!", "en": "Avoid other meteors!" },
+
+  "hint/Avoid puddles during lightning bolts.": { "de": "Während der Blitze die Pfützen meiden.", "en": "Avoid puddles during lightning bolts." },
+
+  "hint/Avoid puddles.": { "de": "Pfützen meiden.", "en": "Avoid puddles." },
+
+  "hint/Avoid taking tether!": { "de": "Verbindung nicht annehmen!", "en": "Avoid taking tether!" },
+
+  "hint/Avoid the orbs!": { "de": "Die Kugeln meiden!", "en": "Avoid the orbs!" },
+
+  "hint/Avoid transmission aoe!": { "de": "Transmission-AoE meiden!", "en": "Avoid transmission aoe!" },
+
+  "hint/Bait 3 AOEs before going into the towers!": { "de": "3 AoEs baiten, bevor du in die Türme gehst!", "en": "Bait 3 AOEs before going into the towers!" },
+
+  "hint/Bait away + look away!": { "de": "Weg baiten + wegsehen!", "en": "Bait away + look away!" },
+
+  "hint/Bait away and move!": { "de": "Weg baiten und bewegen!", "en": "Bait away and move!" },
+
+  "hint/Bait away at marked spot!": { "de": "Am markierten Punkt weg baiten!", "en": "Bait away at marked spot!" },
+
+  "hint/Bait away from orb!": { "de": "Weg von der Kugel baiten!", "en": "Bait away from orb!" },
+
+  "hint/Bait away from other towers!": { "de": "Weg von den anderen Türmen baiten!", "en": "Bait away from other towers!" },
+
+  "hint/Bait away from raid!": { "de": "Weg vom Raid baiten!", "en": "Bait away from raid!" },
+
+  "hint/Bait away or interrupt!": { "de": "Weg baiten oder unterbrechen!", "en": "Bait away or interrupt!" },
+
+  "hint/Bait away!": { "de": "Weg baiten!", "en": "Bait away!" },
+
+  "hint/Bait away! (3 times)": { "de": "Weg baiten! (3x)", "en": "Bait away! (3 times)" },
+
+  "hint/Bait away, avoid intersecting bubble hitboxes!": { "de": "Weg baiten, Blasen-Hitboxen nicht schneiden!", "en": "Bait away, avoid intersecting bubble hitboxes!" },
+
+  "hint/Bait away, avoid intersecting cage hitboxes!": { "de": "Weg baiten, Käfig-Hitboxen nicht schneiden!", "en": "Bait away, avoid intersecting cage hitboxes!" },
+
+  "hint/Bait away, avoid intersecting furniture hitboxes!": { "de": "Weg baiten, Möbel-Hitboxen nicht schneiden!", "en": "Bait away, avoid intersecting furniture hitboxes!" },
+
+  "hint/Bait away, avoid intersecting wall hitboxes!": { "de": "Weg baiten, Wand-Hitboxen nicht schneiden!", "en": "Bait away, avoid intersecting wall hitboxes!" },
+
+  "hint/Bait bubble away!": { "de": "Blase weg baiten!", "en": "Bait bubble away!" },
+
+  "hint/Bait close or far!": { "de": "Nah oder fern baiten!", "en": "Bait close or far!" },
+
+  "hint/Bait cloud away, avoid intersecting wall hitboxes!": { "de": "Wolke weg baiten, Wand-Hitboxen nicht schneiden!", "en": "Bait cloud away, avoid intersecting wall hitboxes!" },
+
+  "hint/Bait cone away from raid!": { "de": "Kegel weg vom Raid baiten!", "en": "Bait cone away from raid!" },
+
+  "hint/Bait exaflare away from raid!": { "de": "Exaflare weg vom Raid baiten!", "en": "Bait exaflare away from raid!" },
+
+  "hint/Bait far away on one side of the map!": { "de": "Weit weg an einer Seite der Karte baiten!", "en": "Bait far away on one side of the map!" },
+
+  "hint/Bait into a hole!": { "de": "In ein Loch baiten!", "en": "Bait into a hole!" },
+
+  "hint/Bait levinorb away!": { "de": "Levinorb weg baiten!", "en": "Bait levinorb away!" },
+
+  "hint/Bait next aoe": { "de": "Nächste AoE baiten", "en": "Bait next aoe" },
+
+  "hint/Bait puddle to edge": { "de": "Pfütze an den Rand baiten", "en": "Bait puddle to edge" },
+
+  "hint/Bait the Meteor to the edge of the arena!\nUse Loom to escape or Diamondback to survive.": { "de": "'Meteor' an den Arenarand baiten!\nMit 'Loom' entkommen oder mit 'Diamondback' überleben.", "en": "Bait the Meteor to the edge of the arena!\nUse Loom to escape or Diamondback to survive." },
+
+  "hint/Bait the cone AOEs!": { "de": "Die Kegel-AoEs baiten!", "en": "Bait the cone AOEs!" },
+
+  "hint/Bait through orb!": { "de": "Durch die Kugel baiten!", "en": "Bait through orb!" },
+
+  "hint/Bait to glowing comet!": { "de": "Zum leuchtenden Kometen baiten!", "en": "Bait to glowing comet!" },
+
+  "hint/Bait!": { "de": "Baiten!", "en": "Bait!" },
+
+  "hint/Baiting mulitple cones!": { "de": "Baitest mehrere Kegel!", "en": "Baiting mulitple cones!" },
+
+  "hint/Bats are weak to lightning. The wolf is weak to fire.": { "de": "Die Fledermäuse sind anfällig gegen Blitz, der Wolf gegen Feuer.", "en": "Bats are weak to lightning. The wolf is weak to fire." },
+
+  "hint/Be inside river!": { "de": "Im Fluss stehen!", "en": "Be inside river!" },
+
+  "hint/Block a drain!": { "de": "Einen Abfluss blockieren!", "en": "Block a drain!" },
+
+  "hint/Boss is running to the North wall to cast Trounce!": { "de": "Boss läuft zur Nordwand, um 'Trounce' zu wirken!", "en": "Boss is running to the North wall to cast Trounce!" },
+
+  "hint/Boss is running to the South wall to cast Trounce!": { "de": "Boss läuft zur Südwand, um 'Trounce' zu wirken!", "en": "Boss is running to the South wall to cast Trounce!" },
+
+  "hint/Boss reflects all magic damage!": { "de": "Boss spiegelt allen magischen Schaden!", "en": "Boss reflects all magic damage!" },
+
+  "hint/Boss will reflect all magic damage!": { "de": "Boss wird allen magischen Schaden spiegeln!", "en": "Boss will reflect all magic damage!" },
+
+  "hint/Break chains!": { "de": "Ketten brechen!", "en": "Break chains!" },
+
+  "hint/Break tether!": { "de": "Verbindung brechen!", "en": "Break tether!" },
+
+  "hint/Bringing Flying Sardine, lightning and wind spells is higly recommended.": { "de": "'Flying Sardine' sowie Blitz- und Wind-Zauber mitzubringen ist sehr empfehlenswert.", "en": "Bringing Flying Sardine, lightning and wind spells is higly recommended." },
+
+  "hint/Cancel knockback immunity!": { "de": "Knockback-Immunität abbrechen!", "en": "Cancel knockback immunity!" },
+
+  "hint/Cast Ink Jet on boss to get blinded!": { "de": "'Ink Jet' auf den Boss wirken, um geblendet zu werden!", "en": "Cast Ink Jet on boss to get blinded!" },
+
+  "hint/Charybdis -> Thunderbolt -> Charybdis -> Trounce from West Wall.": { "de": "Charybdis -> Thunderbolt -> Charybdis -> Trounce von der Westwand.", "en": "Charybdis -> Thunderbolt -> Charybdis -> Trounce from West Wall." },
+
+  "hint/Charybdis -> Thunderbolt -> Trounce from East Wall": { "de": "Charybdis -> Thunderbolt -> Trounce von der Ostwand", "en": "Charybdis -> Thunderbolt -> Trounce from East Wall" },
+
+  "hint/Charybdis -> Trounce from North Wall!": { "de": "Charybdis -> Trounce von der Nordwand!", "en": "Charybdis -> Trounce from North Wall!" },
+
+  "hint/Charybdis -> Trounce from West Wall!": { "de": "Charybdis -> Trounce von der Westwand!", "en": "Charybdis -> Trounce from West Wall!" },
+
+  "hint/Charybdis x1 -> Thunderbolt -> Charybdis -> Trounce from North Wall.": { "de": "Charybdis x1 -> Thunderbolt -> Charybdis -> Trounce von der Nordwand.", "en": "Charybdis x1 -> Thunderbolt -> Charybdis -> Trounce from North Wall." },
+
+  "hint/Charybdis x1 -> Thunderbolt -> Trounce from South Wall!": { "de": "Charybdis x1 -> Thunderbolt -> Trounce von der Südwand!", "en": "Charybdis x1 -> Thunderbolt -> Trounce from South Wall!" },
+
+  "hint/Charybdis x2 -> Thunderbolt -> Charybdis -> Trounce from North Wall.": { "de": "Charybdis x2 -> Thunderbolt -> Charybdis -> Trounce von der Nordwand.", "en": "Charybdis x2 -> Thunderbolt -> Charybdis -> Trounce from North Wall." },
+
+  "hint/Charybdis x2 -> Thunderbolt -> Trounce from South Wall.": { "de": "Charybdis x2 -> Thunderbolt -> Trounce von der Südwand.", "en": "Charybdis x2 -> Thunderbolt -> Trounce from South Wall." },
+
+  "hint/Circles resolve before cross": { "de": "Kreise lösen vor dem Kreuz aus", "en": "Circles resolve before cross" },
+
+  "hint/Circles resolve before cross, aim forced march into cross": { "de": "Kreise lösen vor dem Kreuz aus, Zwangsmarsch ins Kreuz ausrichten", "en": "Circles resolve before cross, aim forced march into cross" },
+
+  "hint/Cleanse Doom!": { "de": "Doom entfernen!", "en": "Cleanse Doom!" },
+
+  "hint/Cleanse Electrocution!": { "de": "'Electrocution' entfernen!", "en": "Cleanse Electrocution!" },
+
+  "hint/Cleanse debuffs!": { "de": "Debuffs entfernen!", "en": "Cleanse debuffs!" },
+
+  "hint/Cleanse yourself fast (poison).": { "de": "Dich schnell entgiften (Gift).", "en": "Cleanse yourself fast (poison)." },
+
+  "hint/Clipped by other tethers!": { "de": "Von anderen Verbindungen gestreift!", "en": "Clipped by other tethers!" },
+
+  "hint/Condensed Libra puts a debuff on you. Use Diamondback to survive thefollowing attack.": { "de": "'Condensed Libra' belegt dich mit einem Debuff. Mit 'Diamondback' den folgenden Angriff überleben.", "en": "Condensed Libra puts a debuff on you. Use Diamondback to survive thefollowing attack." },
+
+  "hint/Dark Loaded": { "de": "Dunkel geladen", "en": "Dark Loaded" },
+
+  "hint/Debuffs: OK": { "de": "Debuffs: OK", "en": "Debuffs: OK" },
+
+  "hint/Debuffs: avoid": { "de": "Debuffs: meiden", "en": "Debuffs: avoid" },
+
+  "hint/Debuffs: failed to handle": { "de": "Debuffs: nicht bewältigt", "en": "Debuffs: failed to handle" },
+
+  "hint/Debuffs: grab!": { "de": "Debuffs: nehmen!", "en": "Debuffs: grab!" },
+
+  "hint/Debuffs: pass!": { "de": "Debuffs: weitergeben!", "en": "Debuffs: pass!" },
+
+  "hint/Debuffs: spread and prepare to handle!": { "de": "Debuffs: verteilen und aufs Bewältigen vorbereiten!", "en": "Debuffs: spread and prepare to handle!" },
+
+  "hint/Debuffs: stack and prepare to pass!": { "de": "Debuffs: stacken und aufs Weitergeben vorbereiten!", "en": "Debuffs: stack and prepare to pass!" },
+
+  "hint/Deliver the coins!": { "de": "Die Münzen abliefern!", "en": "Deliver the coins!" },
+
+  "hint/Destroy at least one fireball to create a safe spot!": { "de": "Mindestens einen Feuerball zerstören, um einen Safespot zu schaffen!", "en": "Destroy at least one fireball to create a safe spot!" },
+
+  "hint/Destroy fetters on Kuiyki!": { "de": "Fesseln an Kuiyki zerstören!", "en": "Destroy fetters on Kuiyki!" },
+
+  "hint/Destroy the airstones to remove invincibility!": { "de": "Die Luftsteine zerstören, um die Unverwundbarkeit aufzuheben!", "en": "Destroy the airstones to remove invincibility!" },
+
+  "hint/Destroy the spumes!": { "de": "Die Spumes zerstören!", "en": "Destroy the spumes!" },
+
+  "hint/Diamondback and Flying Sardine are essential for this stage.": { "de": "'Diamondback' und 'Flying Sardine' sind für diese Stufe unverzichtbar.", "en": "Diamondback and Flying Sardine are essential for this stage." },
+
+  "hint/Dispel buff!": { "de": "Buff entfernen!", "en": "Dispel buff!" },
+
+  "hint/Do no damage!": { "de": "Keinen Schaden machen!", "en": "Do no damage!" },
+
+  "hint/Don't move!": { "de": "Nicht bewegen!", "en": "Don't move!" },
+
+  "hint/Don't panic! AOEs start resolving 3.8s after towers.": { "de": "Keine Panik! Die AoEs lösen 3,8 s nach den Türmen aus.", "en": "Don't panic! AOEs start resolving 3.8s after towers." },
+
+  "hint/Don't soak any orbs!": { "de": "Keine Kugeln soaken!", "en": "Don't soak any orbs!" },
+
+  "hint/Doom": { "de": "Doom", "en": "Doom" },
+
+  "hint/Drag bird away!": { "de": "Vogel weg ziehen!", "en": "Drag bird away!" },
+
+  "hint/Dread": { "de": "Dread", "en": "Dread" },
+
+  "hint/Drop baited AOEs at arena border!": { "de": "Gebaitete AoEs am Arenarand ablegen!", "en": "Drop baited AOEs at arena border!" },
+
+  "hint/Drop seed outside of vulnerable area!": { "de": "Saat außerhalb des gefährdeten Bereichs ablegen!", "en": "Drop seed outside of vulnerable area!" },
+
+  "hint/Drop your seed!": { "de": "Deine Saat ablegen!", "en": "Drop your seed!" },
+
+  "hint/Eat a fruit to cleanse debuff!": { "de": "Eine Frucht essen, um den Debuff zu entfernen!", "en": "Eat a fruit to cleanse debuff!" },
+
+  "hint/Electrocution on you! Cleanse it with Exuviation.": { "de": "'Electrocution' auf dir! Mit 'Exuviation' entfernen.", "en": "Electrocution on you! Cleanse it with Exuviation." },
+
+  "hint/Exuviation, a melee ability and fire, wind and ice spells are recommended.": { "de": "Empfehlenswert sind 'Exuviation', eine Nahkampffähigkeit sowie Feuer-, Wind- und Eis-Zauber.", "en": "Exuviation, a melee ability and fire, wind and ice spells are recommended." },
+
+  "hint/Face away from raid": { "de": "Vom Raid wegdrehen", "en": "Face away from raid" },
+
+  "hint/Face open weakpoint to eye!": { "de": "Offene Schwachstelle zum Auge drehen!", "en": "Face open weakpoint to eye!" },
+
+  "hint/Face raid": { "de": "Zum Raid drehen", "en": "Face raid" },
+
+  "hint/Face safe side to AOE!": { "de": "Sichere Seite zur AoE drehen!", "en": "Face safe side to AOE!" },
+
+  "hint/Face the hand to petrify it!": { "de": "Die Hand ansehen, um sie zu versteinern!", "en": "Face the hand to petrify it!" },
+
+  "hint/Failed orbs...": { "de": "Kugeln verpatzt …", "en": "Failed orbs..." },
+
+  "hint/Fire debuff": { "de": "Feuer-Debuff", "en": "Fire debuff" },
+
+  "hint/Follow the charge!": { "de": "Der Charge folgen!", "en": "Follow the charge!" },
+
+  "hint/For act 2 the spell Loom is strongly recommended. The slimes are strong against blunt melee damage such as J Kick.": { "de": "Für Akt 2 ist der Zauber 'Loom' sehr empfehlenswert. Die Slimes sind widerstandsfähig gegen stumpfen Nahkampfschaden wie 'J Kick'.", "en": "For act 2 the spell Loom is strongly recommended. The slimes are strong against blunt melee damage such as J Kick." },
+
+  "hint/For the 2nd act Diamondback is highly recommended.": { "de": "Für den 2. Akt ist 'Diamondback' sehr empfehlenswert.", "en": "For the 2nd act Diamondback is highly recommended." },
+
+  "hint/For the 3rd act a ranged physical spell such as Fire Angon is highly recommended.": { "de": "Für den 3. Akt ist ein physischer Fernkampfzauber wie 'Fire Angon' sehr empfehlenswert.", "en": "For the 3rd act a ranged physical spell such as Fire Angon is highly recommended." },
+
+  "hint/For this act Exuviation and Diamondback are mandatory.": { "de": "Für diesen Akt sind 'Exuviation' und 'Diamondback' Pflicht.", "en": "For this act Exuviation and Diamondback are mandatory." },
+
+  "hint/For this act: Pudding is weak to wind spells. Marshmallow is weak to ice spells. Bavarois is weak to earth spells.": { "de": "Für diesen Akt: Pudding ist anfällig gegen Wind-Zauber, Marshmallow gegen Eis-Zauber, Bavarois gegen Erd-Zauber.", "en": "For this act: Pudding is weak to wind spells. Marshmallow is weak to ice spells. Bavarois is weak to earth spells." },
+
+  "hint/For this fight Diamondback, Exuviation, Flying Sardine and a healing ability (preferably Pom Cure with healer mimicry) are mandatory. Eerie Soundwave is also recommended.": { "de": "Für diesen Kampf sind 'Diamondback', 'Exuviation', 'Flying Sardine' und eine Heilfähigkeit (am besten 'Pom Cure' mit Heiler-Mimikry) Pflicht. 'Eerie Soundwave' ist ebenfalls empfehlenswert.", "en": "For this fight Diamondback, Exuviation, Flying Sardine and a healing ability (preferably Pom Cure with healer mimicry) are mandatory. Eerie Soundwave is also recommended." },
+
+  "hint/For this stage Flying Sardine and Acorn Bomb are highly recommended. Use Flying Sardine to interrupt High Voltage. Use Acorn Bomb to put Shabtis to sleep until their buff runs out.": { "de": "Für diese Stufe sind 'Flying Sardine' und 'Acorn Bomb' sehr empfehlenswert. 'Flying Sardine' unterbricht 'High Voltage'. 'Acorn Bomb' schläfert die Shabtis ein, bis ihr Buff abläuft.", "en": "For this stage Flying Sardine and Acorn Bomb are highly recommended. Use Flying Sardine to interrupt High Voltage. Use Acorn Bomb to put Shabtis to sleep until their buff runs out." },
+
+  "hint/For this stage Ice Spikes and Bomb Toss are recommended spells. Use Ice Spikes to instantly kill roselets once they become aggressive. Hydnora in act 2 is weak against water and strong against earth spells.": { "de": "Für diese Stufe sind 'Ice Spikes' und 'Bomb Toss' empfehlenswert. 'Ice Spikes' tötet Roselets sofort, sobald sie aggressiv werden. Hydnora in Akt 2 ist anfällig gegen Wasser und widerstandsfähig gegen Erd-Zauber.", "en": "For this stage Ice Spikes and Bomb Toss are recommended spells. Use Ice Spikes to instantly kill roselets once they become aggressive. Hydnora in act 2 is weak against water and strong against earth spells." },
+
+  "hint/For this stage the spell Flying Sardine to interrupt the Progenitrix in act 2 is highly recommended. Hit the Cherry Bomb from a safe distance with anything but fire damage to set of a chain reaction to win this act.": { "de": "Für diese Stufe ist 'Flying Sardine' sehr empfehlenswert, um die Progenitrix in Akt 2 zu unterbrechen. Triff die Cherry Bomb aus sicherer Entfernung mit allem außer Feuerschaden, um eine Kettenreaktion auszulösen und den Akt zu gewinnen.", "en": "For this stage the spell Flying Sardine to interrupt the Progenitrix in act 2 is highly recommended. Hit the Cherry Bomb from a safe distance with anything but fire damage to set of a chain reaction to win this act." },
+
+  "hint/GTFO from AOE!": { "de": "Raus aus der AoE!", "en": "GTFO from AOE!" },
+
+  "hint/GTFO from Tataru!": { "de": "Raus von Tataru!", "en": "GTFO from Tataru!" },
+
+  "hint/GTFO from acid square!": { "de": "Raus aus dem Säurefeld!", "en": "GTFO from acid square!" },
+
+  "hint/GTFO from aoe!": { "de": "Raus aus der AoE!", "en": "GTFO from aoe!" },
+
+  "hint/GTFO from aoes!": { "de": "Raus aus den AoEs!", "en": "GTFO from aoes!" },
+
+  "hint/GTFO from avarice!": { "de": "Raus aus 'Avarice'!", "en": "GTFO from avarice!" },
+
+  "hint/GTFO from baited AOE!": { "de": "Raus aus der gebaiteten AoE!", "en": "GTFO from baited AOE!" },
+
+  "hint/GTFO from baited aoe!": { "de": "Raus aus der gebaiteten AoE!", "en": "GTFO from baited aoe!" },
+
+  "hint/GTFO from baited cone!": { "de": "Raus aus dem gebaiteten Kegel!", "en": "GTFO from baited cone!" },
+
+  "hint/GTFO from baiters!": { "de": "Raus von den Baitern!", "en": "GTFO from baiters!" },
+
+  "hint/GTFO from baits!": { "de": "Raus aus den Baits!", "en": "GTFO from baits!" },
+
+  "hint/GTFO from bird/behemoth aoe!": { "de": "Raus aus der Vogel-/Behemoth-AoE!", "en": "GTFO from bird/behemoth aoe!" },
+
+  "hint/GTFO from bit aoe!": { "de": "Raus aus der Bit-AoE!", "en": "GTFO from bit aoe!" },
+
+  "hint/GTFO from black hole baiter!": { "de": "Raus vom Schwarzloch-Baiter!", "en": "GTFO from black hole baiter!" },
+
+  "hint/GTFO from boss!": { "de": "Raus vom Boss!", "en": "GTFO from boss!" },
+
+  "hint/GTFO from cataract!": { "de": "Raus aus 'Cataract'!", "en": "GTFO from cataract!" },
+
+  "hint/GTFO from center!": { "de": "Raus aus der Mitte!", "en": "GTFO from center!" },
+
+  "hint/GTFO from charge zone!": { "de": "Raus aus der Charge-Zone!", "en": "GTFO from charge zone!" },
+
+  "hint/GTFO from charge!": { "de": "Raus aus der Charge!", "en": "GTFO from charge!" },
+
+  "hint/GTFO from charges!": { "de": "Raus aus den Charges!", "en": "GTFO from charges!" },
+
+  "hint/GTFO from chests!": { "de": "Raus von den Truhen!", "en": "GTFO from chests!" },
+
+  "hint/GTFO from cleave!": { "de": "Raus aus dem Cleave!", "en": "GTFO from cleave!" },
+
+  "hint/GTFO from cleaved side!": { "de": "Raus von der gecleavten Seite!", "en": "GTFO from cleaved side!" },
+
+  "hint/GTFO from co-tank!": { "de": "Raus vom Co-Tank!", "en": "GTFO from co-tank!" },
+
+  "hint/GTFO from conduit!": { "de": "Raus aus dem Conduit!", "en": "GTFO from conduit!" },
+
+  "hint/GTFO from cone aoe!": { "de": "Raus aus der Kegel-AoE!", "en": "GTFO from cone aoe!" },
+
+  "hint/GTFO from cone!": { "de": "Raus aus dem Kegel!", "en": "GTFO from cone!" },
+
+  "hint/GTFO from defamation!": { "de": "Raus aus der Defamation!", "en": "GTFO from defamation!" },
+
+  "hint/GTFO from delimiter!": { "de": "Raus aus dem Delimiter!", "en": "GTFO from delimiter!" },
+
+  "hint/GTFO from diagonal aoe!": { "de": "Raus aus der diagonalen AoE!", "en": "GTFO from diagonal aoe!" },
+
+  "hint/GTFO from dissociation!": { "de": "Raus aus 'Dissociation'!", "en": "GTFO from dissociation!" },
+
+  "hint/GTFO from exhaust intersection": { "de": "Raus aus der Exhaust-Kreuzung", "en": "GTFO from exhaust intersection" },
+
+  "hint/GTFO from exo aoe!": { "de": "Raus aus der Exo-AoE!", "en": "GTFO from exo aoe!" },
+
+  "hint/GTFO from exploding square": { "de": "Raus aus dem explodierenden Feld", "en": "GTFO from exploding square" },
+
+  "hint/GTFO from explosion!": { "de": "Raus aus der Explosion!", "en": "GTFO from explosion!" },
+
+  "hint/GTFO from fire aoe!": { "de": "Raus aus der Feuer-AoE!", "en": "GTFO from fire aoe!" },
+
+  "hint/GTFO from fire square!": { "de": "Raus aus dem Feuerfeld!", "en": "GTFO from fire square!" },
+
+  "hint/GTFO from flood!": { "de": "Raus aus der Flut!", "en": "GTFO from flood!" },
+
+  "hint/GTFO from forbidden color!": { "de": "Raus aus der verbotenen Farbe!", "en": "GTFO from forbidden color!" },
+
+  "hint/GTFO from forbidden stacks!": { "de": "Raus aus den verbotenen Stacks!", "en": "GTFO from forbidden stacks!" },
+
+  "hint/GTFO from glory aoe!": { "de": "Raus aus der Glory-AoE!", "en": "GTFO from glory aoe!" },
+
+  "hint/GTFO from head aoe!": { "de": "Raus aus der Kopf-AoE!", "en": "GTFO from head aoe!" },
+
+  "hint/GTFO from imminent flow!": { "de": "Raus aus der kommenden Strömung!", "en": "GTFO from imminent flow!" },
+
+  "hint/GTFO from incorrect stacks!": { "de": "Raus aus den falschen Stacks!", "en": "GTFO from incorrect stacks!" },
+
+  "hint/GTFO from knockback!": { "de": "Raus aus dem Knockback!", "en": "GTFO from knockback!" },
+
+  "hint/GTFO from laser aoe!": { "de": "Raus aus der Laser-AoE!", "en": "GTFO from laser aoe!" },
+
+  "hint/GTFO from lighting square!": { "de": "Raus aus dem Blitzfeld!", "en": "GTFO from lighting square!" },
+
+  "hint/GTFO from marked players!": { "de": "Raus von den markierten Spielern!", "en": "GTFO from marked players!" },
+
+  "hint/GTFO from neurolink!": { "de": "Raus vom Neurolink!", "en": "GTFO from neurolink!" },
+
+  "hint/GTFO from normal comets!": { "de": "Raus von den normalen Kometen!", "en": "GTFO from normal comets!" },
+
+  "hint/GTFO from one of the knockbacks!": { "de": "Raus aus einem der Knockbacks!", "en": "GTFO from one of the knockbacks!" },
+
+  "hint/GTFO from other bait!": { "de": "Raus aus dem anderen Bait!", "en": "GTFO from other bait!" },
+
+  "hint/GTFO from other bubble!": { "de": "Raus aus der anderen Blase!", "en": "GTFO from other bubble!" },
+
+  "hint/GTFO from other charges!": { "de": "Raus aus den anderen Charges!", "en": "GTFO from other charges!" },
+
+  "hint/GTFO from other crystals!": { "de": "Raus von den anderen Kristallen!", "en": "GTFO from other crystals!" },
+
+  "hint/GTFO from other spreads!": { "de": "Raus aus den anderen Spreads!", "en": "GTFO from other spreads!" },
+
+  "hint/GTFO from other tethers!": { "de": "Raus aus den anderen Verbindungen!", "en": "GTFO from other tethers!" },
+
+  "hint/GTFO from others!": { "de": "Raus von den anderen!", "en": "GTFO from others!" },
+
+  "hint/GTFO from pillars!": { "de": "Raus von den Säulen!", "en": "GTFO from pillars!" },
+
+  "hint/GTFO from planet aoe!": { "de": "Raus aus der Planeten-AoE!", "en": "GTFO from planet aoe!" },
+
+  "hint/GTFO from protean!": { "de": "Raus aus dem Protean!", "en": "GTFO from protean!" },
+
+  "hint/GTFO from raid!": { "de": "Raus aus dem Raid!", "en": "GTFO from raid!" },
+
+  "hint/GTFO from ray aoe!": { "de": "Raus aus der Strahl-AoE!", "en": "GTFO from ray aoe!" },
+
+  "hint/GTFO from river!": { "de": "Raus aus dem Fluss!", "en": "GTFO from river!" },
+
+  "hint/GTFO from rots!": { "de": "Raus aus den Rots!", "en": "GTFO from rots!" },
+
+  "hint/GTFO from side smash aoe!": { "de": "Raus aus der Seiten-Smash-AoE!", "en": "GTFO from side smash aoe!" },
+
+  "hint/GTFO from snake aoe!": { "de": "Raus aus der Schlangen-AoE!", "en": "GTFO from snake aoe!" },
+
+  "hint/GTFO from spreads!": { "de": "Raus aus den Spreads!", "en": "GTFO from spreads!" },
+
+  "hint/GTFO from sword!": { "de": "Raus vom Schwert!", "en": "GTFO from sword!" },
+
+  "hint/GTFO from tank!": { "de": "Raus vom Tank!", "en": "GTFO from tank!" },
+
+  "hint/GTFO from tankbuster!": { "de": "Raus aus dem Tankbuster!", "en": "GTFO from tankbuster!" },
+
+  "hint/GTFO from tanks!": { "de": "Raus von den Tanks!", "en": "GTFO from tanks!" },
+
+  "hint/GTFO from target!": { "de": "Raus vom Ziel!", "en": "GTFO from target!" },
+
+  "hint/GTFO from tether targets!": { "de": "Raus von den Verbindungszielen!", "en": "GTFO from tether targets!" },
+
+  "hint/GTFO from tether!": { "de": "Raus aus der Verbindung!", "en": "GTFO from tether!" },
+
+  "hint/GTFO from tower": { "de": "Raus aus dem Turm", "en": "GTFO from tower" },
+
+  "hint/GTFO from tower!": { "de": "Raus aus dem Turm!", "en": "GTFO from tower!" },
+
+  "hint/GTFO from voidzone!": { "de": "Raus aus der Voidzone!", "en": "GTFO from voidzone!" },
+
+  "hint/GTFO from water square!": { "de": "Raus aus dem Wasserfeld!", "en": "GTFO from water square!" },
+
+  "hint/GTFO from wave!": { "de": "Raus aus der Welle!", "en": "GTFO from wave!" },
+
+  "hint/GTFO from webs!": { "de": "Raus aus den Netzen!", "en": "GTFO from webs!" },
+
+  "hint/GTFO from wind area!": { "de": "Raus aus dem Windbereich!", "en": "GTFO from wind area!" },
+
+  "hint/GTFO from wrong orb!": { "de": "Raus von der falschen Kugel!", "en": "GTFO from wrong orb!" },
+
+  "hint/GTFO from wrong side!": { "de": "Raus von der falschen Seite!", "en": "GTFO from wrong side!" },
+
+  "hint/Gelato is weak to fire spells. Flan is weak to lightning spells. Licorice is weak to water spells.": { "de": "Gelato ist anfällig gegen Feuer-Zauber, Flan gegen Blitz-Zauber, Licorice gegen Wasser-Zauber.", "en": "Gelato is weak to fire spells. Flan is weak to lightning spells. Licorice is weak to water spells." },
+
+  "hint/Get blinded by the Teary Twirl AOE from the mandragoras. Blindness makes you immune to all the gaze attacks. The eyes in act 2 are weak to lightning damage.": { "de": "Lass dich von der 'Teary Twirl'-AoE der Mandragoras blenden. Blindheit macht dich immun gegen alle Blickangriffe. Die Augen in Akt 2 sind anfällig gegen Blitzschaden.", "en": "Get blinded by the Teary Twirl AOE from the mandragoras. Blindness makes you immune to all the gaze attacks. The eyes in act 2 are weak to lightning damage." },
+
+  "hint/Get closer to adds!": { "de": "Näher an die Adds!", "en": "Get closer to adds!" },
+
+  "hint/Get closer to co-tank!": { "de": "Näher an den Co-Tank!", "en": "Get closer to co-tank!" },
+
+  "hint/Get closer to eye placement position!": { "de": "Näher an die Auge-Ablageposition!", "en": "Get closer to eye placement position!" },
+
+  "hint/Get hit by AOE of correct temperature!": { "de": "Von der AoE mit der richtigen Temperatur treffen lassen!", "en": "Get hit by AOE of correct temperature!" },
+
+  "hint/Get hit by AOE!": { "de": "Von der AoE treffen lassen!", "en": "Get hit by AOE!" },
+
+  "hint/Get hit by a fire blade!": { "de": "Von einer Feuerklinge treffen lassen!", "en": "Get hit by a fire blade!" },
+
+  "hint/Get hit by a single ice blade!": { "de": "Von genau einer Eisklinge treffen lassen!", "en": "Get hit by a single ice blade!" },
+
+  "hint/Get hit by an ice AOE!": { "de": "Von einer Eis-AoE treffen lassen!", "en": "Get hit by an ice AOE!" },
+
+  "hint/Get hit by cone AOE!": { "de": "Von der Kegel-AoE treffen lassen!", "en": "Get hit by cone AOE!" },
+
+  "hint/Get hit by correct AOE!": { "de": "Von der richtigen AoE treffen lassen!", "en": "Get hit by correct AOE!" },
+
+  "hint/Get hit by the cone!": { "de": "Vom Kegel treffen lassen!", "en": "Get hit by the cone!" },
+
+  "hint/Get morphed!": { "de": "Verwandeln lassen!", "en": "Get morphed!" },
+
+  "hint/Get moved into safety!": { "de": "In Sicherheit schieben lassen!", "en": "Get moved into safety!" },
+
+  "hint/Get out of the snake coil!": { "de": "Raus aus der Schlangenwindung!", "en": "Get out of the snake coil!" },
+
+  "hint/Getting hit by the needle attack will instantly kill you from now on!": { "de": "Ein Treffer durch den Nadelangriff tötet dich ab jetzt sofort!", "en": "Getting hit by the needle attack will instantly kill you from now on!" },
+
+  "hint/Give tether away!": { "de": "Verbindung abgeben!", "en": "Give tether away!" },
+
+  "hint/Global": { "de": "Global", "en": "Global" },
+
+  "hint/Go behind shield or duty fails!": { "de": "Hinter den Schild, sonst scheitert die Duty!", "en": "Go behind shield or duty fails!" },
+
+  "hint/Go behind shield!": { "de": "Hinter den Schild!", "en": "Go behind shield!" },
+
+  "hint/Go behind tank!": { "de": "Hinter den Tank!", "en": "Go behind tank!" },
+
+  "hint/Go in front of raid!": { "de": "Vor den Raid!", "en": "Go in front of raid!" },
+
+  "hint/Go inside crater!": { "de": "In den Krater!", "en": "Go inside crater!" },
+
+  "hint/Go inside puddle!": { "de": "In die Pfütze!", "en": "Go inside puddle!" },
+
+  "hint/Go inside shield": { "de": "In den Schild", "en": "Go inside shield" },
+
+  "hint/Go into a spotlight!": { "de": "In ein Spotlight!", "en": "Go into a spotlight!" },
+
+  "hint/Go into middle to prepare for knockback!": { "de": "In die Mitte, um dich auf den Knockback vorzubereiten!", "en": "Go into middle to prepare for knockback!" },
+
+  "hint/Go into quicksand to avoid AOE!": { "de": "In den Treibsand, um der AoE auszuweichen!", "en": "Go into quicksand to avoid AOE!" },
+
+  "hint/Go opposite distance of co-tank!": { "de": "Entgegengesetzte Distanz zum Co-Tank halten!", "en": "Go opposite distance of co-tank!" },
+
+  "hint/Go to assigned cell!": { "de": "Zur zugewiesenen Zelle!", "en": "Go to assigned cell!" },
+
+  "hint/Go to assigned position!": { "de": "Zur zugewiesenen Position!", "en": "Go to assigned position!" },
+
+  "hint/Go to center!": { "de": "In die Mitte!", "en": "Go to center!" },
+
+  "hint/Go to correct cell!": { "de": "Zur richtigen Zelle!", "en": "Go to correct cell!" },
+
+  "hint/Go to correct geyser and wait for erruption!": { "de": "Zum richtigen Geysir und auf den Ausbruch warten!", "en": "Go to correct geyser and wait for erruption!" },
+
+  "hint/Go to correct group!": { "de": "Zur richtigen Gruppe!", "en": "Go to correct group!" },
+
+  "hint/Go to correct spot!": { "de": "Zum richtigen Platz!", "en": "Go to correct spot!" },
+
+  "hint/Go to edge": { "de": "Zum Rand", "en": "Go to edge" },
+
+  "hint/Go to edge!": { "de": "Zum Rand!", "en": "Go to edge!" },
+
+  "hint/Go to glowing platform!": { "de": "Zur leuchtenden Plattform!", "en": "Go to glowing platform!" },
+
+  "hint/Go to ground!": { "de": "Zum Boden!", "en": "Go to ground!" },
+
+  "hint/Go to marked area for rotation start!": { "de": "Zum markierten Bereich für den Rotationsstart!", "en": "Go to marked area for rotation start!" },
+
+  "hint/Go to neurolink!": { "de": "Zum Neurolink!", "en": "Go to neurolink!" },
+
+  "hint/Go to opposite tower!": { "de": "Zum gegenüberliegenden Turm!", "en": "Go to opposite tower!" },
+
+  "hint/Go to safe side!": { "de": "Auf die sichere Seite!", "en": "Go to safe side!" },
+
+  "hint/Go to safe zone!": { "de": "In die sichere Zone!", "en": "Go to safe zone!" },
+
+  "hint/Go to the edge and run until 4 orbs are spawned": { "de": "Zum Rand gehen und laufen, bis 4 Kugeln gespawnt sind", "en": "Go to the edge and run until 4 orbs are spawned" },
+
+  "hint/Go to the opposite side of the arena and work against getting sucked in!": { "de": "Auf die gegenüberliegende Arenaseite und gegen den Sog anlaufen!", "en": "Go to the opposite side of the arena and work against getting sucked in!" },
+
+  "hint/Go towards edge to escape platform!": { "de": "Zum Rand, um von der Plattform zu kommen!", "en": "Go towards edge to escape platform!" },
+
+  "hint/Go under boss!": { "de": "Unter den Boss!", "en": "Go under boss!" },
+
+  "hint/Go under shield!": { "de": "Unter den Schild!", "en": "Go under shield!" },
+
+  "hint/Grab correct tether!": { "de": "Die richtige Verbindung nehmen!", "en": "Grab correct tether!" },
+
+  "hint/Grab tether!": { "de": "Verbindung nehmen!", "en": "Grab tether!" },
+
+  "hint/Grab the tether!": { "de": "Die Verbindung nehmen!", "en": "Grab the tether!" },
+
+  "hint/He will also spawn adds that need to be dealed with swiftly, since they will spam raidwides.": { "de": "Er spawnt außerdem Adds, die schnell wegmüssen, da sie Raidwides spammen.", "en": "He will also spawn adds that need to be dealed with swiftly, since they will spam raidwides." },
+
+  "hint/Heal yourself to full! (Doom).": { "de": "Dich voll heilen! (Doom).", "en": "Heal yourself to full! (Doom)." },
+
+  "hint/Hide behind boulder!": { "de": "Hinter dem Felsen verstecken!", "en": "Hide behind boulder!" },
+
+  "hint/Hide behind crystal!": { "de": "Hinter dem Kristall verstecken!", "en": "Hide behind crystal!" },
+
+  "hint/Hide behind meteor!": { "de": "Hinter dem Meteor verstecken!", "en": "Hide behind meteor!" },
+
+  "hint/Hide behind partner!": { "de": "Hinter dem Partner verstecken!", "en": "Hide behind partner!" },
+
+  "hint/Hide behind party!": { "de": "Hinter der Gruppe verstecken!", "en": "Hide behind party!" },
+
+  "hint/Hide behind someone!": { "de": "Hinter jemandem verstecken!", "en": "Hide behind someone!" },
+
+  "hint/Hide behind tank!": { "de": "Hinter dem Tank verstecken!", "en": "Hide behind tank!" },
+
+  "hint/Hint": { "de": "Hinweis", "en": "Hint" },
+
+  "hint/Hit at least one add!": { "de": "Mindestens einen Add treffen!", "en": "Hit at least one add!" },
+
+  "hint/Hit by aether explosion!": { "de": "Von der Äther-Explosion getroffen!", "en": "Hit by aether explosion!" },
+
+  "hint/Hit by baited AOE": { "de": "Von gebaiteter AoE getroffen", "en": "Hit by baited AOE" },
+
+  "hint/Hit by first flail!": { "de": "Vom ersten Flegel getroffen!", "en": "Hit by first flail!" },
+
+  "hint/Hit by second flail!": { "de": "Vom zweiten Flegel getroffen!", "en": "Hit by second flail!" },
+
+  "hint/Hit by tankbuster": { "de": "Vom Tankbuster getroffen", "en": "Hit by tankbuster" },
+
+  "hint/Hit by two aoes!": { "de": "Von zwei AoEs getroffen!", "en": "Hit by two aoes!" },
+
+  "hint/Hit the Cherry Bomb from a safe distance to win this act.": { "de": "Triff die Cherry Bomb aus sicherer Entfernung, um den Akt zu gewinnen.", "en": "Hit the Cherry Bomb from a safe distance to win this act." },
+
+  "hint/Hitting others with tether!": { "de": "Triffst andere mit der Verbindung!", "en": "Hitting others with tether!" },
+
+  "hint/If any magitek explosive detonates you will be wiped. The explosives are vulnerable against water abilities and strong against fire attacks.": { "de": "Detoniert ein Magitek-Sprengsatz, seid ihr tot. Die Sprengsätze sind anfällig gegen Wasser-Fähigkeiten und widerstandsfähig gegen Feuerangriffe.", "en": "If any magitek explosive detonates you will be wiped. The explosives are vulnerable against water abilities and strong against fire attacks." },
+
+  "hint/If available use the Ram's Voice + Ultravibration combo for instant kill.": { "de": "Wenn verfügbar, die Kombo 'Ram's Voice' + 'Ultravibration' für einen Sofort-Kill nutzen.", "en": "If available use the Ram's Voice + Ultravibration combo for instant kill." },
+
+  "hint/If you don't use the self-destruct combo in act 1, you can bring the Final Sting combo for act 2. (Off-guard->Bristle->Moonflute->Final Sting) Diamondback is highly recommended in act 2.": { "de": "Wenn du in Akt 1 nicht die Selbstzerstörungs-Kombo nutzt, kannst du für Akt 2 die 'Final Sting'-Kombo mitbringen. (Off-guard->Bristle->Moonflute->Final Sting) In Akt 2 ist 'Diamondback' sehr empfehlenswert.", "en": "If you don't use the self-destruct combo in act 1, you can bring the Final Sting combo for act 2. (Off-guard->Bristle->Moonflute->Final Sting) Diamondback is highly recommended in act 2." },
+
+  "hint/If you gear is bad consider using 1000 Needles. For the 2nd act you should bring Sticky Tongue.": { "de": "Bei schwacher Ausrüstung bietet sich '1000 Needles' an. Für den 2. Akt solltest du 'Sticky Tongue' mitbringen.", "en": "If you gear is bad consider using 1000 Needles. For the 2nd act you should bring Sticky Tongue." },
+
+  "hint/If you have healing spells you can just tank the counter damage and kill them however you like anyway.": { "de": "Mit Heilzaubern kannst du den Konterschaden einfach wegtanken und sie beliebig töten.", "en": "If you have healing spells you can just tank the counter damage and kill them however you like anyway." },
+
+  "hint/In act 3 can start the Final Sting combination at about 50% health left. (Off-guard->Bristle->Moonflute->Final Sting)": { "de": "In Akt 3 kannst du die 'Final Sting'-Kombo bei etwa 50 % Rest-HP starten. (Off-guard->Bristle->Moonflute->Final Sting)", "en": "In act 3 can start the Final Sting combination at about 50% health left. (Off-guard->Bristle->Moonflute->Final Sting)" },
+
+  "hint/In keg explosion radius!": { "de": "Im Explosionsradius des Fasses!", "en": "In keg explosion radius!" },
+
+  "hint/In slime explosion radius!": { "de": "Im Explosionsradius des Slimes!", "en": "In slime explosion radius!" },
+
+  "hint/In the 2nd act you can start the Final Sting combination at about 50% health left. (Off-guard->Bristle->Moonflute->Final Sting)": { "de": "Im 2. Akt kannst du die 'Final Sting'-Kombo bei etwa 50 % Rest-HP starten. (Off-guard->Bristle->Moonflute->Final Sting)", "en": "In the 2nd act you can start the Final Sting combination at about 50% health left. (Off-guard->Bristle->Moonflute->Final Sting)" },
+
+  "hint/Incorrect pairing!": { "de": "Falsche Paarung!", "en": "Incorrect pairing!" },
+
+  "hint/Incorrect stack!": { "de": "Falscher Stack!", "en": "Incorrect stack!" },
+
+  "hint/Interact with control unit to continue!": { "de": "Mit der Steuereinheit interagieren, um fortzufahren!", "en": "Interact with control unit to continue!" },
+
+  "hint/Intercept charge!": { "de": "Charge abfangen!", "en": "Intercept charge!" },
+
+  "hint/Intercept next cleave!": { "de": "Nächsten Cleave abfangen!", "en": "Intercept next cleave!" },
+
+  "hint/Intercept tether!": { "de": "Verbindung abfangen!", "en": "Intercept tether!" },
+
+  "hint/Intercept the charge!": { "de": "Die Charge abfangen!", "en": "Intercept the charge!" },
+
+  "hint/Interrupt The Rams Keeper with Flying Sardine.": { "de": "The Rams Keeper mit 'Flying Sardine' unterbrechen.", "en": "Interrupt The Rams Keeper with Flying Sardine." },
+
+  "hint/Interrupt cross caster!": { "de": "Kreuz-Caster unterbrechen!", "en": "Interrupt cross caster!" },
+
+  "hint/Interrupt donut caster!": { "de": "Donut-Caster unterbrechen!", "en": "Interrupt donut caster!" },
+
+  "hint/Interrupt the Dreadwash spell or use your pet to take the damage down.": { "de": "Den Zauber 'Dreadwash' unterbrechen oder mit dem Pet den Schaden abfangen.", "en": "Interrupt the Dreadwash spell or use your pet to take the damage down." },
+
+  "hint/Intersect black walls!": { "de": "Schwarze Wände schneiden!", "en": "Intersect black walls!" },
+
+  "hint/Intersect marked tiles to share damage over distance!": { "de": "Markierte Felder schneiden, um den Schaden über Distanz zu teilen!", "en": "Intersect marked tiles to share damage over distance!" },
+
+  "hint/Intersect the hitbox of a bird and pull it out of AOEs!": { "de": "Die Hitbox eines Vogels schneiden und ihn aus den AoEs ziehen!", "en": "Intersect the hitbox of a bird and pull it out of AOEs!" },
+
+  "hint/Intersect white walls!": { "de": "Weiße Wände schneiden!", "en": "Intersect white walls!" },
+
+  "hint/It will also spawn two hands which need to be killed asap. Focus the left hand first because it will drain all your MP.": { "de": "Er spawnt zusätzlich zwei Hände, die schnellstmöglich sterben müssen. Zuerst die linke Hand, denn sie saugt dein gesamtes MP ab.", "en": "It will also spawn two hands which need to be killed asap. Focus the left hand first because it will drain all your MP." },
+
+  "hint/Kill Queer Bubble to free bound player!": { "de": "Queer Bubble töten, um den gefesselten Spieler zu befreien!", "en": "Kill Queer Bubble to free bound player!" },
+
+  "hint/Kill Sahagins or lose control!": { "de": "Sahagins töten, sonst verlierst du die Kontrolle!", "en": "Kill Sahagins or lose control!" },
+
+  "hint/Kill a feather!": { "de": "Eine Feder töten!", "en": "Kill a feather!" },
+
+  "hint/Kill birds outside of AOEs!": { "de": "Vögel außerhalb der AoEs töten!", "en": "Kill birds outside of AOEs!" },
+
+  "hint/Kill both at the same time!": { "de": "Beide gleichzeitig töten!", "en": "Kill both at the same time!" },
+
+  "hint/Kill mandragoras last incase you need to get blinded again.": { "de": "Mandragoras zuletzt töten, falls du noch einmal Blindheit brauchst.", "en": "Kill mandragoras last incase you need to get blinded again." },
+
+  "hint/Kill the Bombs!": { "de": "Die Bombs töten!", "en": "Kill the Bombs!" },
+
+  "hint/Kill the Iron Chain on bound players!": { "de": "Die Iron Chain an gefesselten Spielern töten!", "en": "Kill the Iron Chain on bound players!" },
+
+  "hint/Kill the Plume!": { "de": "Die Plume töten!", "en": "Kill the Plume!" },
+
+  "hint/Kill the adds to stop the frog song.": { "de": "Die Adds töten, um das Froschlied zu stoppen.", "en": "Kill the adds to stop the frog song." },
+
+  "hint/Kill the imps!": { "de": "Die Imps töten!", "en": "Kill the imps!" },
+
+  "hint/Kill the small dolls to free the players!": { "de": "Die kleinen Dolls töten, um die Spieler zu befreien!", "en": "Kill the small dolls to free the players!" },
+
+  "hint/Kite the add!": { "de": "Den Add kiten!", "en": "Kite the add!" },
+
+  "hint/Kite the orb!": { "de": "Die Kugel kiten!", "en": "Kite the orb!" },
+
+  "hint/Knockback": { "de": "Knockback", "en": "Knockback" },
+
+  "hint/Leave unsafe area!": { "de": "Unsicheren Bereich verlassen!", "en": "Leave unsafe area!" },
+
+  "hint/Look at gaze players": { "de": "Blick-Spieler ansehen", "en": "Look at gaze players" },
+
+  "hint/Look away from gaze players": { "de": "Von Blick-Spielern wegsehen", "en": "Look away from gaze players" },
+
+  "hint/Loom, Exuviation and Diamondback are recommended.": { "de": "'Loom', 'Exuviation' und 'Diamondback' sind empfehlenswert.", "en": "Loom, Exuviation and Diamondback are recommended." },
+
+  "hint/Lyon has 'On Fire'. Use Dispell to remove it!": { "de": "Lyon hat 'On Fire'. Mit 'Dispell' entfernen!", "en": "Lyon has 'On Fire'. Use Dispell to remove it!" },
+
+  "hint/Maintain Distance": { "de": "Abstand halten", "en": "Maintain Distance" },
+
+  "hint/Make sure ray hits everyone!": { "de": "Dafür sorgen, dass der Strahl alle trifft!", "en": "Make sure ray hits everyone!" },
+
+  "hint/Make the manticores run to the kegs and their attacks will make them blow up. They take 2500 damage per keg explosion.": { "de": "Die Manticores zu den Fässern laufen lassen — ihre Angriffe bringen die Fässer zur Explosion. Sie nehmen 2500 Schaden pro Fassexplosion.", "en": "Make the manticores run to the kegs and their attacks will make them blow up. They take 2500 damage per keg explosion." },
+
+  "hint/Meanwhile destroy the explosives as soon as possible, because they will blow up on their own after about 35s.": { "de": "Zerstöre die Sprengsätze so schnell wie möglich, denn nach etwa 35 s gehen sie von selbst hoch.", "en": "Meanwhile destroy the explosives as soon as possible, because they will blow up on their own after about 35s." },
+
+  "hint/Meet at marked spot for chains!": { "de": "Am markierten Punkt für die Ketten treffen!", "en": "Meet at marked spot for chains!" },
+
+  "hint/Mitigate NOW!": { "de": "JETZT mitigieren!", "en": "Mitigate NOW!" },
+
+  "hint/More than 1 defamation on your platform!": { "de": "Mehr als 1 Defamation auf deiner Plattform!", "en": "More than 1 defamation on your platform!" },
+
+  "hint/More than 2 players on your platform!": { "de": "Mehr als 2 Spieler auf deiner Plattform!", "en": "More than 2 players on your platform!" },
+
+  "hint/Move a little to avoid voidzone spawning under you": { "de": "Ein Stück bewegen, damit keine Voidzone unter dir spawnt", "en": "Move a little to avoid voidzone spawning under you" },
+
+  "hint/Move away from light beacon!": { "de": "Weg vom Licht-Beacon!", "en": "Move away from light beacon!" },
+
+  "hint/Move away from other baits!": { "de": "Weg von den anderen Baits!", "en": "Move away from other baits!" },
+
+  "hint/Move away from partner!": { "de": "Weg vom Partner!", "en": "Move away from partner!" },
+
+  "hint/Move away from raid!": { "de": "Weg vom Raid!", "en": "Move away from raid!" },
+
+  "hint/Move away from tether partner!": { "de": "Weg vom Verbindungspartner!", "en": "Move away from tether partner!" },
+
+  "hint/Move closer to boss!": { "de": "Näher an den Boss!", "en": "Move closer to boss!" },
+
+  "hint/Move closer to center!": { "de": "Näher an die Mitte!", "en": "Move closer to center!" },
+
+  "hint/Move closer to dark beacon!": { "de": "Näher an das Dunkel-Beacon!", "en": "Move closer to dark beacon!" },
+
+  "hint/Move closer to partner!": { "de": "Näher an den Partner!", "en": "Move closer to partner!" },
+
+  "hint/Move closer to tether partner!": { "de": "Näher an den Verbindungspartner!", "en": "Move closer to tether partner!" },
+
+  "hint/Move closer to the edge!": { "de": "Näher an den Rand!", "en": "Move closer to the edge!" },
+
+  "hint/Move closer!": { "de": "Näher ran!", "en": "Move closer!" },
+
+  "hint/Move further away from boss!": { "de": "Weiter weg vom Boss!", "en": "Move further away from boss!" },
+
+  "hint/Move into a voidzone to turn into pudding!": { "de": "In eine Voidzone, um zu Pudding zu werden!", "en": "Move into a voidzone to turn into pudding!" },
+
+  "hint/Move to a safe tile!": { "de": "Auf ein sicheres Feld!", "en": "Move to a safe tile!" },
+
+  "hint/Move to platform spawn!": { "de": "Zum Plattform-Spawn!", "en": "Move to platform spawn!" },
+
+  "hint/Move!": { "de": "Bewegen!", "en": "Move!" },
+
+  "hint/Multiple soakers for the tower!": { "de": "Mehrere Soaker für den Turm!", "en": "Multiple soakers for the tower!" },
+
+  "hint/Not enough in stack!": { "de": "Zu wenige im Stack!", "en": "Not enough in stack!" },
+
+  "hint/OT soaks orbs!": { "de": "OT soakt die Kugeln!", "en": "OT soaks orbs!" },
+
+  "hint/One Vril orb if Vril action not charged.": { "de": "Eine Vril-Kugel, wenn die Vril-Aktion nicht geladen ist.", "en": "One Vril orb if Vril action not charged." },
+
+  "hint/Order: ": { "de": "Reihenfolge:", "en": "Order: " },
+
+  "hint/Order: ????": { "de": "Reihenfolge: ????", "en": "Order: ????" },
+
+  "hint/Order: AOE -> Knockback": { "de": "Reihenfolge: AoE -> Knockback", "en": "Order: AOE -> Knockback" },
+
+  "hint/Order: Fater -> mother -> brother -> sister -> drakeling": { "de": "Reihenfolge: Vater -> Mutter -> Bruder -> Schwester -> Drakeling", "en": "Order: Fater -> mother -> brother -> sister -> drakeling" },
+
+  "hint/Order: Knockback -> AOE": { "de": "Reihenfolge: Knockback -> AoE", "en": "Order: Knockback -> AOE" },
+
+  "hint/Overlap with other web!": { "de": "Mit dem anderen Netz überlappen!", "en": "Overlap with other web!" },
+
+  "hint/Pairs": { "de": "Pairs", "en": "Pairs" },
+
+  "hint/Panic": { "de": "Panik", "en": "Panic" },
+
+  "hint/Party stack": { "de": "Gruppen-Stack", "en": "Party stack" },
+
+  "hint/Pass aggro to co-tank!": { "de": "Aggro an den Co-Tank abgeben!", "en": "Pass aggro to co-tank!" },
+
+  "hint/Pass aggro!": { "de": "Aggro abgeben!", "en": "Pass aggro!" },
+
+  "hint/Pass flames debuff to furniture!": { "de": "Flammen-Debuff an Möbel weitergeben!", "en": "Pass flames debuff to furniture!" },
+
+  "hint/Pass nisi!": { "de": "Nisi weitergeben!", "en": "Pass nisi!" },
+
+  "hint/Pass tether to another player!": { "de": "Verbindung an einen anderen Spieler weitergeben!", "en": "Pass tether to another player!" },
+
+  "hint/Pass tether to tank!": { "de": "Verbindung an den Tank weitergeben!", "en": "Pass tether to tank!" },
+
+  "hint/Pass tether!": { "de": "Verbindung weitergeben!", "en": "Pass tether!" },
+
+  "hint/Pass the lightning to a rod!": { "de": "Den Blitz an einen Stab weitergeben!", "en": "Pass the lightning to a rod!" },
+
+  "hint/Pass the tether to a statue!": { "de": "Die Verbindung an eine Statue weitergeben!", "en": "Pass the tether to a statue!" },
+
+  "hint/Pass the tether!": { "de": "Die Verbindung weitergeben!", "en": "Pass the tether!" },
+
+  "hint/Pick up seeds in vulnerable area!": { "de": "Saat im gefährdeten Bereich aufsammeln!", "en": "Pick up seeds in vulnerable area!" },
+
+  "hint/Place bomb inside quicksand": { "de": "Bombe im Treibsand ablegen", "en": "Place bomb inside quicksand" },
+
+  "hint/Place meteor!": { "de": "Meteor ablegen!", "en": "Place meteor!" },
+
+  "hint/Position in group properly!": { "de": "Richtig in der Gruppe positionieren!", "en": "Position in group properly!" },
+
+  "hint/Prepare for divebomb!": { "de": "Auf Divebomb vorbereiten!", "en": "Prepare for divebomb!" },
+
+  "hint/Prepare for lightning!": { "de": "Auf den Blitz vorbereiten!", "en": "Prepare for lightning!" },
+
+  "hint/Prepare for movement!": { "de": "Auf Bewegung vorbereiten!", "en": "Prepare for movement!" },
+
+  "hint/Prepare to defend Clive!": { "de": "Bereit, Clive zu verteidigen!", "en": "Prepare to defend Clive!" },
+
+  "hint/Prepare to go to upcoming safespot!": { "de": "Bereit, zum kommenden Safespot zu gehen!", "en": "Prepare to go to upcoming safespot!" },
+
+  "hint/Prepare to soak the orbs!": { "de": "Bereit zum Soaken der Kugeln!", "en": "Prepare to soak the orbs!" },
+
+  "hint/Prepare to solve a QTE!": { "de": "Bereit für ein QTE!", "en": "Prepare to solve a QTE!" },
+
+  "hint/Prepare to spread": { "de": "Bereit zum Verteilen", "en": "Prepare to spread" },
+
+  "hint/Prepare to stack": { "de": "Bereit zum Stacken", "en": "Prepare to stack" },
+
+  "hint/Preposition on platform 1 (S)!": { "de": "Auf Plattform 1 (S) vorpositionieren!", "en": "Preposition on platform 1 (S)!" },
+
+  "hint/Preposition on platform 3 (NW)!": { "de": "Auf Plattform 3 (NW) vorpositionieren!", "en": "Preposition on platform 3 (NW)!" },
+
+  "hint/Preposition on platform 5 (E)!": { "de": "Auf Plattform 5 (E) vorpositionieren!", "en": "Preposition on platform 5 (E)!" },
+
+  "hint/Press invul!": { "de": "Invul drücken!", "en": "Press invul!" },
+
+  "hint/Provoke for tankbuster!": { "de": "Für den Tankbuster provozieren!", "en": "Provoke for tankbuster!" },
+
+  "hint/Proximity shared tankbuster": { "de": "Geteilter Tankbuster mit Distanzabfall", "en": "Proximity shared tankbuster" },
+
+  "hint/Proximity tankbusters": { "de": "Tankbuster mit Distanzabfall", "en": "Proximity tankbusters" },
+
+  "hint/Pull boss out of puddle!": { "de": "Boss aus der Pfütze ziehen!", "en": "Pull boss out of puddle!" },
+
+  "hint/Pull lightning orb into black hole!": { "de": "Blitzkugel ins Schwarze Loch ziehen!", "en": "Pull lightning orb into black hole!" },
+
+  "hint/Pull or push the Lava Slimes to the Ice Sprites and then hit the slimes from a distance to set of the explosions.": { "de": "Die Lava Slimes zu den Ice Sprites ziehen oder schieben und die Slimes dann aus der Entfernung treffen, um die Explosionen auszulösen.", "en": "Pull or push the Lava Slimes to the Ice Sprites and then hit the slimes from a distance to set of the explosions." },
+
+  "hint/Pull or push the Lava Slimes to the towers and then hit the slimes from a distance to set off the explosions. The towers create a damage pulse every 12s and a deadly explosion when they die. Take cover.": { "de": "Die Lava Slimes zu den Türmen ziehen oder schieben und die Slimes dann aus der Entfernung treffen, um die Explosionen auszulösen. Die Türme erzeugen alle 12 s einen Schadensimpuls und beim Sterben eine tödliche Explosion. Geh in Deckung.", "en": "Pull or push the Lava Slimes to the towers and then hit the slimes from a distance to set off the explosions. The towers create a damage pulse every 12s and a deadly explosion when they die. Take cover." },
+
+  "hint/Pull the orb to the boss!": { "de": "Die Kugel zum Boss ziehen!", "en": "Pull the orb to the boss!" },
+
+  "hint/Push defeated moogles out of circles!": { "de": "Besiegte Moogles aus den Kreisen schieben!", "en": "Push defeated moogles out of circles!" },
+
+  "hint/Pyretic on you! STOP everything!": { "de": "Pyretikum auf dir! ALLES anhalten!", "en": "Pyretic on you! STOP everything!" },
+
+  "hint/Raidwide": { "de": "Raidwide", "en": "Raidwide" },
+
+  "hint/Raidwide after dragon heads leave arena": { "de": "Raidwide, nachdem die Drachenköpfe die Arena verlassen", "en": "Raidwide after dragon heads leave arena" },
+
+  "hint/Raidwide x5": { "de": "Raidwide x5", "en": "Raidwide x5" },
+
+  "hint/Requirement for achievement: Don't kill any tentacles in this act": { "de": "Voraussetzung für den Erfolg: In diesem Akt keine Tentakel töten", "en": "Requirement for achievement: Don't kill any tentacles in this act" },
+
+  "hint/Requirement for the achievement: Don't kill any tentacles in act 3": { "de": "Voraussetzung für den Erfolg: In Akt 3 keine Tentakel töten", "en": "Requirement for the achievement: Don't kill any tentacles in act 3" },
+
+  "hint/Requirements for achievement: Don't destroy the crystal in act 2, use no sprint, use all 6 magic elements, take no optional damage. This means using only physical damage abilities in act 2.": { "de": "Voraussetzungen für den Erfolg: In Akt 2 den Kristall nicht zerstören, keinen Sprint nutzen, alle 6 Magie-Elemente einsetzen, keinen vermeidbaren Schaden nehmen. In Akt 2 heißt das: nur physische Schadensfähigkeiten.", "en": "Requirements for achievement: Don't destroy the crystal in act 2, use no sprint, use all 6 magic elements, take no optional damage. This means using only physical damage abilities in act 2." },
+
+  "hint/Requirements for achievement: Take no damage, use all 6 magic elements, use all 3 melee types, kill all 3 clones in act3 and finish faster than 6min 30s.": { "de": "Voraussetzungen für den Erfolg: Keinen Schaden nehmen, alle 6 Magie-Elemente einsetzen, alle 3 Nahkampfarten nutzen, in Akt 3 alle 3 Klone töten und schneller als 6:30 abschließen.", "en": "Requirements for achievement: Take no damage, use all 6 magic elements, use all 3 melee types, kill all 3 clones in act3 and finish faster than 6min 30s." },
+
+  "hint/Requirements for achievement: Take no damage, use no healing, use all 6 magic elements, use all 3 melee types and finish faster than 7min 15s": { "de": "Voraussetzungen für den Erfolg: Keinen Schaden nehmen, nicht heilen, alle 6 Magie-Elemente einsetzen, alle 3 Nahkampfarten nutzen und schneller als 7:15 abschließen", "en": "Requirements for achievement: Take no damage, use no healing, use all 6 magic elements, use all 3 melee types and finish faster than 7min 15s" },
+
+  "hint/Requirements for achievement: Take no optional damage and finish in less than 6min 50s.": { "de": "Voraussetzungen für den Erfolg: Keinen vermeidbaren Schaden nehmen und in unter 6:50 abschließen.", "en": "Requirements for achievement: Take no optional damage and finish in less than 6min 50s." },
+
+  "hint/Risk": { "de": "Gefahr", "en": "Risk" },
+
+  "hint/Run through a DPS!": { "de": "Durch einen DPS laufen!", "en": "Run through a DPS!" },
+
+  "hint/Same as first act, but the slimes will apply heavy to you. Use Loom to get out of line of sight as soon as Final Song gets casted.": { "de": "Wie der erste Akt, aber die Slimes belegen dich mit 'Heavy'. Nutze 'Loom', um aus der Sichtlinie zu kommen, sobald 'Final Song' gewirkt wird.", "en": "Same as first act, but the slimes will apply heavy to you. Use Loom to get out of line of sight as soon as Final Song gets casted." },
+
+  "hint/Same as first act, but this time the boss will cast a gaze from all directions.": { "de": "Wie der erste Akt, aber diesmal wirkt der Boss einen Blick aus allen Richtungen.", "en": "Same as first act, but this time the boss will cast a gaze from all directions." },
+
+  "hint/Same as last act, but this time there are 4 bombs. Pull them to the middle with Sticky Tongue and attack them with any AOE to keep them interrupted. They are weak against wind and strong against fire.": { "de": "Wie der letzte Akt, aber diesmal sind es 4 Bomben. Zieh sie mit 'Sticky Tongue' in die Mitte und halte sie mit beliebigen AoEs unterbrochen. Sie sind anfällig gegen Wind und widerstandsfähig gegen Feuer.", "en": "Same as last act, but this time there are 4 bombs. Pull them to the middle with Sticky Tongue and attack them with any AOE to keep them interrupted. They are weak against wind and strong against fire." },
+
+  "hint/Same as last stage. Make the manticores run to the kegs and their attacks will make them blow up. Their attacks will also do friendly fire damage to each other.": { "de": "Wie die letzte Stufe. Die Manticores zu den Fässern laufen lassen — ihre Angriffe bringen die Fässer zur Explosion. Ihre Angriffe schaden auch einander.", "en": "Same as last stage. Make the manticores run to the kegs and their attacks will make them blow up. Their attacks will also do friendly fire damage to each other." },
+
+  "hint/Separate adds!": { "de": "Adds trennen!", "en": "Separate adds!" },
+
+  "hint/Share damage inside wild charge!": { "de": "Schaden im Wild Charge teilen!", "en": "Share damage inside wild charge!" },
+
+  "hint/Share damage inside wildcharge!": { "de": "Schaden im Wildcharge teilen!", "en": "Share damage inside wildcharge!" },
+
+  "hint/Shirk!": { "de": "Shirk!", "en": "Shirk!" },
+
+  "hint/Soak assigned tower!": { "de": "Zugewiesenen Turm soaken!", "en": "Soak assigned tower!" },
+
+  "hint/Soak next tower": { "de": "Nächsten Turm soaken", "en": "Soak next tower" },
+
+  "hint/Soak orbs until you reach 4 stacks!": { "de": "Kugeln soaken, bis du 4 Stacks hast!", "en": "Soak orbs until you reach 4 stacks!" },
+
+  "hint/Soak the mine!": { "de": "Die Mine soaken!", "en": "Soak the mine!" },
+
+  "hint/Soak the orbs (with mitigations)!": { "de": "Die Kugeln soaken (mit Mitigation)!", "en": "Soak the orbs (with mitigations)!" },
+
+  "hint/Soak the orbs in pairs!": { "de": "Die Kugeln paarweise soaken!", "en": "Soak the orbs in pairs!" },
+
+  "hint/Soak the orbs!": { "de": "Die Kugeln soaken!", "en": "Soak the orbs!" },
+
+  "hint/Soak the tower": { "de": "Den Turm soaken", "en": "Soak the tower" },
+
+  "hint/Soak the tower!": { "de": "Den Turm soaken!", "en": "Soak the tower!" },
+
+  "hint/Soak tower!": { "de": "Turm soaken!", "en": "Soak tower!" },
+
+  "hint/Spread": { "de": "Verteilen", "en": "Spread" },
+
+  "hint/Spread and avoid cone!": { "de": "Verteilen und dem Kegel ausweichen!", "en": "Spread and avoid cone!" },
+
+  "hint/Spread and get hit by cone!": { "de": "Verteilen und vom Kegel treffen lassen!", "en": "Spread and get hit by cone!" },
+
+  "hint/Spread by roles!": { "de": "Nach Rollen verteilen!", "en": "Spread by roles!" },
+
+  "hint/Spread cones, stay in donut": { "de": "Kegel verteilen, im Donut bleiben", "en": "Spread cones, stay in donut" },
+
+  "hint/Spread on different squares!": { "de": "Auf verschiedene Felder verteilen!", "en": "Spread on different squares!" },
+
+  "hint/Spread out!": { "de": "Auseinander verteilen!", "en": "Spread out!" },
+
+  "hint/Spread!": { "de": "Verteilen!", "en": "Spread!" },
+
+  "hint/Spread, avoid intersecting cage hitboxes!": { "de": "Verteilen, Käfig-Hitboxen nicht schneiden!", "en": "Spread, avoid intersecting cage hitboxes!" },
+
+  "hint/Spread, avoid intersecting wall hitboxes!": { "de": "Verteilen, Wand-Hitboxen nicht schneiden!", "en": "Spread, avoid intersecting wall hitboxes!" },
+
+  "hint/Stack alone with rubble!": { "de": "Allein mit dem Schutt stacken!", "en": "Stack alone with rubble!" },
+
+  "hint/Stack and knockback": { "de": "Stacken und Knockback", "en": "Stack and knockback" },
+
+  "hint/Stack in fours!": { "de": "Zu vier stacken!", "en": "Stack in fours!" },
+
+  "hint/Stack in light parties": { "de": "In Light Parties stacken", "en": "Stack in light parties" },
+
+  "hint/Stack in pairs!": { "de": "Paarweise stacken!", "en": "Stack in pairs!" },
+
+  "hint/Stack inside charge!": { "de": "In der Charge stacken!", "en": "Stack inside charge!" },
+
+  "hint/Stack to get blinded!": { "de": "Stacken, um geblendet zu werden!", "en": "Stack to get blinded!" },
+
+  "hint/Stack with Wuk Lamat!": { "de": "Mit Wuk Lamat stacken!", "en": "Stack with Wuk Lamat!" },
+
+  "hint/Stack with breaking tether!": { "de": "Mit der brechenden Verbindung stacken!", "en": "Stack with breaking tether!" },
+
+  "hint/Stack with co-tank": { "de": "Mit dem Co-Tank stacken", "en": "Stack with co-tank" },
+
+  "hint/Stack with healer!": { "de": "Mit dem Heiler stacken!", "en": "Stack with healer!" },
+
+  "hint/Stack with opposite color!": { "de": "Mit der Gegenfarbe stacken!", "en": "Stack with opposite color!" },
+
+  "hint/Stack with other tank or press invuln!": { "de": "Mit dem anderen Tank stacken oder Invuln drücken!", "en": "Stack with other tank or press invuln!" },
+
+  "hint/Stack with other tanks or press invuln!": { "de": "Mit den anderen Tanks stacken oder Invuln drücken!", "en": "Stack with other tanks or press invuln!" },
+
+  "hint/Stack with other targets!": { "de": "Mit den anderen Zielen stacken!", "en": "Stack with other targets!" },
+
+  "hint/Stack with others!": { "de": "Mit den anderen stacken!", "en": "Stack with others!" },
+
+  "hint/Stack with raid!": { "de": "Mit dem Raid stacken!", "en": "Stack with raid!" },
+
+  "hint/Stack with single group!": { "de": "Mit einer einzelnen Gruppe stacken!", "en": "Stack with single group!" },
+
+  "hint/Stack with tank!": { "de": "Mit dem Tank stacken!", "en": "Stack with tank!" },
+
+  "hint/Stack with target!": { "de": "Mit dem Ziel stacken!", "en": "Stack with target!" },
+
+  "hint/Stack!": { "de": "Stacken!", "en": "Stack!" },
+
+  "hint/Stand between assigned shapes!": { "de": "Zwischen den zugewiesenen Formen stehen!", "en": "Stand between assigned shapes!" },
+
+  "hint/Stand in a tower and match the arrow direction!": { "de": "In einem Turm stehen und zur Pfeilrichtung passen!", "en": "Stand in a tower and match the arrow direction!" },
+
+  "hint/Stand in an air bubble!": { "de": "In einer Luftblase stehen!", "en": "Stand in an air bubble!" },
+
+  "hint/Stand in correct tile!": { "de": "Auf dem richtigen Feld stehen!", "en": "Stand in correct tile!" },
+
+  "hint/Stand in own cell!": { "de": "In der eigenen Zelle stehen!", "en": "Stand in own cell!" },
+
+  "hint/Stand in puddles during hellfire.": { "de": "Während 'Hellfire' in den Pfützen stehen.", "en": "Stand in puddles during hellfire." },
+
+  "hint/Stand in puddles to get fire resist.": { "de": "In den Pfützen stehen, um Feuerresistenz zu bekommen.", "en": "Stand in puddles to get fire resist." },
+
+  "hint/Stand inside AOE of assigned boss!": { "de": "In der AoE des zugewiesenen Bosses stehen!", "en": "Stand inside AOE of assigned boss!" },
+
+  "hint/Stand near inner edge": { "de": "Nahe der inneren Kante stehen", "en": "Stand near inner edge" },
+
+  "hint/Stand near pillar!": { "de": "Nahe der Säule stehen!", "en": "Stand near pillar!" },
+
+  "hint/Stand under a statue if assigned for floating towers!": { "de": "Unter eine Statue, wenn du für die schwebenden Türme eingeteilt bist!", "en": "Stand under a statue if assigned for floating towers!" },
+
+  "hint/Stay away from bridges and go to different islands!": { "de": "Von den Brücken weg und auf verschiedene Inseln!", "en": "Stay away from bridges and go to different islands!" },
+
+  "hint/Stay between tanks!": { "de": "Zwischen den Tanks bleiben!", "en": "Stay between tanks!" },
+
+  "hint/Stay close to tethered wall or pass aggro to co-tank if needed!": { "de": "Nahe an der verbundenen Wand bleiben oder notfalls Aggro an den Co-Tank abgeben!", "en": "Stay close to tethered wall or pass aggro to co-tank if needed!" },
+
+  "hint/Stay close to tethered wall!": { "de": "Nahe an der verbundenen Wand bleiben!", "en": "Stay close to tethered wall!" },
+
+  "hint/Stay closer to bait!": { "de": "Näher am Bait bleiben!", "en": "Stay closer to bait!" },
+
+  "hint/Stay closer to center!": { "de": "Näher an der Mitte bleiben!", "en": "Stay closer to center!" },
+
+  "hint/Stay closer to partner!": { "de": "Näher am Partner bleiben!", "en": "Stay closer to partner!" },
+
+  "hint/Stay farther away!": { "de": "Weiter weg bleiben!", "en": "Stay farther away!" },
+
+  "hint/Stay farther from partner!": { "de": "Weiter weg vom Partner bleiben!", "en": "Stay farther from partner!" },
+
+  "hint/Stay in center": { "de": "In der Mitte bleiben", "en": "Stay in center" },
+
+  "hint/Stay in group!": { "de": "In der Gruppe bleiben!", "en": "Stay in group!" },
+
+  "hint/Stay in safe area!": { "de": "Im sicheren Bereich bleiben!", "en": "Stay in safe area!" },
+
+  "hint/Stay in single charge!": { "de": "In genau einer Charge bleiben!", "en": "Stay in single charge!" },
+
+  "hint/Stay inside charge!": { "de": "In der Charge bleiben!", "en": "Stay inside charge!" },
+
+  "hint/Stay inside one defamation!": { "de": "In genau einer Defamation bleiben!", "en": "Stay inside one defamation!" },
+
+  "hint/Stay near dodge spot!": { "de": "Nahe am Ausweichpunkt bleiben!", "en": "Stay near dodge spot!" },
+
+  "hint/Stay near one stack!": { "de": "Nahe an genau einem Stack bleiben!", "en": "Stay near one stack!" },
+
+  "hint/Stay near one tether!": { "de": "Nahe an genau einer Verbindung bleiben!", "en": "Stay near one tether!" },
+
+  "hint/Stay on bridges!": { "de": "Auf den Brücken bleiben!", "en": "Stay on bridges!" },
+
+  "hint/Stay on different segments!": { "de": "Auf verschiedenen Segmenten bleiben!", "en": "Stay on different segments!" },
+
+  "hint/Stay still!": { "de": "Stillstehen!", "en": "Stay still!" },
+
+  "hint/Stop everything while in beam!": { "de": "Im Strahl alles anhalten!", "en": "Stop everything while in beam!" },
+
+  "hint/Stop everything!": { "de": "Alles anhalten!", "en": "Stop everything!" },
+
+  "hint/Stretch tether further!": { "de": "Verbindung weiter spannen!", "en": "Stretch tether further!" },
+
+  "hint/Stretch tether!": { "de": "Verbindung spannen!", "en": "Stretch tether!" },
+
+  "hint/Stretch the tether!": { "de": "Die Verbindung spannen!", "en": "Stretch the tether!" },
+
+  "hint/Swap target!": { "de": "Ziel wechseln!", "en": "Swap target!" },
+
+  "hint/Take bait to side with meteor!": { "de": "Bait auf die Seite mit dem Meteor ziehen!", "en": "Take bait to side with meteor!" },
+
+  "hint/Take tether!": { "de": "Verbindung nehmen!", "en": "Take tether!" },
+
+  "hint/Tankbuster 5x": { "de": "Tankbuster 5x", "en": "Tankbuster 5x" },
+
+  "hint/Tankbuster cleave": { "de": "Tankbuster-Cleave", "en": "Tankbuster cleave" },
+
+  "hint/Target of two tethers!": { "de": "Ziel von zwei Verbindungen!", "en": "Target of two tethers!" },
+
+  "hint/Targets closest and farthest player per square!": { "de": "Trifft pro Feld den nächsten und den fernsten Spieler!", "en": "Targets closest and farthest player per square!" },
+
+  "hint/Taunt boss!": { "de": "Boss tauntens!", "en": "Taunt boss!" },
+
+  "hint/Taunt!": { "de": "Taunten!", "en": "Taunt!" },
+
+  "hint/Tether distance is correct": { "de": "Verbindungsabstand ist richtig", "en": "Tether distance is correct" },
+
+  "hint/Tethers: GTFO from aoe!": { "de": "Verbindungen: Raus aus der AoE!", "en": "Tethers: GTFO from aoe!" },
+
+  "hint/Tethers: GTFO from others!": { "de": "Verbindungen: Raus von den anderen!", "en": "Tethers: GTFO from others!" },
+
+  "hint/Tethers: OK": { "de": "Verbindungen: OK", "en": "Tethers: OK" },
+
+  "hint/Tethers: avoid": { "de": "Verbindungen: meiden", "en": "Tethers: avoid" },
+
+  "hint/Tethers: intercept!": { "de": "Verbindungen: abfangen!", "en": "Tethers: intercept!" },
+
+  "hint/Tethers: pass!": { "de": "Verbindungen: weitergeben!", "en": "Tethers: pass!" },
+
+  "hint/Tethers: prepare to intercept": { "de": "Verbindungen: bereit zum Abfangen", "en": "Tethers: prepare to intercept" },
+
+  "hint/Tethers: prepare to pass": { "de": "Verbindungen: bereit zum Weitergeben", "en": "Tethers: prepare to pass" },
+
+  "hint/The Final Sting combo (Off-guard->Bristle->Moonflute->Final Sting) can make act 3 including the achievement much easier. Ultros in act 2 and 3 is weak to fire.": { "de": "Die 'Final Sting'-Kombo (Off-guard->Bristle->Moonflute->Final Sting) macht Akt 3 samt Erfolg deutlich leichter. Ultros ist in Akt 2 und 3 anfällig gegen Feuer.", "en": "The Final Sting combo (Off-guard->Bristle->Moonflute->Final Sting) can make act 3 including the achievement much easier. Ultros in act 2 and 3 is weak to fire." },
+
+  "hint/The Final Sting combo (Off-guard->Bristle->Moonflute->Final Sting) makes this act including the achievement much easier.": { "de": "Die 'Final Sting'-Kombo (Off-guard->Bristle->Moonflute->Final Sting) macht diesen Akt samt Erfolg deutlich leichter.", "en": "The Final Sting combo (Off-guard->Bristle->Moonflute->Final Sting) makes this act including the achievement much easier." },
+
+  "hint/The Final Sting combo window opens at around 75% health. (Off-guard->Bristle->Moonflute->Final Sting)": { "de": "Das Fenster für die 'Final Sting'-Kombo öffnet sich bei etwa 75 % HP. (Off-guard->Bristle->Moonflute->Final Sting)", "en": "The Final Sting combo window opens at around 75% health. (Off-guard->Bristle->Moonflute->Final Sting)" },
+
+  "hint/The Ram's Voice and Ultravibration combo can be used to kill manticores.": { "de": "Mit der Kombo 'Ram's Voice' und 'Ultravibration' lassen sich die Manticores töten.", "en": "The Ram's Voice and Ultravibration combo can be used to kill manticores." },
+
+  "hint/The adds are immune against magic and fire attacks.": { "de": "Die Adds sind immun gegen Magie- und Feuerangriffe.", "en": "The adds are immune against magic and fire attacks." },
+
+  "hint/The boss will sometimes spawn an imp during the fight.": { "de": "Der Boss spawnt im Kampf gelegentlich einen Imp.", "en": "The boss will sometimes spawn an imp during the fight." },
+
+  "hint/The cyclops are very slow, but will instantly kill you, if they catch you. Kite them or kill them with the self-destruct combo. (Toad Oil->Bristle->Moonflute->Swiftcast->Self-destruct)": { "de": "Die Zyklopen sind sehr langsam, töten dich aber sofort, wenn sie dich erwischen. Kite sie oder töte sie mit der Selbstzerstörungs-Kombo. (Toad Oil->Bristle->Moonflute->Swiftcast->Self-destruct)", "en": "The cyclops are very slow, but will instantly kill you, if they catch you. Kite them or kill them with the self-destruct combo. (Toad Oil->Bristle->Moonflute->Swiftcast->Self-destruct)" },
+
+  "hint/The easiest counter for this is to blind yourself by casting Ink Jet on the boss after it casted Schizocarps.": { "de": "Am einfachsten kontert man das, indem man sich selbst blendet: 'Ink Jet' auf den Boss wirken, nachdem er 'Schizocarps' gewirkt hat.", "en": "The easiest counter for this is to blind yourself by casting Ink Jet on the boss after it casted Schizocarps." },
+
+  "hint/The eyes are weak to lightning spells.": { "de": "Die Augen sind anfällig gegen Blitz-Zauber.", "en": "The eyes are weak to lightning spells." },
+
+  "hint/The first act is easy. Kill the grenades in one hit each or they will wipe you. They got 543 HP.": { "de": "Der erste Akt ist leicht. Töte jede Granate mit einem Treffer, sonst wipet ihr. Sie haben 543 HP.", "en": "The first act is easy. Kill the grenades in one hit each or they will wipe you. They got 543 HP." },
+
+  "hint/The first act is fairly easy. Interrupt the Void Blizzards with Flying Sardine and most of the danger is gone.": { "de": "Der erste Akt ist recht leicht. Unterbrich die 'Void Blizzard'-Zauber mit 'Flying Sardine', dann ist die größte Gefahr weg.", "en": "The first act is fairly easy. Interrupt the Void Blizzards with Flying Sardine and most of the danger is gone." },
+
+  "hint/The first act is trivial, almost anything will work. For act 2 having Flying Sardine is recommended.": { "de": "Der erste Akt ist trivial, fast alles funktioniert. Für Akt 2 ist 'Flying Sardine' empfehlenswert.", "en": "The first act is trivial, almost anything will work. For act 2 having Flying Sardine is recommended." },
+
+  "hint/The imps are weak to fire spells and strong against ice. Interrupt Void Blizzard with Flying Sardine.": { "de": "Die Imps sind anfällig gegen Feuer-Zauber und widerstandsfähig gegen Eis. Unterbrich 'Void Blizzard' mit 'Flying Sardine'.", "en": "The imps are weak to fire spells and strong against ice. Interrupt Void Blizzard with Flying Sardine." },
+
+  "hint/There is 3 sets of adds that spawn at HP %'s -> (90%, 65%, 40%) \nA resolution can make the adds permanently disappear once they are at 0% HP/the corpse are just laying on the floor.\nResolution is also does high damage to the adds + 0.3% to the Boss\nSolo tip: Either pop a resolution on all add packs, or pop lust -> resolution on 2nd ad pack. Make sure to keep regen up!": { "de": "Es spawnen 3 Add-Gruppen bei bestimmten HP-Werten -> (90 %, 65 %, 40 %) \nEine Resolution kann die Adds dauerhaft verschwinden lassen, sobald sie bei 0 % HP sind bzw. die Leichen nur noch am Boden liegen.\nResolution macht außerdem hohen Schaden an den Adds + 0,3 % am Boss\nSolo-Tipp: Entweder auf jede Add-Gruppe eine Resolution, oder Lust -> Resolution auf die 2. Gruppe. Halte den Regen aufrecht!", "en": "There is 3 sets of adds that spawn at HP %'s -> (90%, 65%, 40%) \nA resolution can make the adds permanently disappear once they are at 0% HP/the corpse are just laying on the floor.\nResolution is also does high damage to the adds + 0.3% to the Boss\nSolo tip: Either pop a resolution on all add packs, or pop lust -> resolution on 2nd ad pack. Make sure to keep regen up!" },
+
+  "hint/These bombs start self-destruction on combat start. Pull them together with Sticky Tongue and attack them with anything to interrupt them. They are weak against wind and strong against fire.": { "de": "Diese Bomben starten mit Kampfbeginn die Selbstzerstörung. Zieh sie mit 'Sticky Tongue' zusammen und unterbrich sie mit beliebigen Angriffen. Sie sind anfällig gegen Wind und widerstandsfähig gegen Feuer.", "en": "These bombs start self-destruction on combat start. Pull them together with Sticky Tongue and attack them with anything to interrupt them. They are weak against wind and strong against fire." },
+
+  "hint/These slimes start casting Final Song after death. While Final Song is not deadly, it does heavy damage and applies silence to you. Take cover!": { "de": "Diese Slimes wirken nach dem Tod 'Final Song'. Der ist nicht tödlich, macht aber hohen Schaden und verstummt dich. Geh in Deckung!", "en": "These slimes start casting Final Song after death. While Final Song is not deadly, it does heavy damage and applies silence to you. Take cover!" },
+
+  "hint/These turtles have very high defenses. Bring 1000 Needles or Doom to defeat them. Alternatively you can remove their buff with Eerie Soundwave.": { "de": "Diese Schildkröten haben sehr hohe Verteidigung. Bring '1000 Needles' oder 'Doom' mit, um sie zu besiegen. Alternativ entfernst du ihren Buff mit 'Eerie Soundwave'.", "en": "These turtles have very high defenses. Bring 1000 Needles or Doom to defeat them. Alternatively you can remove their buff with Eerie Soundwave." },
+
+  "hint/This act is act 1+2 combined with tentacles on top.": { "de": "Dieser Akt ist Akt 1+2 kombiniert, dazu noch Tentakel.", "en": "This act is act 1+2 combined with tentacles on top." },
+
+  "hint/This fight is easy if you kill every pack wave together and before the 4th pack spawn otherwise it starts getting complicated.": { "de": "Der Kampf ist leicht, wenn du jede Gegnerwelle gemeinsam und vor dem Spawn der 4. Gruppe tötest — sonst wird es kompliziert.", "en": "This fight is easy if you kill every pack wave together and before the 4th pack spawn otherwise it starts getting complicated." },
+
+  "hint/This fight is easy, break shell, kill the snail then kill the 2nd boss.": { "de": "Der Kampf ist leicht: Schale brechen, Schnecke töten, dann den 2. Boss töten.", "en": "This fight is easy, break shell, kill the snail then kill the 2nd boss." },
+
+  "hint/This stage is trivial. Use whatever skills you have to defeat these opponents.": { "de": "Diese Stufe ist trivial. Nimm, was du hast, um diese Gegner zu besiegen.", "en": "This stage is trivial. Use whatever skills you have to defeat these opponents." },
+
+  "hint/Thunderbolt -> Charybdis -> Thunderbolt -> Trounce from East Wall": { "de": "Thunderbolt -> Charybdis -> Thunderbolt -> Trounce von der Ostwand", "en": "Thunderbolt -> Charybdis -> Thunderbolt -> Trounce from East Wall" },
+
+  "hint/Thunderbolt -> Charybdis -> Trounce from North Wall!": { "de": "Thunderbolt -> Charybdis -> Trounce von der Nordwand!", "en": "Thunderbolt -> Charybdis -> Trounce from North Wall!" },
+
+  "hint/Thunderbolt -> Charybdis -> Trounce from West Wall.": { "de": "Thunderbolt -> Charybdis -> Trounce von der Westwand.", "en": "Thunderbolt -> Charybdis -> Trounce from West Wall." },
+
+  "hint/Thunderbolt -> Charybdis x2 -> Thunderbolt -> Trounce from South Wall.": { "de": "Thunderbolt -> Charybdis x2 -> Thunderbolt -> Trounce von der Südwand.", "en": "Thunderbolt -> Charybdis x2 -> Thunderbolt -> Trounce from South Wall." },
+
+  "hint/Thunderbolt -> Trounce from East Wall": { "de": "Thunderbolt -> Trounce von der Ostwand", "en": "Thunderbolt -> Trounce from East Wall" },
+
+  "hint/Thunderbolt -> Trounce from South Wall!": { "de": "Thunderbolt -> Trounce von der Südwand!", "en": "Thunderbolt -> Trounce from South Wall!" },
+
+  "hint/To beat this stage in a timely manner, you should have at least one spell of each element. (Water, Fire, Ice, Lightning, Earth and Wind)": { "de": "Um diese Stufe zügig zu schaffen, solltest du mindestens einen Zauber je Element haben. (Wasser, Feuer, Eis, Blitz, Erde und Wind)", "en": "To beat this stage in a timely manner, you should have at least one spell of each element. (Water, Fire, Ice, Lightning, Earth and Wind)" },
+
+  "hint/To unlock path 12, pull the ghosts to the marked spots\nand kill them one at a time while they face a lantern.": { "de": "Um Pfad 12 freizuschalten, zieh die Geister zu den markierten Punkten\nund töte sie einzeln, während sie eine Laterne ansehen.", "en": "To unlock path 12, pull the ghosts to the marked spots\nand kill them one at a time while they face a lantern." },
+
+  "hint/Too close to other players!": { "de": "Zu nah an anderen Spielern!", "en": "Too close to other players!" },
+
+  "hint/Too close to partner!": { "de": "Zu nah am Partner!", "en": "Too close to partner!" },
+
+  "hint/Too close!": { "de": "Zu nah!", "en": "Too close!" },
+
+  "hint/Too far from bat!": { "de": "Zu weit von der Fledermaus!", "en": "Too far from bat!" },
+
+  "hint/Too far from other players!": { "de": "Zu weit von den anderen Spielern!", "en": "Too far from other players!" },
+
+  "hint/Too few soakers in the tower!": { "de": "Zu wenige Soaker im Turm!", "en": "Too few soakers in the tower!" },
+
+  "hint/Too many in stack!": { "de": "Zu viele im Stack!", "en": "Too many in stack!" },
+
+  "hint/Too many soakers in the tower!": { "de": "Zu viele Soaker im Turm!", "en": "Too many soakers in the tower!" },
+
+  "hint/Too many targets, mechanic potentially unsolveable!": { "de": "Zu viele Ziele, die Mechanik ist möglicherweise nicht lösbar!", "en": "Too many targets, mechanic potentially unsolveable!" },
+
+  "hint/Touch bomb when ready to resolve stack!": { "de": "Bombe berühren, wenn der Stack aufgelöst werden soll!", "en": "Touch bomb when ready to resolve stack!" },
+
+  "hint/Trivial act. Enemies here are weak to lightning and fire. In Act 2 the Ram's Voice and Ultravibration combo can be useful. Flying Sardine for interrupts can be beneficial.": { "de": "Trivialer Akt. Die Gegner sind anfällig gegen Blitz und Feuer. In Akt 2 kann die Kombo 'Ram's Voice' und 'Ultravibration' nützlich sein, 'Flying Sardine' zum Unterbrechen ebenfalls.", "en": "Trivial act. Enemies here are weak to lightning and fire. In Act 2 the Ram's Voice and Ultravibration combo can be useful. Flying Sardine for interrupts can be beneficial." },
+
+  "hint/Trounce from East Wall": { "de": "Trounce von der Ostwand", "en": "Trounce from East Wall" },
+
+  "hint/Trounce from West Wall!": { "de": "Trounce von der Westwand!", "en": "Trounce from West Wall!" },
+
+  "hint/Turn into a ghost!": { "de": "In einen Geist verwandeln!", "en": "Turn into a ghost!" },
+
+  "hint/Turn into flesh!": { "de": "In Fleisch verwandeln!", "en": "Turn into flesh!" },
+
+  "hint/Use Diamondback outside of marked area!": { "de": "'Diamondback' außerhalb des markierten Bereichs nutzen!", "en": "Use Diamondback outside of marked area!" },
+
+  "hint/Use Diamondback to survive the 1111 Tonze Swing. Alternatively you can try the Final Sting combo when he drops to about 75% health. (Off-guard->Bristle->Moonflute->Final Sting)": { "de": "Mit 'Diamondback' den '1111 Tonze Swing' überleben. Alternativ kannst du bei etwa 75 % HP die 'Final Sting'-Kombo versuchen. (Off-guard->Bristle->Moonflute->Final Sting)", "en": "Use Diamondback to survive the 1111 Tonze Swing. Alternatively you can try the Final Sting combo when he drops to about 75% health. (Off-guard->Bristle->Moonflute->Final Sting)" },
+
+  "hint/Use Eerie Soundwave to dispel it. Caber Toss must be interrupted or you will wipe.": { "de": "Mit 'Eerie Soundwave' entfernen. 'Caber Toss' muss unterbrochen werden, sonst wipet ihr.", "en": "Use Eerie Soundwave to dispel it. Caber Toss must be interrupted or you will wipe." },
+
+  "hint/Use Esuna on yourself.": { "de": "'Esuna' auf dich selbst wirken.", "en": "Use Esuna on yourself." },
+
+  "hint/Use Loom to dodge AOEs!": { "de": "Mit 'Loom' den AoEs ausweichen!", "en": "Use Loom to dodge AOEs!" },
+
+  "hint/Use Sticky Tongue to pull Gas Bombs to the boss so they interrupt the enrage.": { "de": "Mit 'Sticky Tongue' die Gas Bombs zum Boss ziehen, damit sie den Enrage unterbrechen.", "en": "Use Sticky Tongue to pull Gas Bombs to the boss so they interrupt the enrage." },
+
+  "hint/Use an incubator to stun the boss!": { "de": "Einen Inkubator nutzen, um den Boss zu betäuben!", "en": "Use an incubator to stun the boss!" },
+
+  "hint/Use safewalls for knockback!": { "de": "Für den Knockback die sicheren Wände nutzen!", "en": "Use safewalls for knockback!" },
+
+  "hint/Use the turrets to stun the boss!": { "de": "Die Geschütztürme nutzen, um den Boss zu betäuben!", "en": "Use the turrets to stun the boss!" },
+
+  "hint/Useful skills: Sharpened Knife, Flying Sardine, Ink Jet (Act 2), Exuviation (Act 2), potentially a Final Sting combo. (Off-guard->Bristle->Moonflute->Final Sting)": { "de": "Nützliche Fähigkeiten: 'Sharpened Knife', 'Flying Sardine', 'Ink Jet' (Akt 2), 'Exuviation' (Akt 2), eventuell eine 'Final Sting'-Kombo. (Off-guard->Bristle->Moonflute->Final Sting)", "en": "Useful skills: Sharpened Knife, Flying Sardine, Ink Jet (Act 2), Exuviation (Act 2), potentially a Final Sting combo. (Off-guard->Bristle->Moonflute->Final Sting)" },
+
+  "hint/Wait in marked safespot for donut resolve!": { "de": "Im markierten Safespot auf das Auslösen des Donuts warten!", "en": "Wait in marked safespot for donut resolve!" },
+
+  "hint/Wait in marked spot for knockback!": { "de": "Am markierten Punkt auf den Knockback warten!", "en": "Wait in marked spot for knockback!" },
+
+  "hint/Wait in safe area!": { "de": "Im sicheren Bereich warten!", "en": "Wait in safe area!" },
+
+  "hint/Wait inside safespot for knockback!": { "de": "Im Safespot auf den Knockback warten!", "en": "Wait inside safespot for knockback!" },
+
+  "hint/Walk into safespot for knockback!": { "de": "Für den Knockback in den Safespot laufen!", "en": "Walk into safespot for knockback!" },
+
+  "hint/Walk into the glowing circle!": { "de": "In den leuchtenden Kreis laufen!", "en": "Walk into the glowing circle!" },
+
+  "hint/Walk onto green square!": { "de": "Auf das grüne Feld laufen!", "en": "Walk onto green square!" },
+
+  "hint/Walk onto purple square!": { "de": "Auf das violette Feld laufen!", "en": "Walk onto purple square!" },
+
+  "hint/Walk onto safe square!": { "de": "Auf das sichere Feld laufen!", "en": "Walk onto safe square!" },
+
+  "hint/Water debuff": { "de": "Wasser-Debuff", "en": "Water debuff" },
+
+  "hint/Wild charges -> Tanks infront!": { "de": "Wild Charges -> Tanks nach vorne!", "en": "Wild charges -> Tanks infront!" },
+
+  "hint/Windburn on you! Cleanse it with Exuviation.": { "de": "'Windburn' auf dir! Mit 'Exuviation' entfernen.", "en": "Windburn on you! Cleanse it with Exuviation." },
+
+  "hint/Windslicer Loaded": { "de": "Windslicer geladen", "en": "Windslicer Loaded" },
+
+  "hint/Wrong tower!": { "de": "Falscher Turm!", "en": "Wrong tower!" },
+
+  "hint/You are risking to slide into danger!": { "de": "Du riskierst, in die Gefahr zu rutschen!", "en": "You are risking to slide into danger!" },
+
+  "hint/You can start the Final Sting combination at about 40% health left. (Off-guard->Bristle->Moonflute->Final Sting)": { "de": "Du kannst die 'Final Sting'-Kombo bei etwa 40 % Rest-HP starten. (Off-guard->Bristle->Moonflute->Final Sting)", "en": "You can start the Final Sting combination at about 40% health left. (Off-guard->Bristle->Moonflute->Final Sting)" },
+
+  "hint/You can start the Final Sting combination at about 50% health left. (Off-guard->Bristle->Moonflute->Final Sting)": { "de": "Du kannst die 'Final Sting'-Kombo bei etwa 50 % Rest-HP starten. (Off-guard->Bristle->Moonflute->Final Sting)", "en": "You can start the Final Sting combination at about 50% health left. (Off-guard->Bristle->Moonflute->Final Sting)" },
+
+  "hint/You can start the Final Sting combination at about 50% health left. (Off-guard->Bristle->Moonflute->Final Sting).": { "de": "Du kannst die 'Final Sting'-Kombo bei etwa 50 % Rest-HP starten. (Off-guard->Bristle->Moonflute->Final Sting).", "en": "You can start the Final Sting combination at about 50% health left. (Off-guard->Bristle->Moonflute->Final Sting)." },
+
+  "hint/You were bound! Cleanse it with Exuviation.": { "de": "Du bist gefesselt! Mit 'Exuviation' entfernen.", "en": "You were bound! Cleanse it with Exuviation." },
+
+  "hint/You were doomed! Cleanse it with Exuviation or finish the act fast.": { "de": "Du hast Doom! Mit 'Exuviation' entfernen oder den Akt schnell beenden.", "en": "You were doomed! Cleanse it with Exuviation or finish the act fast." },
+
+  "hint/You were doomed! Cleanse it with Exuviation.": { "de": "Du hast Doom! Mit 'Exuviation' entfernen.", "en": "You were doomed! Cleanse it with Exuviation." },
+
+  "hint/You were doomed! Get healed to full fast.": { "de": "Du hast Doom! Schnell auf volle HP heilen lassen.", "en": "You were doomed! Get healed to full fast." },
+
+  "hint/You're Gaze": { "de": "Du bist Blick", "en": "You're Gaze" },
 
   "ui.tab/About": { "de": "Über", "en": "About" },
 
