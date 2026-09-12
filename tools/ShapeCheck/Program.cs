@@ -14,6 +14,7 @@ if (args.Contains("--help") || args.Contains("-h"))
           --dalamud <dir>    Dalamud assembly directory (default: $DALAMUD_HOME or XIVLauncher addon/Hooks/dev)
           --seed <path>      translation file to validate (default: BmrTranslation/Resources/de.json)
           --strict           treat drift warnings as failures
+          --missing          print untranslated keys as "key<TAB>english" and exit
         """);
     return 0;
 }
@@ -34,9 +35,9 @@ if (dalamudDir == null)
     return 2;
 }
 
-Console.WriteLine($"assembly: {bmrPath}");
-Console.WriteLine($"dalamud:  {dalamudDir}");
-Console.WriteLine($"seed:     {seedPath ?? "(none found, skipping seed checks)"}");
+Console.Error.WriteLine($"assembly: {bmrPath}");
+Console.Error.WriteLine($"dalamud:  {dalamudDir}");
+Console.Error.WriteLine($"seed:     {seedPath ?? "(none found, skipping seed checks)"}");
 
 var probe = new List<string> { bmrPath };
 probe.AddRange(Directory.GetFiles(dalamudDir, "*.dll"));
@@ -44,7 +45,13 @@ probe.AddRange(Directory.GetFiles(Path.GetDirectoryName(typeof(object).Assembly.
 
 using var mlc = new MetadataLoadContext(new PathAssemblyResolver(probe.Distinct()));
 var asm = mlc.LoadFromAssemblyPath(bmrPath);
-Console.WriteLine($"version:  {asm.GetName().Name} {asm.GetName().Version}");
+Console.Error.WriteLine($"version:  {asm.GetName().Name} {asm.GetName().Version}");
+
+if (args.Contains("--missing"))
+{
+    SeedChecks.DumpMissing(asm, seedPath, Console.Out);
+    return 0;
+}
 
 var report = new Report();
 ShapeChecks.Run(asm, report);

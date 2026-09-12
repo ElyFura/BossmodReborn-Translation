@@ -18,12 +18,23 @@ ohne Harmony:
 | Enum-Anzeigenamen (Combobox-Einträge) | `GeneratedEnumMetadata` | ✅ |
 | Autorotation (Modul-, Track- und Options-Namen) | `RotationModuleDefinition`, `StrategyConfig`, `StrategyOption` | ✅ |
 | Tab-Leiste des Einstellungsfensters | 5 Tabs | ✅ |
+| Statusfenster (Abdeckung, Drift, Export) | `/bmrtl` bzw. Zahnrad in der Plugin-Liste | ✅ |
 | Kampfhinweise (`hints.Add(...)`) | 543 feste + 238 interpolierte | ⏳ Milestone 2 |
 | Übrige ImGui-Literale in der UI | 87 Dateien | ⏳ Milestone 3 |
 
-Die mitgelieferte `de.json` ist ein Startbestand: 109 von 913 übersetzbaren Konfigurations-Strings (11,9 %)
-— Einstellungsbaum, Radar- und Boss-Modul-Einstellungen, automatische Bewegung, Tabs. Alles ohne Eintrag
-bleibt englisch; es fehlt nie Text, er ist nur noch nicht übersetzt.
+Die mitgelieferte `de.json` enthält 308 Einträge, davon 303 von 913 übersetzbaren
+Konfigurations-Strings (33,2 %). **Die allgemeinen Einstellungen sind vollständig** — Einstellungsbaum,
+Radar und Boss-Module, automatische Bewegung, Aktions-Anpassungen, Farbschema, Autorotation, Replays,
+Gebietsmodule, Job-Einstellungen, alle Tabs. Offen sind ausschließlich die 610 Encounter-spezifischen
+Strings (FRU allein 222, TOP 85, DSW2 41 …). Alles ohne Eintrag bleibt englisch; es fehlt nie Text, er ist
+nur noch nicht übersetzt.
+
+### Konvention: Fähigkeitsnamen bleiben englisch
+
+Job-Fähigkeiten stehen in einfachen Anführungszeichen und unübersetzt da — `'Elusive Jump'`,
+`'Holy Spirit'`, `'Peloton'`. Deutsche Spieler kennen sie aus Guides und der Community unter den englischen
+Namen, und BossMods eigene Modul- und Preset-Namen sind ebenfalls englisch. Umgebender Satz ist deutsch,
+der Name bleibt zitierfähig. Wer das anders will, ändert es in `de.json` — keine Codeänderung nötig.
 
 ## Installation
 
@@ -38,7 +49,8 @@ Das Ergebnis in `BmrTranslation/bin/Release/` als Dev-Plugin in Dalamud einbinde
 
 | Befehl | Wirkung |
 | --- | --- |
-| `/bmrtl` | Status: BossMod-Version, Anzahl Einträge, angewendet / fehlend / veraltet |
+| `/bmrtl` | Öffnet das Statusfenster (auch über Zahnrad/Symbol in der Plugin-Liste) |
+| `/bmrtl status` | Status in den Chat: BossMod-Version, Einträge, angewendet / fehlend / veraltet |
 | `/bmrtl extract` | Schreibt den vollständigen Übersetzungskatalog der **installierten** BossMod-Version |
 | `/bmrtl reload` | Übersetzungsdateien neu laden und erneut anwenden |
 | `/bmrtl off` / `on` | Übersetzung abschalten (englische Originale zurück) bzw. wieder einschalten |
@@ -74,6 +86,32 @@ Jeder Eintrag darf den englischen Text mitschreiben, gegen den übersetzt wurde:
 
 Ändert BossMod das Original, meldet `/bmrtl` den Eintrag als *stale* — die Übersetzung greift weiter,
 muss aber nachgesehen werden. Kurzform `"key": "Text"` ist erlaubt, verzichtet dann aber auf diese Prüfung.
+
+### Stapelweise übersetzen, ohne das Spiel zu starten
+
+Für größere Batches braucht man das Spiel nicht — die Konfigurations-Strings lassen sich direkt aus der
+installierten Assembly ziehen:
+
+```
+dotnet run --project tools/ShapeCheck -- --missing > missing.json
+```
+
+Dann eine Batch-Datei mit einer Zeile pro Eintrag schreiben (`\n` im Text erzeugt einen Zeilenumbruch):
+
+```
+cfg/BossMod.ColorConfig/ArenaEnemy/label ||| Arena: Gegner
+```
+
+und einmischen:
+
+```
+python tools/merge-translations.py missing.json batch.txt
+```
+
+Das Skript nimmt den **englischen Text niemals aus der Batch-Datei**, sondern immer aus dem Dump — so passt
+der gespeicherte `en`-Wert für die Drift-Erkennung garantiert zum Original. Ein Schlüssel, der im Dump nicht
+vorkommt, wird gemeldet und übersprungen statt still hinzugefügt; das fängt Tippfehler in Schlüsseln ab
+(Exit-Code 1). Anschließend `dotnet run --project tools/ShapeCheck` zur Kontrolle.
 
 ## Verifikation nach einem BossMod-Update
 

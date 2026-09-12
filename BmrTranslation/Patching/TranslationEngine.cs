@@ -139,5 +139,12 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
 
     public IReadOnlyCollection<CatalogueEntry> Catalogue => _session?.Catalogue ?? [];
 
+    public string? BossModVersion => _bmr?.Version;
+    public int EntryCount => _table.Count;
+    public string? OverrideFile => _table.UserFile;
+    public int AppliedCount => _session?.Applied ?? 0;
+    public int MissingCount => _session?.Missing ?? 0;
+    public int StaleCount => _session?.Stale ?? 0;
+
     public void Dispose() => Revert();
 }

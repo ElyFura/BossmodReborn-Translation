@@ -20,6 +20,31 @@ public static class SeedChecks
     // and autorotation names are built by module constructors at runtime
     private static readonly string[] RuntimeOnlyPrefixes = ["ui.tab/", "enum/", "rot/"];
 
+    // dumps untranslated config keys with their English text, so a translation batch can be prepared
+    // without launching the game (the in-game /bmrtl extract additionally covers the runtime-only keys
+    // this cannot see).
+    //
+    // JSON, not a flat table: BossMod tooltips contain embedded newlines, and a line-oriented format would
+    // have to mangle them - which silently corrupts the 'en' value that drift detection compares against.
+    public static void DumpMissing(Assembly asm, string? seedPath, TextWriter output)
+    {
+        var translated = seedPath != null
+            ? LoadSeed(seedPath).Where(e => e.Value.De != null).Select(e => e.Key).ToHashSet(StringComparer.Ordinal)
+            : [];
+
+        var missing = DeriveEnglish(asm)
+            .Where(e => !translated.Contains(e.Key))
+            .OrderBy(e => e.Key, StringComparer.Ordinal)
+            .ToDictionary(e => e.Key, e => e.Value, StringComparer.Ordinal);
+
+        output.Write(JsonSerializer.Serialize(missing, new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        }));
+        output.WriteLine();
+    }
+
     public static void Run(Assembly asm, string seedPath, Report report)
     {
         report.Section("Resources/" + Path.GetFileName(seedPath));

@@ -130,10 +130,16 @@ gleich und die Übersetzung greift weiter — aber der mitgeschriebene `en`-Wert
 `/bmrtl` meldet den Eintrag als *stale*. Eine Umbenennung eines Feldes oder Typs hingegen lässt den
 Schlüssel verwaisen; er erscheint dann in `missing.de.json`.
 
-Geprüft gegen **BossMod Reborn 7.5.6.5**: alle Typ-, Feld- und Backing-Field-Namen sowie alle 109
+Geprüft gegen **BossMod Reborn 7.5.6.5**: alle Typ-, Feld- und Backing-Field-Namen sowie alle 303
 Konfigurationsschlüssel der mitgelieferten `de.json` wurden gegen die installierte Assembly verifiziert,
 nicht nur gegen den Quellcode — per `tools/ShapeCheck`. Von 913 ableitbaren Konfigurations-Strings sind
-damit 11,9 % übersetzt.
+damit 33,2 % übersetzt; die allgemeinen Einstellungen vollständig, offen nur Encounter-spezifisches.
+
+Eine Lehre aus dem ersten Batch: der Dump für `tools/merge-translations.py` war zunächst zeilenbasiert
+(TSV) und hat die eingebetteten Zeilenumbrüche in BossMods Tooltips zu Leerzeichen geplättet. Damit wich der
+gespeicherte `en`-Wert vom Original ab, und die Drift-Erkennung meldete zwei frisch übersetzte Einträge
+sofort als veraltet — ein Format, das die zu prüfenden Daten beschädigt, ist als Prüfgrundlage wertlos. Der
+Dump ist deshalb JSON.
 
 ## Milestone 2 und 3
 
