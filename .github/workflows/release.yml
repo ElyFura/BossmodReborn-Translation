@@ -1,0 +1,81 @@
+name: Release
+
+# Tag a release and this publishes the artefact Dalamud downloads.
+#
+# repo.json is NOT written here. Its AssemblyVersion is the only thing Dalamud compares against what a
+# user has installed, so it is generated locally (tools/build-repo-json.py), reviewed and committed like
+# any other source. This workflow only refuses to publish when the tag, the project version and repo.json
+# disagree - which is the mistake worth catching, because its symptom is a silent missing update rather
+# than an error.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to publish
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  DALAMUD_URL: https://goatcorp.github.io/dalamud-distrib/latest.zip
+  DALAMUD_HOME: ${{ github.workspace }}/dalamud
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch Dalamud
+        run: |
+          Invoke-WebRequest -Uri $env:DALAMUD_URL -OutFile dalamud.zip
+          Expand-Archive -Path dalamud.zip -DestinationPath $env:DALAMUD_HOME
+
+      - name: Build
+        run: dotnet build BossmodRebornTranslation.slnx -c Release
+
+      - name: Verify the plugin loads and patches
+        run: dotnet run --project tools/AlcProbe/Host -c Release --no-build
+
+      - name: Tag, project version and repo.json agree
+        run: |
+          python tools/build-repo-json.py --check
+
+          $tag = "${{ github.event.inputs.tag || github.ref_name }}" -replace '^v', ''
+          $repo = (Get-Content repo.json -Raw | ConvertFrom-Json)[0].AssemblyVersion
+          $dll = (Get-Item BmrTranslation/bin/x64/Release/BmrTranslation.dll).VersionInfo.FileVersion
+
+          Write-Host "tag=$tag  repo.json=$repo  assembly=$dll"
+
+          # the tag may be written short (v0.2) while the assembly is always four parts
+          $normalised = ($tag.Split('.') + @('0', '0', '0', '0'))[0..3] -join '.'
+          if ($repo -ne $normalised) {
+            throw "repo.json says $repo but the tag says $normalised - bump <Version> in the csproj and re-run tools/build-repo-json.py"
+          }
+          if ($dll -ne $normalised) {
+            throw "the built assembly is $dll but the tag says $normalised"
+          }
+
+      - name: Publish
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          # the asset name is fixed: repo.json points every download link at
+          # releases/latest/download/latest.zip, so renaming it here breaks installs
+          files: BmrTranslation/bin/x64/Release/BmrTranslation/latest.zip
+          fail_on_unmatched_files: true
+          generate_release_notes: true

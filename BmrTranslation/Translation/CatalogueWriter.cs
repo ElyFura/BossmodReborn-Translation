@@ -39,15 +39,27 @@ public static class CatalogueWriter
 
     private static string Render(List<CatalogueEntry> entries, bool onlyMissing, string language)
     {
+        // One comma rule for the whole object, metadata included. Emitting the separator *before* each
+        // member rather than after means the last member never carries one - which is what the previous
+        // version got wrong: with nothing left untranslated, missing.<lang>.json ended on the notes line
+        // plus its trailing comma and was not valid JSON at all. The empty case is the success case here,
+        // so it is exactly the one that has to parse.
         var sb = new StringBuilder(entries.Count * 96);
-        sb.AppendLine("{");
-        sb.Append("  \"$generated\": ").Append(Json(DateTime.Now.ToString("yyyy-MM-dd HH:mm"))).AppendLine(",");
-        sb.Append("  \"$language\": ").Append(Json(language)).AppendLine(",");
-        sb.AppendLine(onlyMissing
-            ? "  \"$notes\": \"Untranslated keys only. Replace each empty \\\"de\\\" with the translation and merge into the language file.\","
-            : "  \"$notes\": \"Full catalogue of translatable strings found in the installed BossMod Reborn.\",");
-
+        sb.Append('{');
         var written = 0;
+
+        void Member(string text)
+        {
+            sb.AppendLine(written++ > 0 ? "," : "");
+            sb.Append(text);
+        }
+
+        Member("  \"$generated\": " + Json(DateTime.Now.ToString("yyyy-MM-dd HH:mm")));
+        Member("  \"$language\": " + Json(language));
+        Member(onlyMissing
+            ? "  \"$notes\": \"Untranslated keys only. Replace each empty \\\"de\\\" with the translation and merge into the language file.\""
+            : "  \"$notes\": \"Full catalogue of translatable strings found in the installed BossMod Reborn.\"");
+
         var last = entries.Count - 1;
         for (var i = 0; i <= last; ++i)
         {
@@ -56,10 +68,7 @@ public static class CatalogueWriter
             {
                 continue;
             }
-            if (written++ > 0)
-            {
-                sb.AppendLine(",");
-            }
+            sb.AppendLine(written++ > 0 ? "," : "");
             sb.Append("  ").Append(Json(e.Key)).Append(": { \"de\": ").Append(Json(e.German ?? ""))
               .Append(", \"en\": ").Append(Json(e.English));
             if (e.KeptEnglish)

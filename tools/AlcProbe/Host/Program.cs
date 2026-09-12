@@ -142,9 +142,12 @@ partial class Program
         AppContext.BaseDirectory, "..", "..", "..", "..", "..", "..",
         "BmrTranslation", "bin", "x64", "Release", "BmrTranslation.dll"));
 
-    internal static string DalamudDirectory { get; } = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "XIVLauncher", "addon", "Hooks", "dev");
+    // same rule the csproj uses: DALAMUD_HOME wins, so this runs on a CI machine that has no XIVLauncher
+    internal static string DalamudDirectory { get; } =
+        Environment.GetEnvironmentVariable("DALAMUD_HOME")
+        ?? Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "XIVLauncher", "addon", "Hooks", "dev");
 }
 
 // mirrors Dalamud's per-plugin loader: private dependencies resolve out of the plugin's own directory,

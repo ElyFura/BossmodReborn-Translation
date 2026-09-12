@@ -1,0 +1,92 @@
+name: CI
+
+# Everything here has to work without a game installation, so the two checks that need BossMod Reborn
+# itself are deliberately absent: ShapeCheck validates the language file against the *installed*
+# BossModReborn.dll, which a runner has no way to obtain. What remains is still the part that has actually
+# broken before - the plugin failing to load, and repo.json drifting from the built version.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Dalamud is a build-time reference only; the plugin never ships it
+  DALAMUD_URL: https://goatcorp.github.io/dalamud-distrib/latest.zip
+  DALAMUD_HOME: ${{ github.workspace }}/dalamud
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch Dalamud
+        run: |
+          Invoke-WebRequest -Uri $env:DALAMUD_URL -OutFile dalamud.zip
+          Expand-Archive -Path dalamud.zip -DestinationPath $env:DALAMUD_HOME
+          Write-Host "Dalamud.dll: $((Get-Item "$env:DALAMUD_HOME/Dalamud.dll").VersionInfo.FileVersion)"
+
+      - name: Build
+        run: dotnet build BossmodRebornTranslation.slnx -c Release
+
+      - name: Harmony still works from a collectible plugin context
+        # Step 0 loads the built BmrTranslation.dll and enumerates its types with 0Harmony absent - the
+        # exact thing Dalamud does before constructing a plugin, and the exact thing that failed in game.
+        run: dotnet run --project tools/AlcProbe/Host -c Release --no-build
+
+      - name: Shipping 0Harmony beside the plugin still fails
+        # The negative control. If this ever passes, the bootstrap is no longer load-bearing and the
+        # workaround should be revisited rather than carried forever.
+        run: dotnet run --project tools/AlcProbe/Host -c Release --no-build -- --as-shipped-before
+
+      - name: repo.json matches the project
+        run: python tools/build-repo-json.py --check
+
+      - name: The language file is well formed
+        # de.json is assembled by tooling, but it is also the shipped resource: a malformed one does not
+        # crash the plugin, it just quietly translates nothing. Cheap to rule out here.
+        shell: python
+        run: |
+          import json, sys
+          data = json.load(open("BmrTranslation/Resources/de.json", encoding="utf-8"))
+          entries = {k: v for k, v in data.items() if not k.startswith("$")}
+          bad = [k for k, v in entries.items() if not isinstance(v, (str, dict))]
+          missing_de = [k for k, v in entries.items() if isinstance(v, dict) and "de" not in v]
+          for k in (bad + missing_de)[:10]:
+              print(f"malformed entry: {k}", file=sys.stderr)
+          if bad or missing_de:
+              sys.exit(f"{len(bad)} entries of the wrong shape, {len(missing_de)} without a 'de'")
+          translated = sum(1 for v in entries.values() if (v.get("de") if isinstance(v, dict) else v))
+          print(f"{len(entries)} entries, {translated} translated, {len(entries) - translated} deliberately English")
+
+      - name: The package contains what it should
+        # A stray 0Harmony.dll in the zip would be loaded into the plugin's collectible context and break
+        # every patch, so the artefact is inspected rather than trusted.
+        run: |
+          $zip = "BmrTranslation/bin/x64/Release/BmrTranslation/latest.zip"
+          if (-not (Test-Path $zip)) { throw "no package was produced at $zip" }
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $names = [IO.Compression.ZipFile]::OpenRead((Resolve-Path $zip)).Entries.FullName
+          Write-Host ($names -join ", ")
+          if ($names -contains "0Harmony.dll") { throw "0Harmony.dll must be embedded, not packaged" }
+          if ($names -notcontains "BmrTranslation.dll") { throw "BmrTranslation.dll missing from the package" }
+          if ($names -notcontains "BmrTranslation.json") { throw "BmrTranslation.json missing from the package" }
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BmrTranslation
+          path: BmrTranslation/bin/x64/Release/BmrTranslation/latest.zip
+          if-no-files-found: error

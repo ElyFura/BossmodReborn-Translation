@@ -131,8 +131,32 @@ python tools/build-repo-json.py           # schreiben
 python tools/build-repo-json.py --check   # meldet Exit-Code 1, wenn repo.json veraltet ist
 ```
 
-Ablauf: Version in der `.csproj` erhöhen → bauen → `latest.zip` als Release-Asset hochladen →
-`build-repo-json.py` → `repo.json` committen.
+Ablauf: Version in der `.csproj` erhöhen → `build-repo-json.py` → `repo.json` committen → Tag `vX.Y.Z.W`
+pushen. Den Rest erledigt der Release-Workflow.
+
+### GitHub Actions
+
+| Workflow | Auslöser | Tut |
+| --- | --- | --- |
+| `ci.yml` | Push auf `main`, Pull Request | Bauen, AlcProbe (positiv **und** negativ), `repo.json --check`, Sprachdatei prüfen, Paketinhalt prüfen, ZIP als Artefakt |
+| `release.yml` | Tag `v*` | Bauen, AlcProbe, Tag/Projektversion/`repo.json` abgleichen, `latest.zip` ans Release hängen |
+
+Beide laden Dalamud über `DALAMUD_HOME` aus der offiziellen Distribution — ein Runner hat keine
+XIVLauncher-Installation. Deshalb gewinnt `DALAMUD_HOME` inzwischen auf **jedem** System, nicht mehr nur
+unter Linux.
+
+Zwei Dinge, die die CI bewusst *nicht* tut:
+
+* **`ShapeCheck` läuft nicht.** Es prüft gegen die *installierte* `BossModReborn.dll`, und die kann sich
+  ein Runner nicht beschaffen. Die Drift-Prüfung nach einem BossMod-Update bleibt ein lokaler Lauf.
+* **`repo.json` wird nicht automatisch geschrieben.** Der Release-Workflow *weigert sich* zu
+  veröffentlichen, wenn Tag, Projektversion und `repo.json` auseinanderlaufen. Ein stillschweigender
+  Auto-Commit auf `main` würde den Fehler verstecken, statt ihn zu zeigen — und sein Symptom ist ohnehin
+  kein Fehler, sondern ein Update, das nie angeboten wird.
+
+Der negative AlcProbe-Lauf (`--as-shipped-before`) steht bewusst als eigener CI-Schritt: schlägt er eines
+Tages *nicht* mehr fehl, ist der Harmony-Bootstrap überflüssig geworden und gehört überprüft, statt
+für immer mitgeschleppt zu werden.
 
 ## Befehle
 
