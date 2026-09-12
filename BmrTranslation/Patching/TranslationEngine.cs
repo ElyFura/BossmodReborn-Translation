@@ -20,6 +20,7 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
     private ConfigUiPatcher? _uiPatcher;
     private HintTranslator? _hints;
     private HintPatcher? _hintPatcher;
+    private UiPatcher? _uiTextPatcher;
     private DateTime _nextSweep;
     private string? _lastAttachError;
 
@@ -102,6 +103,19 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
             _hintPatcher = null;
         }
 
+        // the remaining UI literals, also via Harmony but with an independent patch id, so a failure here
+        // leaves the config and the hints translated
+        _uiTextPatcher = new UiPatcher(bmr, _table);
+        try
+        {
+            _uiTextPatcher.Apply();
+        }
+        catch (Exception ex)
+        {
+            Service.Log.Error(ex, "ui patching failed - the rest stays translated, window text stays English");
+            _uiTextPatcher = null;
+        }
+
         Service.Log.Information($"attached to BossModReborn {bmr.Version}: {_session.Applied} strings translated, {_session.Missing} without translation");
     }
 
@@ -133,6 +147,8 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
 
     private void Revert()
     {
+        _uiTextPatcher?.Dispose();
+        _uiTextPatcher = null;
         _hintPatcher?.Dispose();
         _hintPatcher = null;
         _hints = null;
@@ -156,7 +172,10 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
         var hints = _hintPatcher != null
             ? $" | hints: {_hintPatcher.PatchedMethods} patched methods, {_hints?.ObservedCount ?? 0} seen"
             : " | hints: not patched";
-        return $"BossModReborn {_bmr.Version} | {_table.Count} entries in '{Language}' | {_session.Applied} applied, {_session.KeptEnglish} kept English, {_session.Missing} missing, {_session.Stale} stale{hints}{user}";
+        var ui = _uiTextPatcher != null
+            ? $" | ui: {_uiTextPatcher.PatchedMethods} patched methods, {_uiTextPatcher.ReplacedLiterals} literals"
+            : " | ui: not patched";
+        return $"BossModReborn {_bmr.Version} | {_table.Count} entries in '{Language}' | {_session.Applied} applied, {_session.KeptEnglish} kept English, {_session.Missing} missing, {_session.Stale} stale{hints}{ui}{user}";
     }
 
     // config keys from the sweep, plus every hint seen in play so far - the only way to discover the
@@ -180,6 +199,10 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
             return combined;
         }
     }
+
+    public int UiPatchedMethods => _uiTextPatcher?.PatchedMethods ?? 0;
+    public int UiReplacedLiterals => _uiTextPatcher?.ReplacedLiterals ?? 0;
+    public IReadOnlyList<string> UiPatchFailures => _uiTextPatcher?.Failures ?? [];
 
     public int HintsPatchedMethods => _hintPatcher?.PatchedMethods ?? 0;
     public int HintsObserved => _hints?.ObservedCount ?? 0;

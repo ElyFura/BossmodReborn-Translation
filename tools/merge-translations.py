@@ -45,9 +45,10 @@ def load_batch(path):
             print(f"  line {number}: no '{SEP}' separator, skipped", file=sys.stderr)
             continue
         key, translation = (part.strip() for part in line.split(SEP, 1))
-        # hint keys embed the English text, and two BossMod hints contain a real newline, so the key
-        # needs the same \n escape the translation has. Config keys never contain backslashes.
-        key = key.replace("\\n", "\n")
+        # Hint and UI keys embed the English text, and some of those strings contain real line breaks -
+        # CRLF for UI literals, because BossMod's source files are CRLF. Config keys never contain
+        # backslashes, so unescaping here is safe for every kind of key.
+        key = key.replace("\\r", "\r").replace("\\n", "\n")
         # a key wrapped in double quotes is taken verbatim - needed for the one hint that ends in a
         # space ("Order: "), which stripping the line would otherwise eat
         if len(key) >= 2 and key[0] == '"' and key[-1] == '"':
@@ -60,7 +61,7 @@ def load_batch(path):
             result[key] = ""
         else:
             # the batch file is line-based, so a literal \n is how a translator breaks a long tooltip
-            result[key] = translation.replace("\\n", "\n")
+            result[key] = translation.replace("\\r", "\r").replace("\\n", "\n")
     return result
 
 

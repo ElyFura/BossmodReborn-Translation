@@ -5,10 +5,10 @@ Deutsche Übersetzung für [BossMod Reborn](https://github.com/FFXIV-CombatRebor
 als Datei. Die Übersetzung tauscht die Strings zur Laufzeit im Speicher und stellt beim Entladen wieder
 das englische Original her.
 
-## Status: Milestone 1 + 2
+## Status: Milestone 1 - 3
 
 Die Konfigurationsebene kommt ohne IL-Patching aus — BossMod legt sie datengetrieben in Metadaten ab.
-Die Kampfhinweise nicht: die sind String-Literale in über 800 Aufrufstellen und brauchen Harmony.
+Kampfhinweise und Fenstertexte nicht: das sind String-Literale im Code und brauchen Harmony.
 
 | Bereich | Umfang | Zustand |
 | --- | --- | --- |
@@ -22,7 +22,8 @@ Die Kampfhinweise nicht: die sind String-Literale in über 800 Aufrufstellen und
 | Konfigurations-Übersetzung | 913 Schlüssel, alle entschieden | ✅ 542 deutsch, 371 bewusst englisch |
 | Kampfhinweise (`hints.Add(...)`) | 636 feste Literale | ✅ alle übersetzt (Harmony) |
 | Interpolierte Kampfhinweise | 220 Aufrufe | ✅ 59 Regex-Muster |
-| Übrige ImGui-Literale in der UI | 87 Dateien | ⏳ Milestone 3 |
+| Übrige UI-Literale (Fenster, Buttons, Tooltips) | 380 nutzerseitige | ✅ 259 deutsch, 121 Identität |
+| Debug- und Replay-UI | 1282 Literale | ⛔ bewusst ausgelassen |
 
 **Die Konfigurationsebene ist vollständig abgearbeitet:** alle 913 Schlüssel sind entschieden — 542
 übersetzt, 371 bewusst englisch, 0 offen. `de.json` hat 918 Einträge (die fünf weiteren sind die Tabs).
@@ -163,6 +164,31 @@ Das Skript nimmt den **englischen Text niemals aus der Batch-Datei**, sondern im
 der gespeicherte `en`-Wert für die Drift-Erkennung garantiert zum Original. Ein Schlüssel, der im Dump nicht
 vorkommt, wird gemeldet und übersprungen statt still hinzugefügt; das fängt Tippfehler in Schlüsseln ab
 (Exit-Code 1). Anschließend `dotnet run --project tools/ShapeCheck` zur Kontrolle.
+
+## Fenstertexte (Milestone 3)
+
+Alles, was BossMod direkt als Literal an ImGui gibt: Fenstertitel, Buttons, Checkboxen, Tabellenköpfe,
+Tooltips. 380 nutzerseitige Literale sind entschieden — 259 deutsch, 121 bleiben englisch.
+
+Der Transpiler **ersetzt den `ldstr`-Operanden direkt zur Patch-Zeit**. Er baut keinen Lookup ein: das
+Literal liegt beim Transpilieren schon als Operand vor, also kostet die Auflösung zur Laufzeit nichts —
+kein Aufwand pro Frame, kein Helfer, der sich falsch verhalten kann.
+
+Gepatcht werden **nur Methoden, die tatsächlich eine Übersetzung haben** — die Liste kommt aus der
+Sprachdatei, nicht aus einem Assembly-Scan. Das sind rund 80 statt mehrerer Tausend.
+
+Schlüssel sind `ui/<Typ>::<Methode>/<Literal>`. Das Literal gehört in den Schlüssel, weil derselbe Text in
+einer Methode ein sichtbares Label und in einer anderen eine ImGui-ID oder ein String-Vergleich sein kann —
+nur das erste darf übersetzt werden. Ein Beispiel, das genau das braucht: `ModuleViewer` nutzt „Enabled" als
+Spaltenkopf **und** in `EnabledColumnWidth`, um die Spaltenbreite zu messen. Würde nur der Kopf übersetzt,
+wäre die Spalte falsch breit; beide Schlüssel bekommen dieselbe Übersetzung.
+
+Als englisch markiert (121): ImGui-IDs (`ConfigTabs`, `preset_options`, `##module`), Chat-Befehle (`/bmr`,
+`/bmrai`), Befehls-Token (`RADAR`, `TOGGLE`), Reflection-Namen, URLs, Texturpfade, Log-Präfixe und der
+erzeugte C#-Quellcode des Quest-Battle-Gerüsts. Das ist Identität oder Protokoll, kein Anzeigetext.
+
+**Debug- und Replay-Oberflächen (1282 Literale) sind bewusst ausgelassen** — Entwicklerwerkzeuge, die kein
+Spieler öffnet. `tools/ShapeCheck --ui` listet sie, falls sie doch jemand haben will.
 
 ## Verifikation nach einem BossMod-Update
 

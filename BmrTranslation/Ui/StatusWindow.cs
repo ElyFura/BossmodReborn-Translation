@@ -74,6 +74,19 @@ public sealed class StatusWindow : Window
         {
             ImGui.TextDisabled("    " + failure);
         }
+
+        if (_engine.UiPatchedMethods > 0)
+        {
+            ImGui.TextUnformatted($"Fenstertexte: {_engine.UiPatchedMethods} Methoden gepatcht, {_engine.UiReplacedLiterals} Literale ersetzt");
+        }
+        else
+        {
+            ImGui.TextUnformatted("Fenstertexte: nicht gepatcht (bleiben englisch)");
+        }
+        foreach (var failure in _engine.UiPatchFailures)
+        {
+            ImGui.TextDisabled("    " + failure);
+        }
     }
 
     private void DrawActions()

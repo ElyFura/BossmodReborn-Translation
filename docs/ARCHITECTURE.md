@@ -150,6 +150,52 @@ Beobachtungsliste ist begrenzt.
 Ein Nebenfund beim Extrahieren: `$"..."` **ohne** Platzhalter kompiliert zu einem gewöhnlichen String. Alle
 `$`-Aufrufe zu überspringen hätte 16 feste Hinweise stillschweigend verloren.
 
+## Milestone 3: Fenstertexte
+
+### Der Transpiler ersetzt, statt nachzuschlagen
+
+Der erste Entwurf war, jedes `ldstr` durch `ldstr` + `Translate(string)` zu ersetzen — also einen Lookup pro
+Literal pro Frame zu emittieren. Beim Prototypen fiel auf, dass das unnötig ist: der Transpiler hat das
+Literal zur Patch-Zeit **schon als Operanden**. Er ersetzt es einfach. Damit gibt es zur Laufzeit keinen
+Aufwand, keinen Helfer und nichts, was sich falsch verhalten kann. Voraussetzung ist, dass Harmony dem
+Transpiler die gepatchte Methode mitgibt (`__originalMethod`) — das ist im ALC-Prober mitgeprüft.
+
+### Die Patch-Liste kommt aus der Sprachdatei
+
+Nicht aus einem Assembly-Scan. Übersetzte Schlüssel nennen ihre Methode, also ist die Menge der zu
+patchenden Methoden genau die Menge der Methoden mit Übersetzung — rund 80 statt mehrerer Tausend. Das hält
+JIT-Kosten und Wirkungsradius klein und macht ein „alles patchen und hoffen" unnötig.
+
+### Warum das Literal in den Schlüssel gehört
+
+`ui/<Typ>::<Methode>/<Literal>`. Derselbe Text kann in einer Methode ein sichtbares Label und in einer
+anderen eine ImGui-ID oder ein String-Vergleich sein; nur das erste darf übersetzt werden. Und das Literal
+statt eines Index im Schlüssel heißt: ein neues Literal in einer Methode verschiebt nicht alle anderen
+Schlüssel darin.
+
+Ein Fall, der genau das braucht: `ModuleViewer` nutzt „Enabled" als Spaltenkopf **und** in
+`EnabledColumnWidth`, um die Spaltenbreite zu messen. Nur den Kopf zu übersetzen hätte eine falsch
+bemessene Spalte ergeben. Beide Schlüssel bekommen dieselbe Übersetzung.
+
+`::` trennt Typ von Methode, weil ein Konstruktor buchstäblich `.ctor` heißt und ein `.` als Trenner
+ambig wäre.
+
+### Der Extraktor liest IL, keinen Quellcode
+
+`tools/ShapeCheck --ui` liest die installierte Assembly mit Mono.Cecil: die Literale einer Methode sind ihre
+`ldstr`-Operanden, und ob eine Methode UI zeichnet, entscheidet sich daran, ob sie ImGui aufruft. Damit ist
+die Kandidatenmenge exakt statt geraten — kein Quellbaum, keine Regexe, und automatisch passend zur
+installierten Version. Ergebnis: 1662 Literale in 277 Methoden, davon 380 nutzerseitig.
+
+### Zwei Fallen beim Zusammenführen
+
+Mehrzeilige Literale tragen **CRLF**, weil BossMods Quelldateien CRLF haben. Der erste Merge-Durchlauf
+schrieb `
+` und traf die Schlüssel nicht — der Diff sah dabei identisch aus, weil der Unterschied
+unsichtbar ist. Und Literale, die auf ein Leerzeichen enden (`"AI: "`, `"New "`), verlieren es, wenn die
+Batch-Zeile getrimmt wird; dafür gibt es die Anführungszeichen-Form. Beides hat der Abgleich gegen den Dump
+gefunden, nicht ein Blick auf den Text.
+
 ## Der Shape-Checker
 
 `tools/ShapeCheck` liest die installierte `BossModReborn.dll` über einen `MetadataLoadContext` — also nur
@@ -164,8 +210,8 @@ Drei Prüfungen:
 * **Verwaiste Schlüssel.** `SeedChecks` baut aus den Attribut-Blobs dieselben Schlüssel nach, die
   `ConfigMetadataPatcher` zur Laufzeit erzeugt, und meldet jeden Eintrag in `de.json`, den es dort nicht
   gibt. Exit-Code 1.
-* **Kampfhinweise.** Deren Schlüssel enthalten den englischen Text, also werden sie gegen die Literale der
-  Assembly geprüft. Dabei ist eine Falle: Literale liegen UTF-16LE im #US-Heap, aber nichts garantiert einen
+* **Kampfhinweise und Fenstertexte.** Deren Schlüssel enthalten den englischen Text, also werden sie gegen
+  die Literale der Assembly geprüft. Dabei ist eine Falle: Literale liegen UTF-16LE im #US-Heap, aber nichts garantiert einen
   geraden Byte-Offset — die Datei nur ab Offset 0 zu dekodieren verliert jedes Literal auf einem ungeraden.
   Der erste Anlauf meldete deshalb 267 von 636 Hinweisen als verschwunden. Geprüft werden jetzt beide
   Ausrichtungen.
@@ -216,11 +262,8 @@ Dump ist deshalb JSON.
 
 ## Milestone 2 und 3
 
-**Milestone 3 — restliche UI.** 87 Dateien, darunter 314 `TextUnformatted`, 162 `Button`, 72 `Checkbox`.
-Praktikabel nur über einen Harmony-Transpiler, der in den UI-Typen jedes `ldstr` durch `ldstr` +
-`Translate(string)` ersetzt, mit Rückfall auf das Original bei fehlendem Eintrag.
-
-Milestone 3 ist invasiver als 1 und 2 und sollte getrennt schaltbar bleiben.
+Alle drei Milestones sind umgesetzt. Was offen bleibt: die Debug- und Replay-Oberflächen (1282 Literale),
+bewusst ausgelassen, weil es Entwicklerwerkzeuge sind. `tools/ShapeCheck --ui` listet sie.
 
 ## Schriftzeichen
 

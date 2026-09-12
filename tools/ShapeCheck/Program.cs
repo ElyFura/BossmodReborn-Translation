@@ -18,6 +18,8 @@ if (args.Contains("--help") || args.Contains("-h"))
           --all              dump every derivable key, decided or not (to revise existing entries)
           --hints <src>      extract fixed combat-hint literals from a BossMod source tree, verified
                              against the installed assembly, as a merge-ready JSON dump
+          --ui               extract UI string literals from the installed assembly's IL (methods that
+                             call ImGui), as a merge-ready JSON dump; --with-ids keeps "##id" literals
         """);
     return 0;
 }
@@ -49,6 +51,11 @@ probe.AddRange(Directory.GetFiles(Path.GetDirectoryName(typeof(object).Assembly.
 using var mlc = new MetadataLoadContext(new PathAssemblyResolver(probe.Distinct()));
 var asm = mlc.LoadFromAssemblyPath(bmrPath);
 Console.Error.WriteLine($"version:  {asm.GetName().Name} {asm.GetName().Version}");
+
+if (args.Contains("--ui"))
+{
+    return UiExtraction.Run(bmrPath, Console.Out, new Report(Console.Error), includeIds: args.Contains("--with-ids"));
+}
 
 if (Arg("--hints") is { } hintSource)
 {

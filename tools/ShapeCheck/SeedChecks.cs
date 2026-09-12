@@ -22,6 +22,10 @@ public static class SeedChecks
     private static readonly string[] RuntimeOnlyPrefixes = ["ui.tab/", "enum/", "rot/"];
 
     private const string HintPrefix = "hint/";
+    private const string UiPrefix = "ui/";
+
+    private static bool Contains(string[] alignments, string text)
+        => alignments.Any(a => a.Contains(text, StringComparison.Ordinal));
 
     private static string Shorten(string text)
         => text.Length <= 70 ? text : text[..70] + "...";
@@ -80,6 +84,8 @@ public static class SeedChecks
         var keptEnglish = 0;
         var hints = 0;
         var hintOrphans = 0;
+        var uiKeys = 0;
+        var uiOrphans = 0;
 
         // Hint keys embed the English text, so they are checked against the assembly's literals rather
         // than against derived config keys.
@@ -104,10 +110,29 @@ public static class SeedChecks
             {
                 ++hints;
                 var text = key[HintPrefix.Length..];
-                if (assemblyText != null && !assemblyText.Any(t => t.Contains(text, StringComparison.Ordinal)))
+                if (assemblyText != null && !Contains(assemblyText, text))
                 {
                     report.Fail($"hint no longer present in BossMod: {Shorten(text)}");
                     ++hintOrphans;
+                }
+                continue;
+            }
+            if (key.StartsWith(UiPrefix, StringComparison.Ordinal))
+            {
+                // "ui/<Type>::<Method>/<literal>" - the owner never contains '/', so the first slash
+                // after the prefix ends it and the rest is the literal, slashes and all
+                ++uiKeys;
+                var rest = key[UiPrefix.Length..];
+                var slash = rest.IndexOf('/');
+                if (slash <= 0)
+                {
+                    report.Fail($"malformed ui key: {Shorten(key)}");
+                    ++uiOrphans;
+                }
+                else if (assemblyText != null && !Contains(assemblyText, rest[(slash + 1)..]))
+                {
+                    report.Fail($"ui literal no longer present in BossMod: {Shorten(rest)}");
+                    ++uiOrphans;
                 }
                 continue;
             }
@@ -142,6 +167,12 @@ public static class SeedChecks
             report.Check(true, $"{checkedKeys} config key(s) present with matching English source");
         }
         report.Info($"{runtimeOnly} key(s) not statically verifiable (enum / autorotation / tab labels)");
+        if (uiKeys > 0)
+        {
+            report.Check(uiOrphans == 0, assemblyText != null
+                ? $"{uiKeys} ui literal(s) still present in the installed assembly"
+                : $"{uiKeys} ui literal(s) not checked (assembly path unavailable)");
+        }
         if (hints > 0)
         {
             report.Check(hintOrphans == 0, assemblyText != null

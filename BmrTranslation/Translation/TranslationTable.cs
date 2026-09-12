@@ -145,4 +145,8 @@ public sealed class TranslationTable
     }
 
     public TranslationEntry? Lookup(string key) => _entries.GetValueOrDefault(key);
+
+    // used by the UI patcher to discover which methods need patching at all
+    public IEnumerable<KeyValuePair<string, TranslationEntry>> WithPrefix(string prefix)
+        => _entries.Where(e => e.Key.StartsWith(prefix, StringComparison.Ordinal));
 }
