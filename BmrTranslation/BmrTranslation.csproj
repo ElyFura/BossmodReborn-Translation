@@ -14,7 +14,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <!-- keep one output path whether built via the project or the solution -->
+    <!-- Pin the output to bin\x64\Release regardless of how Platform resolves: a solution build does not
+         propagate x64 down to the project, so relying on AppendPlatformToOutputPath moves the DLL out from
+         under the registered Dalamud dev-plugin path. -->
+    <BaseOutputPath>bin\x64\</BaseOutputPath>
     <AppendPlatformToOutputPath>false</AppendPlatformToOutputPath>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>

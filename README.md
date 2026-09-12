@@ -42,8 +42,10 @@ der Name bleibt zitierfähig. Wer das anders will, ändert es in `de.json` — k
 dotnet build -c Release -p:Platform=x64
 ```
 
-Das Ergebnis in `BmrTranslation/bin/Release/` als Dev-Plugin in Dalamud einbinden
-(`/xlsettings` → Experimental → Dev-Plugin-Pfad).
+Das Ergebnis liegt in `BmrTranslation/bin/x64/Release/` — dieser Pfad ist im Projekt fest verdrahtet
+(`BaseOutputPath`), damit er sich nicht je nach Build-Aufruf verschiebt und der in Dalamud eingetragene
+Dev-Plugin-Pfad gültig bleibt. Dort als Dev-Plugin einbinden: `/xlsettings` → Experimental →
+Dev-Plugin-Pfad.
 
 ## Befehle
 
