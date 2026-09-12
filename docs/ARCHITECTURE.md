@@ -96,6 +96,33 @@ quelltextgeschürfter Übersetzungsdateien aus: Schlüssel, die zur Laufzeit nie
 Nebeneffekt: der englische Text stammt aus der **installierten** BossMod-Version, nicht aus einem
 Arbeitsbaum, der davon abweichen kann.
 
+## Der Shape-Checker
+
+`tools/ShapeCheck` liest die installierte `BossModReborn.dll` über einen `MetadataLoadContext` — also nur
+Metadaten, ohne die Assembly auszuführen und ohne Dalamud-Prozess. Das macht es zu einem Werkzeug, das man
+nach jedem BossMod-Update laufen lassen kann, statt im Spiel zu merken, dass nichts mehr übersetzt wird.
+
+Drei Prüfungen:
+
+* **Strukturen.** Jeder Typ, jedes Feld, jedes Backing-Field und jede Methode, die die Patcher per
+  Reflection erreichen — gruppiert nach der abhängigen Datei. Zusätzlich wird die `readonly`-Eigenschaft
+  mitgemeldet, weil sie entscheidet, ob `Reflect.Set` einen Setter emittieren muss.
+* **Verwaiste Schlüssel.** `SeedChecks` baut aus den Attribut-Blobs dieselben Schlüssel nach, die
+  `ConfigMetadataPatcher` zur Laufzeit erzeugt, und meldet jeden Eintrag in `de.json`, den es dort nicht
+  gibt. Exit-Code 1.
+* **Drift.** Existiert der Schlüssel noch, aber der mitgeschriebene `en`-Wert weicht vom aktuellen Text ab,
+  ist die Übersetzung überholt. Warnung; mit `--strict` ein Fehler.
+
+Ein Detail zur Attribut-Auswertung: Attribute mit optionalen Konstruktorparametern tragen im Metadaten-Blob
+**alle** Argumente positionsweise, mit eingesetzten Standardwerten. `PropertyDisplay`s Tooltip ist damit
+schlicht `ConstructorArguments[2]`; benannte Argumente muss man nur für `ConfigDisplay.Name` betrachten, weil
+das eine setzbare Property und kein Konstruktorparameter ist. Leere Standardwerte werden verworfen — sonst
+würde der Checker Schlüssel erwarten, die die Laufzeit (die leere Strings überspringt) nie erzeugt.
+
+Beide Erkennungen sind negativ getestet: ein manipuliertes `de.json` mit einem umbenannten Schlüssel und
+einem verfälschten `en`-Wert liefert genau eine Fehlermeldung und eine Warnung, Exit-Codes 1 bzw. 0 (ohne
+`--strict`) und 1 (mit).
+
 ## Drift
 
 Schlüssel sind ortsabgeleitet, nie textabgeleitet. Ändert BossMod eine Formulierung, bleibt der Schlüssel
@@ -103,8 +130,10 @@ gleich und die Übersetzung greift weiter — aber der mitgeschriebene `en`-Wert
 `/bmrtl` meldet den Eintrag als *stale*. Eine Umbenennung eines Feldes oder Typs hingegen lässt den
 Schlüssel verwaisen; er erscheint dann in `missing.de.json`.
 
-Geprüft gegen **BossMod Reborn 7.5.6.5**: alle Typ-, Feld- und Backing-Field-Namen wurden gegen die
-installierte Assembly verifiziert, nicht nur gegen den Quellcode.
+Geprüft gegen **BossMod Reborn 7.5.6.5**: alle Typ-, Feld- und Backing-Field-Namen sowie alle 109
+Konfigurationsschlüssel der mitgelieferten `de.json` wurden gegen die installierte Assembly verifiziert,
+nicht nur gegen den Quellcode — per `tools/ShapeCheck`. Von 913 ableitbaren Konfigurations-Strings sind
+damit 11,9 % übersetzt.
 
 ## Milestone 2 und 3
 

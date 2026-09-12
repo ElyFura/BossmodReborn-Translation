@@ -21,17 +21,17 @@ ohne Harmony:
 | Kampfhinweise (`hints.Add(...)`) | 543 feste + 238 interpolierte | ⏳ Milestone 2 |
 | Übrige ImGui-Literale in der UI | 87 Dateien | ⏳ Milestone 3 |
 
-Die mitgelieferte `de.json` ist ein Startbestand (Konfigurationsbaum, Radar-/Boss-Modul-Einstellungen,
-automatische Bewegung, Tabs). Alles ohne Eintrag bleibt englisch — es fehlt nie Text, er ist nur noch
-nicht übersetzt.
+Die mitgelieferte `de.json` ist ein Startbestand: 109 von 913 übersetzbaren Konfigurations-Strings (11,9 %)
+— Einstellungsbaum, Radar- und Boss-Modul-Einstellungen, automatische Bewegung, Tabs. Alles ohne Eintrag
+bleibt englisch; es fehlt nie Text, er ist nur noch nicht übersetzt.
 
 ## Installation
 
 ```
-dotnet build BmrTranslation/BmrTranslation.csproj -c Release -p:Platform=x64
+dotnet build -c Release -p:Platform=x64
 ```
 
-Das Ergebnis in `BmrTranslation/bin/x64/Release/` als Dev-Plugin in Dalamud einbinden
+Das Ergebnis in `BmrTranslation/bin/Release/` als Dev-Plugin in Dalamud einbinden
 (`/xlsettings` → Experimental → Dev-Plugin-Pfad).
 
 ## Befehle
@@ -74,6 +74,28 @@ Jeder Eintrag darf den englischen Text mitschreiben, gegen den übersetzt wurde:
 
 Ändert BossMod das Original, meldet `/bmrtl` den Eintrag als *stale* — die Übersetzung greift weiter,
 muss aber nachgesehen werden. Kurzform `"key": "Text"` ist erlaubt, verzichtet dann aber auf diese Prüfung.
+
+## Verifikation nach einem BossMod-Update
+
+Das Hauptrisiko dieses Plugins ist, dass BossMod etwas umbaut und die Reflection still nicht mehr trifft.
+`tools/ShapeCheck` prüft das **offline** — ohne Spiel, ohne Dalamud-Prozess, nur gegen die installierte
+Assembly:
+
+```
+dotnet run --project tools/ShapeCheck            # findet DLL, Dalamud und de.json selbst
+dotnet run --project tools/ShapeCheck -- --strict # Drift zählt als Fehler
+```
+
+Geprüft wird dreierlei:
+
+1. **Strukturen** — jeder Typ, jedes Feld und jedes Backing-Field, das die Patcher anfassen, gruppiert nach
+   der Datei, die davon abhängt. Ein Fehlschlag zeigt direkt auf den zu korrigierenden Patcher.
+2. **Verwaiste Schlüssel** — ein Eintrag in `de.json`, den BossMod nicht mehr kennt (umbenanntes Feld oder
+   Typ). Das ist ein Fehler, Exit-Code 1.
+3. **Drift** — der Schlüssel existiert noch, aber BossMod hat die englische Formulierung geändert; die
+   Übersetzung greift weiter, muss aber nachgesehen werden. Das ist eine Warnung, mit `--strict` ein Fehler.
+
+Optionen: `--bmr <pfad>`, `--dalamud <verzeichnis>`, `--seed <pfad>`, `--strict`, `--help`.
 
 ## Grenzen
 
