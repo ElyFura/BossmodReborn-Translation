@@ -1,4 +1,5 @@
 using System.IO;
+using BmrTranslation.Interop;
 using BmrTranslation.Patching;
 using BmrTranslation.Translation;
 using BmrTranslation.Ui;
@@ -22,6 +23,10 @@ public sealed class Plugin : IDalamudPlugin
     {
         dalamud.Create<Service>();
         _dalamud = dalamud;
+
+        // before anything can name a Harmony type: it has to be loaded outside this plugin's collectible
+        // load context or no patch will ever apply
+        HarmonyBootstrap.Ensure();
 
         var configDir = dalamud.ConfigDirectory;
         configDir.Create();

@@ -20,14 +20,27 @@ Kampfhinweise und Fenstertexte nicht: das sind String-Literale im Code und brauc
 | Tab-Leiste des Einstellungsfensters | 5 Tabs | ✅ |
 | Statusfenster (Abdeckung, Drift, Export) | `/bmrtl` bzw. Zahnrad in der Plugin-Liste | ✅ |
 | Konfigurations-Übersetzung | 913 Schlüssel, alle entschieden | ✅ 542 deutsch, 371 bewusst englisch |
+| Enum-Schlüssel (Combobox-Einträge) | 338 Schlüssel, alle entschieden | ✅ 208 deutsch, 130 bewusst englisch |
+| Autorotation-Texte (83 Module, 158 Tracks, 228 Optionen) | 2996 Schlüssel | ✅ 2539 deutsch, 457 Identität |
 | Kampfhinweise (`hints.Add(...)`) | 636 feste Literale | ✅ alle übersetzt (Harmony) |
 | Interpolierte Kampfhinweise | 220 Aufrufe | ✅ 59 Regex-Muster |
 | Übrige UI-Literale (Fenster, Buttons, Tooltips) | 380 nutzerseitige | ✅ 259 deutsch, 121 Identität |
 | Debug- und Replay-UI | 1282 Literale | ⛔ bewusst ausgelassen |
 
-**Die Konfigurationsebene ist vollständig abgearbeitet:** alle 913 Schlüssel sind entschieden — 542
-übersetzt, 371 bewusst englisch, 0 offen. `de.json` hat 918 Einträge (die fünf weiteren sind die Tabs).
-Das umfasst die allgemeinen Einstellungen ebenso wie jeden Encounter, FRU und TOP und DSW eingeschlossen.
+**Alle Ebenen sind abgearbeitet:** 5268 Schlüssel, davon 4189 übersetzt und 1079 bewusst englisch, 0
+offen. Das umfasst die allgemeinen Einstellungen ebenso wie jeden Encounter, FRU und TOP und DSW
+eingeschlossen, und seit diesem Stand die vollständige Autorotation.
+
+Bei den Enums ist der Zuschnitt die eigentliche Arbeit. BossMod registriert **jedes** seiner Enums — 3607
+Stück mit zusammen 40543 Membern —, aber der weit überwiegende Teil sind Konventionen: `AID`, `SID`,
+`OID`, `IconID`. Deren Membernamen sind Identität, kein Anzeigetext. Übersetzt wird nur, was ein Spieler
+lesen kann: der Enum-Typ eines Konfigurationsfelds (also der Inhalt einer Combobox) und jedes Enum, dessen
+Member ein `PropertyDisplay` tragen. Das sind 42 Enums mit 338 Schlüsseln statt 40543.
+
+Abgeleitet wird das **offline** aus der Assembly, nicht aus einer Spielsitzung. BossMod baut seine
+Enum-Tabellen erst bei Bedarf auf, deshalb sieht `/bmrtl extract` immer nur die Comboboxen, die in dieser
+Sitzung jemand geöffnet hat — der Rest fehlt stillschweigend. `tools/ShapeCheck` leitet stattdessen alle
+ab und prüft sie damit auch auf Drift.
 
 ### Was bewusst englisch bleibt
 
@@ -35,7 +48,7 @@ Zwei Kategorien, beide aus demselben Grund: deutsche Spieler kennen sie ausschli
 Guides, Partyfinder und Community-Sprache englisch sind. Eine Übersetzung würde den Abgleich mit einem
 Guide erschweren, nicht erleichtern.
 
-1. **Raid-Notation und Strategienamen** (371 Schlüssel) — `MT/R1 N, OT/R2 S`,
+1. **Raid-Notation, Strategie- und Fähigkeitsnamen** (1079 Schlüssel) — `MT/R1 N, OT/R2 S`,
    `LPDU (global): M1>M2>MT>OT>R1>R2>H1>H2`, Clockspots, `CW`/`CCW`, `Hector (NA)`, `Banana Codex`.
 2. **Fähigkeits- und Mechaniknamen** innerhalb übersetzter Sätze — `'Elusive Jump'`, `Cyclonic Break`,
    `Sanctity of the Ward`. Der Satz drumherum ist deutsch, der Name bleibt zitierfähig.
@@ -85,6 +98,18 @@ gibt die unübersetzten zurück. Wer spielt, sammelt sie also ein; das Statusfen
 
 ## Installation
 
+### Als Nutzer: eigenes Plugin-Repository
+
+`/xlsettings` → Experimental → „Custom Plugin Repositories", diese URL eintragen:
+
+```
+https://raw.githubusercontent.com/ElyFura/BossmodReborn-Translation/main/repo.json
+```
+
+Danach taucht *BossMod Reborn Translation* im Plugin-Installer auf.
+
+### Als Entwickler
+
 ```
 dotnet build -c Release -p:Platform=x64
 ```
@@ -92,7 +117,22 @@ dotnet build -c Release -p:Platform=x64
 Das Ergebnis liegt in `BmrTranslation/bin/x64/Release/` — dieser Pfad ist im Projekt fest verdrahtet
 (`BaseOutputPath`), damit er sich nicht je nach Build-Aufruf verschiebt und der in Dalamud eingetragene
 Dev-Plugin-Pfad gültig bleibt. Dort als Dev-Plugin einbinden: `/xlsettings` → Experimental →
-Dev-Plugin-Pfad.
+Dev-Plugin-Pfad. Der Release-Build legt zusätzlich `BmrTranslation/latest.zip` an — das ist das Artefakt,
+das als Release-Asset hochgeladen wird.
+
+### Release
+
+`repo.json` wird **nicht von Hand gepflegt**. Die `AssemblyVersion` darin ist das Einzige, woran Dalamud
+ein Update erkennt; driftet sie vom Projekt ab, bietet das Plugin still kein Update mehr an. Sie wird
+deshalb aus `BmrTranslation.csproj` und `BmrTranslation.json` erzeugt:
+
+```
+python tools/build-repo-json.py           # schreiben
+python tools/build-repo-json.py --check   # meldet Exit-Code 1, wenn repo.json veraltet ist
+```
+
+Ablauf: Version in der `.csproj` erhöhen → bauen → `latest.zip` als Release-Asset hochladen →
+`build-repo-json.py` → `repo.json` committen.
 
 ## Befehle
 
@@ -190,6 +230,26 @@ erzeugte C#-Quellcode des Quest-Battle-Gerüsts. Das ist Identität oder Protoko
 **Debug- und Replay-Oberflächen (1282 Literale) sind bewusst ausgelassen** — Entwicklerwerkzeuge, die kein
 Spieler öffnet. `tools/ShapeCheck --ui` listet sie, falls sie doch jemand haben will.
 
+## Autorotation
+
+2996 Schlüssel über 83 Module — Modulnamen, 158 Strategie-Tracks und 228 Optionen. Die Texte sind stark
+formelhaft: 2996 Schlüssel bestehen aus nur 1762 verschiedenen Sätzen, und `Do not use automatically`
+allein steht hinter 321 davon.
+
+Übersetzt wurde in drei Stufen, von der sichersten zur aufwendigsten:
+
+1. **Reine Namen** (299) — `Aegis`, `A.Anchor`, `Arms' Length`. Fähigkeitsnamen und ihre Kürzel bleiben
+   englisch, wie überall sonst in diesem Projekt.
+2. **Satzschablone um einen Namen** (418) — `Automatically use Bow Shock`, `Force Nastrond in next
+   possible weave slot`. Die Schablone übersetzt mechanisch, der Name wird unangetastet durchgereicht.
+   Eine Schablone greift nur, wenn das Objekt wirklich ein bloßer Name ist: alles mit Funktionswörtern
+   oder einem eigenen nachgestellten `ASAP` landet in Stufe 3, weil die Wortstellung sonst kippt.
+3. **Echte Sätze** (1045) — von Hand.
+
+Fachvokabular folgt dem, was die Hinweis-Ebene schon gesetzt hat: Burst, Gauge, Cartridges, GCD, Combo,
+Proc, DoT, Positional, Gapcloser, Slidecasting, Weave und Yalms bleiben stehen, weil deutsche Spieler sie
+ausschließlich so kennen.
+
 ## Verifikation nach einem BossMod-Update
 
 Das Hauptrisiko dieses Plugins ist, dass BossMod etwas umbaut und die Reflection still nicht mehr trifft.
@@ -212,6 +272,32 @@ Geprüft wird dreierlei:
 
 Optionen: `--bmr <pfad>`, `--dalamud <verzeichnis>`, `--seed <pfad>`, `--strict`, `--missing`, `--all`,
 `--help`.
+
+Die zweite Prüfung betrifft das IL-Patching. Kampfhinweise und Fenstertexte laufen über Harmony, und
+Harmony funktioniert in Dalamuds Plugin-Kontext nur, wenn `0Harmony` außerhalb davon liegt (siehe
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)). `tools/AlcProbe` baut diese Umgebung nach — zwei collectible
+Kontexte, Plugin und Zielassembly getrennt — und patcht dort jede Form, die das Plugin braucht:
+
+```
+dotnet run --project tools/AlcProbe/Host                          # muss PASS ergeben
+dotnet run --project tools/AlcProbe/Host -- --as-shipped-before   # muss fehlschlagen
+```
+
+Autorotation-Schlüssel entstehen erst, wenn BossMod seine Modulregistrierung aufgebaut hat — sie lassen
+sich also nicht offline ableiten. Für sie prüft `--catalogue` gegen ein frisches `/bmrtl extract`:
+
+```
+dotnet run --project tools/ShapeCheck -- --catalogue "%appdata%\XIVLauncher\pluginConfigs\BmrTranslation\extract\strings.de.json"
+```
+
+Das meldet dieselben zwei Dinge wie die abgeleiteten Prüfungen: verwaiste Schlüssel und Drift. Ein Katalog
+enthält immer nur, was die Sitzung berührt hat, deshalb überspringt die Prüfung eine Ebene, die im Katalog
+gar nicht vorkommt, mit Hinweis — statt sie als gelöscht zu melden.
+
+Der erste Lauf prüft als Schritt 0 die **echte** gebaute `BmrTranslation.dll`: ob Dalamud ihre Typen
+aufzählen kann, solange `0Harmony` noch nicht geladen ist. Der zweite stellt die Anordnung her, die im
+Spiel jeden Patch scheitern ließ. Beides gehört dazu: ein Prüfstand, der den Fehlerfall nicht mehr
+erzeugen kann, meldet irgendwann grün für die falsche Umgebung — genau das ist hier zweimal passiert.
 
 ## Grenzen
 

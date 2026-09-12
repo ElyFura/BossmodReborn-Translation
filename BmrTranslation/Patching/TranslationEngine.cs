@@ -1,4 +1,5 @@
 using System.IO;
+using System.Runtime.CompilerServices;
 using BmrTranslation.Interop;
 using BmrTranslation.Translation;
 
@@ -89,8 +90,25 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
         StrategyPatcher.Apply(bmr, _session);
         Sweep();
 
-        // combat hints are the one layer that needs IL patching; keep it last so a Harmony problem
-        // cannot cost us the config translation that already succeeded
+        // combat hints and window text are the two layers that need IL patching; keep them last so a
+        // Harmony problem cannot cost us the config translation that already succeeded
+        if (HarmonyBootstrap.Ready)
+        {
+            ApplyIlLayers(bmr);
+        }
+        else
+        {
+            Service.Log.Warning($"Harmony unavailable ({HarmonyBootstrap.Error}) - config stays translated, hints and window text stay English");
+        }
+
+        Service.Log.Information($"attached to BossModReborn {bmr.Version}: {_session.Applied} strings translated, {_session.Missing} without translation");
+    }
+
+    // Split out and never inlined: naming HintPatcher or UiPatcher is what forces 0Harmony to resolve,
+    // and that must not be hoisted into a method the JIT reaches before HarmonyBootstrap.Ready is checked.
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private void ApplyIlLayers(BmrHandle bmr)
+    {
         _hints = new HintTranslator(_table);
         _hintPatcher = new HintPatcher(bmr, _hints);
         try
@@ -103,8 +121,7 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
             _hintPatcher = null;
         }
 
-        // the remaining UI literals, also via Harmony but with an independent patch id, so a failure here
-        // leaves the config and the hints translated
+        // an independent patch id, so a failure here leaves the config and the hints translated
         _uiTextPatcher = new UiPatcher(bmr, _table);
         try
         {
@@ -115,8 +132,6 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
             Service.Log.Error(ex, "ui patching failed - the rest stays translated, window text stays English");
             _uiTextPatcher = null;
         }
-
-        Service.Log.Information($"attached to BossModReborn {bmr.Version}: {_session.Applied} strings translated, {_session.Missing} without translation");
     }
 
     // re-run the parts that can grow after attach: enum tables materialise lazily and the settings

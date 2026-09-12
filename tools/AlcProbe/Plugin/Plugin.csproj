@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>ProbePlugin</AssemblyName>
+    <RootNamespace>ProbePlugin</RootNamespace>
+    <HarmonyVersion>2.4.2</HarmonyVersion>
+  </PropertyGroup>
+
+  <!-- the same shape BmrTranslation ships: a compile-time reference only, with 0Harmony embedded rather
+       than copied next to the assembly. If this diverges, the probe stops proving anything about the
+       plugin, so keep the two in step. -->
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" ExcludeAssets="runtime" />
+    <EmbeddedResource Include="$(NuGetPackageRoot)lib.harmony\$(HarmonyVersion)\lib\net10.0\0Harmony.dll">
+      <LogicalName>ProbePlugin.0Harmony.dll</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

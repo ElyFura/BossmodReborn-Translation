@@ -28,7 +28,12 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
     private static readonly Dictionary<string, string> _replacements = new(StringComparer.Ordinal);
     private static int _replaced;
 
-    private Harmony? _harmony;
+    // object, not Harmony: Dalamud enumerates this assembly's types (Module.GetTypes) to find the
+    // IDalamudPlugin before it constructs anything, and loading a type resolves its field types - a
+    // Harmony-typed field here would demand 0Harmony before HarmonyBootstrap has had a chance to run.
+    // See HintPatcher for the same reason stated at length.
+    private object? _harmonyInstance;
+    private Harmony Harmony => (Harmony)_harmonyInstance!;
 
     public int PatchedMethods { get; private set; }
     public int ReplacedLiterals => _replaced;
@@ -36,7 +41,7 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
 
     public void Apply()
     {
-        if (_harmony != null)
+        if (_harmonyInstance != null)
         {
             return;
         }
@@ -70,7 +75,7 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
             return;
         }
 
-        _harmony = new Harmony(HarmonyId);
+        _harmonyInstance = new Harmony(HarmonyId);
         var transpiler = new HarmonyMethod(typeof(UiPatcher).GetMethod(nameof(Transpile), Reflect.AllStatic));
 
         foreach (var owner in owners)
@@ -79,7 +84,7 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
             {
                 try
                 {
-                    _harmony.Patch(method, transpiler: transpiler);
+                    Harmony.Patch(method, transpiler: transpiler);
                     ++PatchedMethods;
                 }
                 catch (Exception ex)
@@ -144,9 +149,16 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
         }
     }
 
+    // Builds a list instead of yielding. An iterator would compile to a state machine whose fields are
+    // typed CodeInstruction - and a field type is resolved when its declaring type loads, which happens
+    // during the Module.GetTypes() Dalamud runs before constructing the plugin. That one hidden type was
+    // enough to fail the entire plugin load; see HintPatcher for the full reasoning.
+    //
+    // Harmony materialises the sequence anyway, so nothing is lost by not streaming it.
     public static IEnumerable<CodeInstruction> Transpile(IEnumerable<CodeInstruction> instructions, MethodBase __originalMethod)
     {
         var owner = (__originalMethod.DeclaringType?.FullName ?? "?") + "::" + __originalMethod.Name;
+        var result = new List<CodeInstruction>();
         foreach (var instruction in instructions)
         {
             if (instruction.opcode == OpCodes.Ldstr
@@ -156,14 +168,18 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
                 instruction.operand = translated;
                 ++_replaced;
             }
-            yield return instruction;
+            result.Add(instruction);
         }
+        return result;
     }
 
     public void Dispose()
     {
-        _harmony?.UnpatchAll(HarmonyId);
-        _harmony = null;
+        if (_harmonyInstance != null)
+        {
+            Harmony.UnpatchAll(HarmonyId);
+        }
+        _harmonyInstance = null;
         _replacements.Clear();
         _replaced = 0;
         PatchedMethods = 0;

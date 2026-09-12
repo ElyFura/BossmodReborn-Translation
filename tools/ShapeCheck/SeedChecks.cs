@@ -17,9 +17,11 @@ public static class SeedChecks
 {
     private const BindingFlags AllFields = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 
-    // key prefixes that cannot be derived from metadata alone: enum display names live in generated tables
-    // and autorotation names are built by module constructors at runtime
-    private static readonly string[] RuntimeOnlyPrefixes = ["ui.tab/", "enum/", "rot/"];
+    // key prefixes that cannot be derived from metadata alone: autorotation names are built by module
+    // constructors at runtime, and tab labels by ConfigUI. Enum keys used to be in this list; they are
+    // derived now (see EnumDerivation), because the runtime extract only ever sees the lazily
+    // materialised tables and silently misses the rest.
+    private static readonly string[] RuntimeOnlyPrefixes = ["ui.tab/", "rot/"];
 
     private const string HintPrefix = "hint/";
     private const string UiPrefix = "ui/";
@@ -64,7 +66,7 @@ public static class SeedChecks
         report.Section("Resources/" + Path.GetFileName(seedPath));
 
         var english = DeriveEnglish(asm);
-        report.Info($"{english.Count} config strings derivable from the assembly");
+        report.Info($"{english.Count} config and enum strings derivable from the assembly");
 
         Dictionary<string, (string? De, string? En)> seed;
         try
@@ -216,6 +218,8 @@ public static class SeedChecks
     private static Dictionary<string, string> DeriveEnglish(Assembly asm)
     {
         var result = new Dictionary<string, string>(StringComparer.Ordinal);
+
+        EnumDerivation.Derive(asm, result);
 
         foreach (var type in asm.GetTypes())
         {

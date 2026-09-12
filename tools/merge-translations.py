@@ -26,12 +26,26 @@ SEP = "|||"
 
 
 def load_english(path):
-    """key -> english, from the ShapeCheck --missing dump.
+    """key -> english, from either source of truth.
+
+    Two shapes are accepted, because two kinds of key have two different sources:
+
+      {"key": "English"}                  ShapeCheck --missing, for everything derivable offline
+      {"key": {"de": "", "en": "English"}}  the in-game /bmrtl extract, written by CatalogueWriter
+
+    Autorotation keys only exist once BossMod has built its module registry, so they can only come from
+    the extract; config and enum keys come from ShapeCheck. Either way the English text is taken from the
+    file, never from the batch - a batch can only supply German.
 
     JSON rather than a flat table, because BossMod tooltips contain embedded newlines and any
     line-oriented format would have to mangle them - corrupting the very value drift detection compares.
     """
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    data = json.loads(Path(path).read_text(encoding="utf-8-sig"))
+    return {
+        key: value["en"] if isinstance(value, dict) else value
+        for key, value in data.items()
+        if not key.startswith("$")  # the extract carries $generated / $language / $notes
+    }
 
 
 def load_batch(path):

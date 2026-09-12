@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>AlcProbe</AssemblyName>
+  </PropertyGroup>
+
+  <!-- ReferenceOutputAssembly=false is the point: the host builds both assemblies but does not reference
+       them, so it reaches them only through the load contexts it creates. It must not reference Harmony
+       either - if the host pulled 0Harmony into the default context, the probe would pass for the wrong
+       reason. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Plugin\Plugin.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\Target\Target.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+</Project>

@@ -28,20 +28,27 @@ public sealed class HintPatcher(BmrHandle bmr, HintTranslator translator) : IDis
     private const string HarmonyId = "de.elyfura.bmrtranslation.hints";
 
     private static HintTranslator? _active; // the patches are static, so they need a static way in
-    private Harmony? _harmony;
+
+    // Typed object, not Harmony: Dalamud calls Module.GetTypes() on the plugin assembly to find the
+    // IDalamudPlugin - before it constructs anything, and therefore before HarmonyBootstrap has run.
+    // Loading a type resolves its *field* types, so a `Harmony?` field here would demand 0Harmony at that
+    // moment and fail the whole plugin load. Method bodies are JITted on first call, long after the
+    // bootstrap, so naming Harmony inside one is fine.
+    private object? _harmonyInstance;
+    private Harmony Harmony => (Harmony)_harmonyInstance!;
 
     public int PatchedMethods { get; private set; }
     public List<string> Failures { get; } = [];
 
     public void Apply()
     {
-        if (_harmony != null)
+        if (_harmonyInstance != null)
         {
             return;
         }
 
         _active = translator;
-        _harmony = new Harmony(HarmonyId);
+        _harmonyInstance = new Harmony(HarmonyId);
 
         var bossModule = bmr.Assembly.GetType("BossMod.BossModule");
         var zoneModule = bmr.Assembly.GetType("BossMod.ZoneModule");
@@ -132,7 +139,7 @@ public sealed class HintPatcher(BmrHandle bmr, HintTranslator translator) : IDis
         }
         try
         {
-            _harmony!.Patch(target, postfix: new HarmonyMethod(typeof(Postfixes).GetMethod(postfixName)));
+            Harmony.Patch(target, postfix: new HarmonyMethod(typeof(Postfixes).GetMethod(postfixName)));
             ++PatchedMethods;
         }
         catch (Exception ex)
@@ -145,8 +152,11 @@ public sealed class HintPatcher(BmrHandle bmr, HintTranslator translator) : IDis
     public void Dispose()
     {
         // BossMod keeps running after we unload, so the patches have to come off with us
-        _harmony?.UnpatchAll(HarmonyId);
-        _harmony = null;
+        if (_harmonyInstance != null)
+        {
+            Harmony.UnpatchAll(HarmonyId);
+        }
+        _harmonyInstance = null;
         _active = null;
         PatchedMethods = 0;
         Failures.Clear();

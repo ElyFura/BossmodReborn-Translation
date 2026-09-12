@@ -20,6 +20,8 @@ if (args.Contains("--help") || args.Contains("-h"))
                              against the installed assembly, as a merge-ready JSON dump
           --ui               extract UI string literals from the installed assembly's IL (methods that
                              call ImGui), as a merge-ready JSON dump; --with-ids keeps "##id" literals
+          --catalogue <path> also drift-check the runtime-only keys (autorotation, tab labels) against
+                             an in-game /bmrtl extract - strings.<lang>.json
         """);
     return 0;
 }
@@ -73,6 +75,11 @@ ShapeChecks.Run(asm, report);
 if (seedPath != null)
 {
     SeedChecks.Run(asm, seedPath, report, bmrPath);
+    // autorotation keys have no static source, so their drift check needs a catalogue from a session
+    if (Arg("--catalogue") is { } cataloguePath)
+    {
+        CatalogueCheck.Run(cataloguePath, seedPath, report);
+    }
 }
 return report.Summarise(strict);
 

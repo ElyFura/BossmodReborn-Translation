@@ -1,0 +1,33 @@
+[
+  {
+    "Author": "ElyFura",
+    "Name": "BossMod Reborn Translation",
+    "InternalName": "BmrTranslation",
+    "Description": "Translates the BossMod Reborn user interface into German at runtime. Does not modify the BossMod Reborn plugin itself: all strings are swapped in memory and restored when this plugin is unloaded.",
+    "Punchline": "BossMod Reborn auf Deutsch",
+    "ApplicableVersion": "any",
+    "RepoUrl": "https://github.com/ElyFura/BossmodReborn-Translation",
+    "Tags": [
+      "translation",
+      "localization",
+      "german",
+      "deutsch",
+      "bossmod"
+    ],
+    "DalamudApiLevel": 15,
+    "LoadPriority": 0,
+    "LoadRequiredState": 0,
+    "LoadSync": false,
+    "CanUnloadAsync": false,
+    "IsTestingExclusive": false,
+    "AcceptsFeedback": false,
+    "AssemblyVersion": "0.1.0.0",
+    "TestingAssemblyVersion": null,
+    "IsHide": false,
+    "DownloadCount": 0,
+    "DownloadLinkInstall": "https://github.com/ElyFura/BossmodReborn-Translation/releases/latest/download/latest.zip",
+    "DownloadLinkUpdate": "https://github.com/ElyFura/BossmodReborn-Translation/releases/latest/download/latest.zip",
+    "DownloadLinkTesting": "https://github.com/ElyFura/BossmodReborn-Translation/releases/latest/download/latest.zip",
+    "LastUpdate": 1789255192
+  }
+]

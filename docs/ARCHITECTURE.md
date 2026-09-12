@@ -101,18 +101,66 @@ Arbeitsbaum, der davon abweichen kann.
 Die einzige Ebene, die IL-Patching braucht. Hinweise sind String-Literale in über 800 Aufrufstellen und
 werden jeden Frame neu berechnet — es gibt keine Datenstruktur zum Umschreiben.
 
-### Erst prüfen, dann bauen
+### Erst prüfen, dann bauen — und der Prüfstand, der das Falsche prüfte
 
 Ob Harmony unter .NET 10 und über die ALC-Grenze funktioniert, war die Frage, an der der ganze Milestone
 hing. Das lässt sich ohne Spiel beantworten: eine Stellvertreter-Assembly in einen eigenen
-`AssemblyLoadContext` laden — so wie Dalamud es mit jedem Plugin tut — und patchen. Geprüft wurden fünf
-Dinge, alle mit Harmony 2.4.2 auf .NET 10.0.5 erfolgreich:
+`AssemblyLoadContext` laden — so wie Dalamud es mit jedem Plugin tut — und patchen. Geprüft wird in
+`tools/AlcProbe`, mit Harmony 2.4.2 auf .NET 10.0.5:
 
 1. Postfix auf einer öffentlichen Methode, die eine `List<T>`-Ableitung zurückgibt
 2. Postfix auf einer Methode, die **vorher schon** JIT-kompiliert wurde
 3. Postfix auf einem Override einer virtuellen Property
 4. Override-Erkennung per Assembly-Scan und Patch jedes Treffers
-5. `UnpatchAll` stellt das Original wieder her (nötig für `/bmrtl off` und das Entladen)
+5. Transpiler, der `ldstr` ersetzt, inklusive `__originalMethod` (Milestone 3)
+6. `UnpatchAll` stellt das Original wieder her (nötig für `/bmrtl off` und das Entladen)
+
+Die erste Fassung dieses Prüfstands lief grün — und im Spiel scheiterte anschließend **jeder einzelne**
+Patch: 64 Hinweis-Ziele und 75 UI-Ziele, alle mit `NotSupportedException: Resolving to a collectible
+assembly is not supported`. Der Prüfstand hatte den `AssemblyLoadContext` mit `isCollectible: false`
+angelegt. Dalamud legt ihn collectible an, damit Plugins ohne Spielneustart entladbar sind — und genau
+diese eine Eigenschaft entscheidet. Grün war also eine Aussage über eine Konfiguration, die es nicht gibt.
+
+Die Ursache liegt nicht bei Harmony selbst, sondern darin, **wo** Harmony liegt: MonoMod lässt beim Bauen
+eines Patches einen Proxy-Typ erzeugen, der von `System.Reflection.Emit.ILGenerator` erbt und dabei
+HarmonyLibs eigenen `ILGeneratorShim` **über seinen Namen** auflösen muss. Namensauflösung auf eine
+collectible Assembly verweigert die Runtime. Kein Versionsproblem: 2.3.3 bis 2.4.2 scheitern identisch,
+ebenso jedes `MONOMOD_DMDType`-Backend.
+
+### Harmony wohnt außerhalb des Plugins
+
+`0Harmony.dll` liegt deshalb **nicht** neben dem Plugin (`ExcludeAssets="runtime"`), sondern als
+eingebettete Ressource *im* Plugin und wird beim Start in den Default-Kontext geschoben
+(`Interop/HarmonyBootstrap.cs`). Danach findet der Plugin-Kontext nichts, was die Referenz erfüllt, fällt
+auf den Default-Kontext zurück und bindet an diese Kopie. Patch-Methoden, Transpiler und BossMod selbst
+bleiben collectible — nur Harmony zieht um, und das ist das Minimum, das funktioniert. Preis: `0Harmony`
+bleibt nach dem Entladen des Plugins geladen. Eine Assembly, und unvermeidbar.
+
+### Kein Harmony-Typ in einem Feld
+
+Damit war das Plugin immer noch nicht ladbar — aus einem zweiten, unabhängigen Grund. Dalamud ruft
+`Module.GetTypes()` auf der Plugin-Assembly auf, um die `IDalamudPlugin`-Implementierung zu finden, und
+zwar **bevor** es irgendetwas konstruiert. Einen Typ zu laden löst dessen **Feldtypen** auf. Ein Feld
+`private Harmony? _harmony` verlangt also `0Harmony` zu einem Zeitpunkt, an dem der Bootstrap noch gar
+nicht gelaufen ist — `ReflectionTypeLoadException`, und das ganze Plugin lädt nicht.
+
+Betroffen waren drei Stellen, zwei davon sichtbar (`HintPatcher`, `UiPatcher`) und eine nicht: `Transpile`
+war ein Iterator, und der Compiler erzeugt daraus eine State-Machine mit Feldern vom Typ `CodeInstruction`.
+Ein einzelner generierter Typ, den niemand geschrieben hat, reichte aus.
+
+Die Felder heißen jetzt `object?` mit einer typisierten Property davor; `Transpile` baut eine Liste, statt
+zu yielden. Methodenrümpfe werden erst beim JIT aufgelöst — also lange nach dem Bootstrap —, deshalb darf
+Harmony dort beliebig genannt werden. Nur Felder und Signaturen von Feldern sind tabu.
+
+### Was den Zustand hält
+
+Drei Dinge, statt eines Kommentars:
+
+* Der Build bricht ab, wenn `0Harmony.dll` neben dem Plugin landen würde (`ExcludeAssets` entfernt).
+* `AlcProbe` Schritt 0 lädt die **echte** `BmrTranslation.dll` in einen collectible Kontext ohne
+  `0Harmony` und zählt die Typen. Das ist die Stufe, die zweimal übersehen wurde.
+* `AlcProbe --as-shipped-before` stellt die alte Anordnung her und erwartet den Fehlschlag;
+  `--non-collectible` führt vor, wie die falsche Grünmeldung zustande kam.
 
 ### Warum die zusammenführenden Methoden
 
@@ -158,7 +206,7 @@ Der erste Entwurf war, jedes `ldstr` durch `ldstr` + `Translate(string)` zu erse
 Literal pro Frame zu emittieren. Beim Prototypen fiel auf, dass das unnötig ist: der Transpiler hat das
 Literal zur Patch-Zeit **schon als Operanden**. Er ersetzt es einfach. Damit gibt es zur Laufzeit keinen
 Aufwand, keinen Helfer und nichts, was sich falsch verhalten kann. Voraussetzung ist, dass Harmony dem
-Transpiler die gepatchte Methode mitgibt (`__originalMethod`) — das ist im ALC-Prober mitgeprüft.
+Transpiler die gepatchte Methode mitgibt (`__originalMethod`) — das prüft AlcProbe mit.
 
 ### Die Patch-Liste kommt aus der Sprachdatei
 

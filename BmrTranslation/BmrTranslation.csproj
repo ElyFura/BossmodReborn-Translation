@@ -34,6 +34,10 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <HarmonyVersion>2.4.2</HarmonyVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
   </PropertyGroup>
 
@@ -44,8 +48,10 @@
   <ItemGroup>
     <PackageReference Include="DalamudPackager" Version="15.0.0" />
     <!-- Combat hints are string literals inside 800+ call sites; only IL patching reaches them.
-         Verified on this runtime and across the ALC boundary before adopting (see docs/ARCHITECTURE.md). -->
-    <PackageReference Include="Lib.Harmony" Version="2.4.2" />
+         ExcludeAssets="runtime": Harmony must NOT end up beside the plugin, because Dalamud would then
+         load it into the plugin's collectible context, where every Patch() call fails. It is embedded
+         below and pushed into the default context at startup instead - see Interop/HarmonyBootstrap.cs. -->
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" ExcludeAssets="runtime" />
     <Reference Include="Dalamud">
       <HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
       <Private>false</Private>
@@ -62,11 +68,34 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <Target Name="CleanupOutput" AfterTargets="Build" BeforeTargets="DalamudPackage">
+  <!-- Harmony travels inside the plugin assembly rather than next to it. Taken straight from the
+       restored package so the version is stated once, at the PackageReference above. -->
+  <ItemGroup>
+    <EmbeddedResource Include="$(NuGetPackageRoot)lib.harmony\$(HarmonyVersion)\lib\net10.0\0Harmony.dll">
+      <LogicalName>BmrTranslation.0Harmony.dll</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <!-- Checked at the source rather than on the output directory: a copy next to the plugin lands in the
+       collectible load context, where every Harmony patch fails. ReferenceCopyLocalPaths is what would
+       put it there, so dropping ExcludeAssets="runtime" fails the build instead of shipping quietly. -->
+  <Target Name="VerifyHarmonyEmbedded" AfterTargets="ResolveReferences">
+    <Error Condition="!Exists('$(NuGetPackageRoot)lib.harmony\$(HarmonyVersion)\lib\net10.0\0Harmony.dll')" Text="0Harmony.dll not found in the package cache - it must be embedded (see Interop/HarmonyBootstrap.cs)" />
+    <Error Condition="'@(ReferenceCopyLocalPaths->AnyHaveMetadataValue('Filename', '0Harmony'))' == 'true'" Text="0Harmony.dll would be copied next to the plugin; Dalamud loads it into the plugin's collectible context and every patch fails. Keep ExcludeAssets=&quot;runtime&quot; on the PackageReference." />
+  </Target>
+
+  <Target Name="CleanupOutput" AfterTargets="Build">
     <ItemGroup>
-      <!-- 0Harmony.dll must survive: it is a real runtime dependency, not build clutter -->
-      <_ExtraOutputFiles Include="$(OutputPath)*" Exclude="$(OutputPath)BmrTranslation.*;$(OutputPath)0Harmony.dll" />
+      <!-- 0Harmony.dll is deliberately absent from the output: it is embedded, and a copy lying here
+           would be found by the plugin's collectible load context and break every patch -->
+      <_ExtraOutputFiles Include="$(OutputPath)*" Exclude="$(OutputPath)BmrTranslation.*" />
     </ItemGroup>
     <Delete Files="@(_ExtraOutputFiles)" />
+  </Target>
+
+  <!-- The installable artefact. DependsOnTargets, not just AfterTargets: both hang off Build, and the
+       zip has to be taken after the output directory is cleaned, or it ships the build clutter. -->
+  <Target Name="PackagePlugin" AfterTargets="Build" DependsOnTargets="CleanupOutput" Condition="'$(Configuration)' == 'Release'">
+    <DalamudPackager ProjectDir="$(ProjectDir)" OutputPath="$(OutputPath)" AssemblyName="$(AssemblyName)" MakeZip="true" VersionComponents="4" />
   </Target>
 </Project>
