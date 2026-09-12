@@ -26,14 +26,18 @@ public static class SeedChecks
     //
     // JSON, not a flat table: BossMod tooltips contain embedded newlines, and a line-oriented format would
     // have to mangle them - which silently corrupts the 'en' value that drift detection compares against.
-    public static void DumpMissing(Assembly asm, string? seedPath, TextWriter output)
+    public static void DumpMissing(Assembly asm, string? seedPath, TextWriter output, bool all = false)
     {
-        var translated = seedPath != null
+        // a decided key is not a pending key: an empty "de" means "stays English", so it is excluded
+        // from the dump just like a translated one.
+        // `all` dumps everything instead, which is what you need to revise a key that is already in the
+        // language file - the merge tool only ever takes English text from this dump.
+        var decided = !all && seedPath != null && File.Exists(seedPath)
             ? LoadSeed(seedPath).Where(e => e.Value.De != null).Select(e => e.Key).ToHashSet(StringComparer.Ordinal)
             : [];
 
         var missing = DeriveEnglish(asm)
-            .Where(e => !translated.Contains(e.Key))
+            .Where(e => !decided.Contains(e.Key))
             .OrderBy(e => e.Key, StringComparer.Ordinal)
             .ToDictionary(e => e.Key, e => e.Value, StringComparer.Ordinal);
 
@@ -67,6 +71,7 @@ public static class SeedChecks
         var runtimeOnly = 0;
         var orphans = 0;
         var drifted = 0;
+        var keptEnglish = 0;
 
         foreach (var (key, entry) in seed)
         {
@@ -77,6 +82,10 @@ public static class SeedChecks
             }
 
             ++checkedKeys;
+            if (entry.De?.Length == 0)
+            {
+                ++keptEnglish; // explicit empty "de": decided to stay English
+            }
             if (!english.TryGetValue(key, out var current))
             {
                 report.Fail($"orphan key, not present in BossMod: {key}");
@@ -98,9 +107,13 @@ public static class SeedChecks
         }
         report.Info($"{runtimeOnly} key(s) not statically verifiable (enum / autorotation / tab labels)");
 
-        var coverage = english.Count == 0 ? 0 : 100.0 * checkedKeys / english.Count;
+        // coverage counts only what is actually meant to become German
+        var translatable = english.Count - keptEnglish;
+        var translated = checkedKeys - keptEnglish;
+        var coverage = translatable <= 0 ? 100.0 : 100.0 * translated / translatable;
         report.Note(string.Format(System.Globalization.CultureInfo.InvariantCulture,
-            "config coverage: {0}/{1} keys translated ({2:F1}%) - run /bmrtl extract in game for the rest", checkedKeys, english.Count, coverage));
+            "config coverage: {0}/{1} translated ({2:F1}%), {3} deliberately English, {4} still open",
+            translated, translatable, coverage, keptEnglish, translatable - translated));
         report.Note($"missing 'en' source on {seed.Count(s => !RuntimeOnlyPrefixes.Any(p => s.Key.StartsWith(p, StringComparison.Ordinal)) && s.Value.En == null)} config key(s) - those cannot be drift-checked");
     }
 

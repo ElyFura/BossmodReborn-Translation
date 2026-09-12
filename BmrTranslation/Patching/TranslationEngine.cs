@@ -134,7 +134,7 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
             return _lastAttachError ?? "waiting for BossMod Reborn";
         }
         var user = _table.UserFile != null ? $", override file {_table.UserFile}" : "";
-        return $"BossModReborn {_bmr.Version} | {_table.Count} entries in '{Language}' | {_session.Applied} applied, {_session.Missing} missing, {_session.Stale} stale{user}";
+        return $"BossModReborn {_bmr.Version} | {_table.Count} entries in '{Language}' | {_session.Applied} applied, {_session.KeptEnglish} kept English, {_session.Missing} missing, {_session.Stale} stale{user}";
     }
 
     public IReadOnlyCollection<CatalogueEntry> Catalogue => _session?.Catalogue ?? [];
@@ -145,6 +145,7 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
     public int AppliedCount => _session?.Applied ?? 0;
     public int MissingCount => _session?.Missing ?? 0;
     public int StaleCount => _session?.Stale ?? 0;
+    public int KeptEnglishCount => _session?.KeptEnglish ?? 0;
 
     public void Dispose() => Revert();
 }

@@ -14,7 +14,8 @@ if (args.Contains("--help") || args.Contains("-h"))
           --dalamud <dir>    Dalamud assembly directory (default: $DALAMUD_HOME or XIVLauncher addon/Hooks/dev)
           --seed <path>      translation file to validate (default: BmrTranslation/Resources/de.json)
           --strict           treat drift warnings as failures
-          --missing          print untranslated keys as "key<TAB>english" and exit
+          --missing          dump the undecided keys with their English text as JSON, and exit
+          --all              dump every derivable key, decided or not (to revise existing entries)
         """);
     return 0;
 }
@@ -47,9 +48,9 @@ using var mlc = new MetadataLoadContext(new PathAssemblyResolver(probe.Distinct(
 var asm = mlc.LoadFromAssemblyPath(bmrPath);
 Console.Error.WriteLine($"version:  {asm.GetName().Name} {asm.GetName().Version}");
 
-if (args.Contains("--missing"))
+if (args.Contains("--missing") || args.Contains("--all"))
 {
-    SeedChecks.DumpMissing(asm, seedPath, Console.Out);
+    SeedChecks.DumpMissing(asm, seedPath, Console.Out, all: args.Contains("--all"));
     return 0;
 }
 

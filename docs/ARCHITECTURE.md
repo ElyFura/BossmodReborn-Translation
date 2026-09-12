@@ -130,10 +130,24 @@ gleich und die Übersetzung greift weiter — aber der mitgeschriebene `en`-Wert
 `/bmrtl` meldet den Eintrag als *stale*. Eine Umbenennung eines Feldes oder Typs hingegen lässt den
 Schlüssel verwaisen; er erscheint dann in `missing.de.json`.
 
-Geprüft gegen **BossMod Reborn 7.5.6.5**: alle Typ-, Feld- und Backing-Field-Namen sowie alle 303
-Konfigurationsschlüssel der mitgelieferten `de.json` wurden gegen die installierte Assembly verifiziert,
-nicht nur gegen den Quellcode — per `tools/ShapeCheck`. Von 913 ableitbaren Konfigurations-Strings sind
-damit 33,2 % übersetzt; die allgemeinen Einstellungen vollständig, offen nur Encounter-spezifisches.
+Geprüft gegen **BossMod Reborn 7.5.6.5**: alle Typ-, Feld- und Backing-Field-Namen sowie alle 918
+Einträge der mitgelieferten `de.json` wurden gegen die installierte Assembly verifiziert, nicht nur gegen
+den Quellcode — per `tools/ShapeCheck`. Die Konfigurationsebene ist damit vollständig entschieden: 542 der
+913 ableitbaren Strings übersetzt, 371 bewusst englisch, 0 offen.
+
+### Warum „bewusst englisch" ein eigener Zustand ist
+
+Raid-Notation wie `MT/R1 N, OT/R2 S` oder `LPDU (global): M1>M2>MT>OT>R1>R2>H1>H2` darf nicht übersetzt
+werden — Guides und Partyfinder sind englisch, eine Eindeutschung würde den Abgleich erschweren. Ohne eine
+Möglichkeit, „entschieden, bleibt englisch" auszudrücken, würden diese 371 Schlüssel dauerhaft im
+Fehlend-Zähler stehen und die Zahl damit unbrauchbar machen. Ein leeres `"de"` im Sprachfile ist deshalb
+ein eigener Zustand, den Laufzeit und Prüfwerkzeug getrennt zählen.
+
+Die erste Klassifikation war zu grob: pauschal „alle `group`/`preset`/`combo`/`order`-Werte bleiben
+englisch". Vier davon trugen echte Erklärungsprosa hinter einem Notations-Präfix
+(`2+0: first towers are soaked by short color …`, `CCW (leftmost, if facing outside)`). Ein Suchlauf über
+die als englisch markierten Werte nach erklärenden Wörtern hat sie gefunden; sie sind jetzt übersetzt. Eine
+Regel nach Schlüsselform ist ein guter erster Filter, aber kein Ersatz dafür, die Werte anzusehen.
 
 Eine Lehre aus dem ersten Batch: der Dump für `tools/merge-translations.py` war zunächst zeilenbasiert
 (TSV) und hat die eingebetteten Zeilenumbrüche in BossMods Tooltips zu Leerzeichen geplättet. Damit wich der

@@ -2,7 +2,7 @@ using BmrTranslation.Interop;
 
 namespace BmrTranslation.Translation;
 
-public sealed record CatalogueEntry(string Key, string English, string? German, bool Stale, string Origin);
+public sealed record CatalogueEntry(string Key, string English, string? German, bool Stale, bool KeptEnglish, string Origin);
 
 // one apply/revert cycle over BossMod's live metadata.
 //
@@ -22,6 +22,8 @@ public sealed class PatchSession(TranslationTable table)
     public int Applied { get; private set; }
     public int Missing { get; private set; }
     public int Stale { get; private set; }
+    // keys with an explicit empty translation: decided to stay English, not an omission
+    public int KeptEnglish { get; private set; }
 
     public IReadOnlyCollection<CatalogueEntry> Catalogue => _catalogue.Values;
 
@@ -131,12 +133,17 @@ public sealed class PatchSession(TranslationTable table)
     {
         var entry = table.Lookup(key);
         var stale = entry?.Source != null && !string.Equals(entry.Source, english, StringComparison.Ordinal);
+        var keptEnglish = entry != null && entry.Text == null;
         if (!_catalogue.ContainsKey(key))
         {
-            _catalogue[key] = new CatalogueEntry(key, english, entry?.Text, stale, origin);
+            _catalogue[key] = new CatalogueEntry(key, english, entry?.Text, stale, keptEnglish, origin);
             if (entry == null)
             {
                 ++Missing;
+            }
+            else if (keptEnglish)
+            {
+                ++KeptEnglish;
             }
             else if (stale)
             {

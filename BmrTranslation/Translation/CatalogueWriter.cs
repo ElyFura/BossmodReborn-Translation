@@ -31,7 +31,7 @@ public static class CatalogueWriter
         var ordered = catalogue.OrderBy(e => e.Key, StringComparer.Ordinal).ToList();
 
         File.WriteAllText(full, Render(ordered, onlyMissing: false, language), Encoding.UTF8);
-        var missed = ordered.Count(e => e.German == null);
+        var missed = ordered.Count(e => e.German == null && !e.KeptEnglish);
         File.WriteAllText(missing, Render(ordered, onlyMissing: true, language), Encoding.UTF8);
 
         return (full, missing, ordered.Count, missed);
@@ -52,7 +52,7 @@ public static class CatalogueWriter
         for (var i = 0; i <= last; ++i)
         {
             var e = entries[i];
-            if (onlyMissing && e.German != null)
+            if (onlyMissing && (e.German != null || e.KeptEnglish))
             {
                 continue;
             }
@@ -62,7 +62,12 @@ public static class CatalogueWriter
             }
             sb.Append("  ").Append(Json(e.Key)).Append(": { \"de\": ").Append(Json(e.German ?? ""))
               .Append(", \"en\": ").Append(Json(e.English));
-            if (e.Stale)
+            if (e.KeptEnglish)
+            {
+                // an explicit empty "de" - this key is decided, it stays English
+                sb.Append(", \"kept_english\": true");
+            }
+            else if (e.Stale)
             {
                 // the translation was written against a different English text and needs re-review
                 sb.Append(", \"stale\": true");

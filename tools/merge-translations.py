@@ -14,6 +14,7 @@ Usage:
 
 Batch format, one per line:
     <key> ||| <translation>
+    <key> ||| =              # deliberately stays English
 """
 
 import argparse
@@ -46,8 +47,13 @@ def load_batch(path):
         key, translation = (part.strip() for part in line.split(SEP, 1))
         if key in result:
             print(f"  line {number}: duplicate key {key}", file=sys.stderr)
-        # the batch file is line-based, so a literal \n is how a translator breaks a long tooltip
-        result[key] = translation.replace("\\n", "\n")
+        if translation == "=":
+            # "=" marks a key that deliberately stays English (raid shorthand, direction codes, strat
+            # names). Stored as an empty "de" so it counts as decided rather than pending.
+            result[key] = ""
+        else:
+            # the batch file is line-based, so a literal \n is how a translator breaks a long tooltip
+            result[key] = translation.replace("\\n", "\n")
     return result
 
 

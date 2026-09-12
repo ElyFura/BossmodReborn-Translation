@@ -19,22 +19,36 @@ ohne Harmony:
 | Autorotation (Modul-, Track- und Options-Namen) | `RotationModuleDefinition`, `StrategyConfig`, `StrategyOption` | ✅ |
 | Tab-Leiste des Einstellungsfensters | 5 Tabs | ✅ |
 | Statusfenster (Abdeckung, Drift, Export) | `/bmrtl` bzw. Zahnrad in der Plugin-Liste | ✅ |
+| Konfigurations-Übersetzung | 913 Schlüssel, alle entschieden | ✅ 542 deutsch, 371 bewusst englisch |
 | Kampfhinweise (`hints.Add(...)`) | 543 feste + 238 interpolierte | ⏳ Milestone 2 |
 | Übrige ImGui-Literale in der UI | 87 Dateien | ⏳ Milestone 3 |
 
-Die mitgelieferte `de.json` enthält 308 Einträge, davon 303 von 913 übersetzbaren
-Konfigurations-Strings (33,2 %). **Die allgemeinen Einstellungen sind vollständig** — Einstellungsbaum,
-Radar und Boss-Module, automatische Bewegung, Aktions-Anpassungen, Farbschema, Autorotation, Replays,
-Gebietsmodule, Job-Einstellungen, alle Tabs. Offen sind ausschließlich die 610 Encounter-spezifischen
-Strings (FRU allein 222, TOP 85, DSW2 41 …). Alles ohne Eintrag bleibt englisch; es fehlt nie Text, er ist
-nur noch nicht übersetzt.
+**Die Konfigurationsebene ist vollständig abgearbeitet:** alle 913 Schlüssel sind entschieden — 542
+übersetzt, 371 bewusst englisch, 0 offen. `de.json` hat 918 Einträge (die fünf weiteren sind die Tabs).
+Das umfasst die allgemeinen Einstellungen ebenso wie jeden Encounter, FRU und TOP und DSW eingeschlossen.
 
-### Konvention: Fähigkeitsnamen bleiben englisch
+### Was bewusst englisch bleibt
 
-Job-Fähigkeiten stehen in einfachen Anführungszeichen und unübersetzt da — `'Elusive Jump'`,
-`'Holy Spirit'`, `'Peloton'`. Deutsche Spieler kennen sie aus Guides und der Community unter den englischen
-Namen, und BossMods eigene Modul- und Preset-Namen sind ebenfalls englisch. Umgebender Satz ist deutsch,
-der Name bleibt zitierfähig. Wer das anders will, ändert es in `de.json` — keine Codeänderung nötig.
+Zwei Kategorien, beide aus demselben Grund: deutsche Spieler kennen sie ausschließlich englisch, weil
+Guides, Partyfinder und Community-Sprache englisch sind. Eine Übersetzung würde den Abgleich mit einem
+Guide erschweren, nicht erleichtern.
+
+1. **Raid-Notation und Strategienamen** (371 Schlüssel) — `MT/R1 N, OT/R2 S`,
+   `LPDU (global): M1>M2>MT>OT>R1>R2>H1>H2`, Clockspots, `CW`/`CCW`, `Hector (NA)`, `Banana Codex`.
+2. **Fähigkeits- und Mechaniknamen** innerhalb übersetzter Sätze — `'Elusive Jump'`, `Cyclonic Break`,
+   `Sanctity of the Ward`. Der Satz drumherum ist deutsch, der Name bleibt zitierfähig.
+
+Kategorie 1 ist im Sprachfile als Entscheidung markiert, nicht als Lücke:
+
+```json
+"cfg/.../P1BoundOfFaithAssignment/preset.0": { "de": "", "en": "Supports N, DD S" }
+```
+
+Ein leeres `"de"` heißt „entschieden, bleibt englisch"; ein fehlender Eintrag heißt „noch nicht bearbeitet".
+Ohne diese Unterscheidung würde die Zahl offener Schlüssel nie auf null gehen und damit nichts mehr
+aussagen. `/bmrtl` und `tools/ShapeCheck` zählen beide Kategorien getrennt.
+
+Wer es anders haben will, ändert `de.json` — keine Codeänderung nötig.
 
 ## Installation
 
@@ -95,13 +109,16 @@ Für größere Batches braucht man das Spiel nicht — die Konfigurations-String
 installierten Assembly ziehen:
 
 ```
-dotnet run --project tools/ShapeCheck -- --missing > missing.json
+dotnet run --project tools/ShapeCheck -- --missing > missing.json   # nur unentschiedene Schlüssel
+dotnet run --project tools/ShapeCheck -- --all > all.json           # alle, um Bestehendes zu überarbeiten
 ```
 
-Dann eine Batch-Datei mit einer Zeile pro Eintrag schreiben (`\n` im Text erzeugt einen Zeilenumbruch):
+Dann eine Batch-Datei mit einer Zeile pro Eintrag schreiben (`\n` im Text erzeugt einen Zeilenumbruch,
+`=` markiert „bleibt bewusst englisch"):
 
 ```
 cfg/BossMod.ColorConfig/ArenaEnemy/label ||| Arena: Gegner
+cfg/BossMod.Dawntrail.Savage.M10STheXtremes.Strategy/Hector/label ||| =
 ```
 
 und einmischen:
@@ -135,7 +152,8 @@ Geprüft wird dreierlei:
 3. **Drift** — der Schlüssel existiert noch, aber BossMod hat die englische Formulierung geändert; die
    Übersetzung greift weiter, muss aber nachgesehen werden. Das ist eine Warnung, mit `--strict` ein Fehler.
 
-Optionen: `--bmr <pfad>`, `--dalamud <verzeichnis>`, `--seed <pfad>`, `--strict`, `--help`.
+Optionen: `--bmr <pfad>`, `--dalamud <verzeichnis>`, `--seed <pfad>`, `--strict`, `--missing`, `--all`,
+`--help`.
 
 ## Grenzen
 

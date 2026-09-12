@@ -48,7 +48,7 @@ public sealed class StatusWindow : Window
         }
 
         ImGui.TextUnformatted($"BossMod Reborn {_engine.BossModVersion}  ·  Sprache '{_engine.Language}'  ·  {_engine.EntryCount} Einträge geladen");
-        ImGui.TextUnformatted($"{_engine.AppliedCount} übersetzt  ·  {_engine.MissingCount} ohne Übersetzung  ·  {_engine.StaleCount} veraltet");
+        ImGui.TextUnformatted($"{_engine.AppliedCount} übersetzt  ·  {_engine.KeptEnglishCount} bewusst englisch  ·  {_engine.MissingCount} offen  ·  {_engine.StaleCount} veraltet");
 
         var total = _engine.Catalogue.Count;
         if (total > 0)
@@ -115,7 +115,7 @@ public sealed class StatusWindow : Window
         ImGui.SetNextItemWidth(-1f);
         ImGui.InputTextEx("##filter", "Filter (Schlüssel oder englischer Text) …", ref _filter);
 
-        var missing = _engine.Catalogue.Where(e => e.German == null && Matches(e)).Take(500).ToList();
+        var missing = _engine.Catalogue.Where(e => e.German == null && !e.KeptEnglish && Matches(e)).Take(500).ToList();
         ImGui.TextDisabled($"{missing.Count} angezeigt (max. 500)");
 
         using var child = Dalamud.Interface.Utility.Raii.ImRaii.Child("missing", new(0f, 0f), true);
