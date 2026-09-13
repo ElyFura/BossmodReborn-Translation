@@ -223,6 +223,16 @@ public static class SeedChecks
 
         foreach (var type in asm.GetTypes())
         {
+            // Enum members are fields and carry PropertyDisplay too, so this loop used to emit
+            // "cfg/<EnumType>/<Member>/label" for every one of them - 119 keys that can never match.
+            // ConfigMetadataPatcher walks GeneratedConfigMetadata, which holds config *classes*; an enum
+            // is never a key there. Their real keys come from EnumDerivation above, and the in-game
+            // catalogue is what exposed the difference: 119 keys the runtime never once walked past.
+            if (type.IsEnum)
+            {
+                continue;
+            }
+
             var configDisplay = type.GetCustomAttributesData().FirstOrDefault(a => a.AttributeType.Name == "ConfigDisplayAttribute");
             if (configDisplay != null)
             {

@@ -318,15 +318,6 @@
   "cfg/BossMod.AI.AIConfig/MoveDelay/tooltip": { "de": "Ändere das nur auf eigene Gefahr und halte den Wert niedrig! Ist er zu hoch, wird bei manchen Mechaniken nicht rechtzeitig ausgewichen. Passe den Wert für unterschiedliche Inhalte neu an.", "en": "Only change this at your own risk and keep this value low! Too high and it won't move in time for some mechanics. Make sure to readjust the value for different content." },
   "cfg/BossMod.AI.AIConfig/PreferredDistance/label": { "de": "Bevorzugter Abstand zu verbotenen Zonen", "en": "Preferred distance to forbidden zones" },
   "cfg/BossMod.AI.AIConfig/ShowDTR/label": { "de": "Status in der DTR-Leiste anzeigen", "en": "Show status in DTR bar" },
-
-  "cfg/BossMod.ActionTweaksConfig+GroundTargetingMode/AtCursor/label": { "de": "An der aktuellen Mausposition wirken", "en": "Cast at current mouse position" },
-  "cfg/BossMod.ActionTweaksConfig+GroundTargetingMode/AtTarget/label": { "de": "An der Position des gewählten Ziels wirken", "en": "Cast at selected target's position" },
-  "cfg/BossMod.ActionTweaksConfig+GroundTargetingMode/Manual/label": { "de": "Position manuell mit zusätzlichem Klick wählen (normales Spielverhalten)", "en": "Manually select position by extra click (normal game behaviour)" },
-  "cfg/BossMod.ActionTweaksConfig+ModifierKey/Alt/label": { "de": "Alt", "en": "Alt" },
-  "cfg/BossMod.ActionTweaksConfig+ModifierKey/Ctrl/label": { "de": "Strg", "en": "Control" },
-  "cfg/BossMod.ActionTweaksConfig+ModifierKey/M12/label": { "de": "Linke + rechte Maustaste", "en": "LMB + RMB" },
-  "cfg/BossMod.ActionTweaksConfig+ModifierKey/None/label": { "de": "Keine", "en": "None" },
-  "cfg/BossMod.ActionTweaksConfig+ModifierKey/Shift/label": { "de": "Shift", "en": "Shift" },
   "cfg/BossMod.ActionTweaksConfig/AnimationLockDelayMax/label": { "de": "Maximale simulierte Verzögerung der Animationssperre (Tooltip lesen!)", "en": "Animation lock max. simulated delay (read tooltip!)" },
   "cfg/BossMod.ActionTweaksConfig/AnimationLockDelayMax/tooltip": { "de": "Legt die maximale simulierte Verzögerung in Millisekunden fest, wenn die Entfernung der Animationssperre genutzt wird — das ist erforderlich und kann nicht auf null gesetzt werden. Mit 20 ms wird Triple-Weaving bei aktiver Autorotation möglich. Der niedrigste Wert, der Triple-Weaving verhindert, ist 26 ms. Das Minimum von 20 ms ist von FFLogs akzeptiert und sollte keine Probleme mit deinen Logs verursachen.", "en": "Configures the maximum simulated delay in milliseconds when using animation lock removal - this is required and cannot be reduced to zero. Setting this to 20ms will enable triple-weaving when using autorotation. The minimum setting to remove triple-weaving is 26ms. The minimum of 20ms has been accepted by FFLogs and should not cause issues with your logs." },
   "cfg/BossMod.ActionTweaksConfig/AutoAutos/label": { "de": "Auto-Attacken automatisch verwalten", "en": "Automatically manage auto attacks" },
@@ -353,10 +344,6 @@
   "cfg/BossMod.ActionTweaksConfig/RestoreRotation/label": { "de": "Blickrichtung nach dem Einsatz einer Aktion wiederherstellen", "en": "Restore character orientation after action use" },
   "cfg/BossMod.ActionTweaksConfig/UseManualQueue/label": { "de": "Eigene Warteschlange für manuell gedrückte Aktionen verwenden", "en": "Use custom queueing for manually pressed actions" },
   "cfg/BossMod.ActionTweaksConfig/UseManualQueue/tooltip": { "de": "Diese Einstellung verzahnt sich besser mit Autorotationen und verhindert Triple-Weaving oder verschobene GCDs, wenn du während laufender Autorotation eine Heilfähigkeit drückst", "en": "This setting allows better integration with autorotations and will prevent you from triple-weaving or drifting GCDs if you press a healing ability while autorotation is going on" },
-
-  "cfg/BossMod.Autorotation.AutorotationConfig+DtrStatus/Icon/label": { "de": "Mit Symbol", "en": "With icon" },
-  "cfg/BossMod.Autorotation.AutorotationConfig+DtrStatus/None/label": { "de": "Deaktiviert", "en": "Disabled" },
-  "cfg/BossMod.Autorotation.AutorotationConfig+DtrStatus/TextOnly/label": { "de": "Nur Text", "en": "Text only" },
   "cfg/BossMod.Autorotation.AutorotationConfig/ClearForceDisableOnCombatEnd/label": { "de": "Zwangsweise abgeschaltete Autorotation beim Kampfende automatisch wieder aktivieren", "en": "Automatically reenable force-disabled autorotation when exiting combat" },
   "cfg/BossMod.Autorotation.AutorotationConfig/ClearPresetOnCombatEnd/label": { "de": "Autorotation beim Kampfende automatisch abschalten", "en": "Automatically disable autorotation when exiting combat" },
   "cfg/BossMod.Autorotation.AutorotationConfig/ClearPresetOnDeath/label": { "de": "Autorotation bei Tod automatisch abschalten", "en": "Automatically disable autorotation on death" },
@@ -374,23 +361,6 @@
   "cfg/BossMod.Autorotation.AutorotationConfig/ShowPositionals/label": { "de": "Positional-Hinweise in der Spielwelt anzeigen", "en": "Show positional hints in world" },
   "cfg/BossMod.Autorotation.AutorotationConfig/ShowPositionals/tooltip": { "de": "Zeigt Hinweise für positionsabhängige Fähigkeiten an, die zur Flanke oder in den Rücken des Ziels führen", "en": "Show tips for positional abilities, indicating to move to the flank or rear of your target" },
   "cfg/BossMod.Autorotation.AutorotationConfig/ShowUI/label": { "de": "Spielinterne Oberfläche anzeigen", "en": "Show in-game UI" },
-
-  "cfg/BossMod.Autorotation.RotationModuleOrder/Actions/label": { "de": "[2] Standard-Rotations-/Hilfsmodul. Entscheidet, welche Aktionen genutzt werden, und legt Zielzonen fest.", "en": "[2] Standard rotation/utility module. Responsible for deciding which actions to use and setting up goal zones." },
-  "cfg/BossMod.Autorotation.RotationModuleOrder/HighLevel/label": { "de": "[1] Übergeordnetes Strategiemodul. Zuständig für Zielwahl und Gegner-Priorisierung.", "en": "[1] High-level strategy module. Responsible for targeting and enemy prioritization." },
-  "cfg/BossMod.Autorotation.RotationModuleOrder/Movement/label": { "de": "[3] Bewegungsmodul. Zuständig für Wegfindung und Ausführung der Bewegung.", "en": "[3] Movement module. Responsible for pathfinding and executing movement." },
-
-  "cfg/BossMod.Autorotation.RotationModuleQuality/Basic/label": { "de": "Einfach — die Standardrotation funktioniert, aber nicht viel mehr; geeignet zum Leveln oder für lockere Inhalte, erwarte grüne/blaue Logs", "en": "Basic - expect the standard rotation to work, but not much more - suitable for leveling or casual content, expect green/blue logs" },
-  "cfg/BossMod.Autorotation.RotationModuleQuality/Excellent/label": { "de": "Ausgezeichnet — bei korrekter Nutzung des Planers sind durchgehend orange/pinke Logs zu erwarten", "en": "Excellent - expect to be able to get orange/pink logs consistently if you utilize planner correctly" },
-  "cfg/BossMod.Autorotation.RotationModuleQuality/Good/label": { "de": "Gut — führt in den meisten Fällen optimale Aktionen aus, der Planer deckt die restlichen Situationen ab; für alle Inhalte geeignet, erwarte violette/orange Logs", "en": "Good - expect to execute optimal actions in most cases, and planner should cover the remaining situations - suitable for all content, expect purple/orange logs" },
-  "cfg/BossMod.Autorotation.RotationModuleQuality/Ok/label": { "de": "Okay — führt meist sinnvolle Aktionen aus, erholt sich von Toden, grundlegende Planer-Unterstützung; für Savage geeignet, erwarte blaue/violette Logs", "en": "OK - expect to execute reasonable actions in most circumstances, recover from deaths, have basic planning support - suitable for savages, expect blue/purple logs" },
-  "cfg/BossMod.Autorotation.RotationModuleQuality/WIP/label": { "de": "In Arbeit — erwarte, dass viel nicht funktioniert (oder schlicht kaputt ist)", "en": "Work-in-progress - expect it to break a lot (or just be straight broken)" },
-
-  "cfg/BossMod.Autorotation.xan.RDM+ComboStrategy/Break/label": { "de": "Combo abbrechen, wenn das Ziel außer Reichweite ist", "en": "Break combo if target is out of range" },
-  "cfg/BossMod.Autorotation.xan.RDM+ComboStrategy/Preserve/label": { "de": "Combo immer abschließen (halten, wenn das Ziel außer Reichweite gerät)", "en": "Always complete combo (hold if target moves out of range)" },
-  "cfg/BossMod.Autorotation.xan.RDM+ComboStrategy/Reprise/label": { "de": "Combo immer abschließen; 'Reprise' als Ausweichlösung bei genug Mana (NICHT IMPLEMENTIERT, nur ein Platzhalter)", "en": "Always complete combo; use Reprise as fallback if enough mana (NOT IMPLEMENTED, this is a placeholder option)" },
-  "cfg/BossMod.Autorotation.xan.RDM+MeleeStrategy/Automatic/label": { "de": "Bei voller Mana-Leiste, wenn für Bewegung nötig, oder im Burst einsetzen", "en": "Use at full mana, if needed for movement, or during burst" },
-  "cfg/BossMod.Autorotation.xan.RDM+MeleeStrategy/Delay/label": { "de": "Nicht einsetzen", "en": "Do not use" },
-  "cfg/BossMod.Autorotation.xan.RDM+MeleeStrategy/Force/label": { "de": "Sofort einsetzen, notfalls Combos abbrechen", "en": "Use ASAP, break combos if necessary" },
 
   "cfg/BossMod.BossModuleConfig/ActorScale/label": { "de": "Skalierungsfaktor der Akteur-Dreiecke", "en": "Actor triangle scale factor" },
   "cfg/BossMod.BossModuleConfig/AllowAutomaticActions/label": { "de": "Modulen erlauben, Aktionen automatisch einzusetzen", "en": "Allow modules to automatically use actions" },
@@ -454,12 +424,6 @@
   "cfg/BossMod.BossModuleConfig/TrishaMode/tooltip": { "de": "Entfernt den schwarzen Rahmen um den Radar; funktioniert nicht, wenn du den Radar auf einen anderen Monitor verschiebst", "en": "Removes the black window around the radar; this will not work if you move the radar to a different monitor" },
   "cfg/BossMod.BossModuleConfig/WaymarkFontSize/label": { "de": "Schriftgröße der Wegmarken", "en": "Waymark font size" },
 
-  "cfg/BossMod.BossModuleInfo+Maturity/AISupport/label": { "de": "Modul, dessen Zusammenspiel mit aktivierter KI geprüft wurde.", "en": "Module that has been verified to work well with AI enabled." },
-  "cfg/BossMod.BossModuleInfo+Maturity/Contributed/label": { "de": "Von Dritten beigesteuertes Modul, das der Plugin-Autor nicht geprüft hat; kann einwandfrei laufen, kann aber auch beliebige Unstimmigkeiten gegenüber anderen Modulen haben — ohne Gewähr.", "en": "Third-party contributed module that wasn't verified by the plugin author; might be working fine, might have any sorts of inconsistencies with other modules - YMMV." },
-  "cfg/BossMod.BossModuleInfo+Maturity/Dummy/label": { "de": "Platzhalter-Module, nur für Entwicklungszwecke.", "en": "Dummy modules, dev work only." },
-  "cfg/BossMod.BossModuleInfo+Maturity/Verified/label": { "de": "Modul aus erster Hand vom Plugin-Autor, oder ein von Dritten beigesteuertes Modul, das gründlich geprüft wurde.", "en": "First-party module created by the plugin author, or a third-party contributed module that was thoroughly verified." },
-  "cfg/BossMod.BossModuleInfo+Maturity/WIP/label": { "de": "In Arbeit; kann unvollständig sein oder schwere Fehler haben.", "en": "Work in progress; might be incomplete or have severe bugs." },
-
   "cfg/BossMod.ClassShared.SharedActionsConfig/AlignDashToCamera/label": { "de": "Sprint-Aktionen an der Kamerarichtung ausrichten ('Lost Swift', 'Occult Featherfoot' usw.)", "en": "Align dash actions with camera direction (Lost Swift, Occult Featherfoot, etc)" },
 
   "cfg/BossMod.ColorConfig/ArenaAOE/label": { "de": "Arena: typische Gefahrenzone (AoE)", "en": "Arena: typical danger zone (AOE)" },
@@ -515,16 +479,7 @@
   "cfg/BossMod.ColorConfig/WaymarkC/label": { "de": "Wegmarke: C", "en": "Waymark: C" },
   "cfg/BossMod.ColorConfig/WaymarkD/label": { "de": "Wegmarke: D", "en": "Waymark: D" },
 
-  "cfg/BossMod.ColumnStateMachine+NodeTextDisplay/ID/label": { "de": "Nur ID", "en": "ID only" },
-  "cfg/BossMod.ColumnStateMachine+NodeTextDisplay/IDName/label": { "de": "ID und Name", "en": "ID and name" },
-  "cfg/BossMod.ColumnStateMachine+NodeTextDisplay/None/label": { "de": "Kein Text", "en": "No text" },
-
   "cfg/BossMod.DNCConfig/AlignDashToCamera/label": { "de": "'En Avant' an der Kamerarichtung ausrichten", "en": "Align En Avant with camera direction" },
-
-  "cfg/BossMod.DRGConfig+ElusiveJumpBehavior/CameraBackward/label": { "de": "Kamerarelativ, nach hinten", "en": "Camera-relative, backwards" },
-  "cfg/BossMod.DRGConfig+ElusiveJumpBehavior/CameraForward/label": { "de": "Kamerarelativ, nach vorne", "en": "Camera-relative, forwards" },
-  "cfg/BossMod.DRGConfig+ElusiveJumpBehavior/CharacterForward/label": { "de": "Charakterrelativ, nach vorne", "en": "Character-relative, forwards" },
-  "cfg/BossMod.DRGConfig+ElusiveJumpBehavior/Default/label": { "de": "Spielstandard (charakterrelativ, nach hinten)", "en": "Game default (character-relative, backwards)" },
   "cfg/BossMod.DRGConfig/ElusiveJump/label": { "de": "Richtung von 'Elusive Jump'", "en": "Elusive Jump direction" },
 
   "cfg/BossMod.Dawntrail.Chaotic.Ch01CloudOfDarkness.Ch01CloudOfDarknessConfig/ShowOccupiedTiles/label": { "de": "Besetzte Felder im Radar anzeigen", "en": "Show occupied tiles on radar" },
@@ -537,9 +492,6 @@
   "cfg/BossMod.Dawntrail.Extreme.Ex3QueenEternal.Ex3QueenEternalConfig/SideTethersCrossStrategy/tooltip": { "de": "West/Ost-Verbindungen ohne Kreuzen zu spannen ist im EU/NA-Partyfinder üblich, die andere Option nutzt meist JP", "en": "West/East stretch tethers without crossing is typically used on EU/NA partyfinder, the other option is usually used by JP" },
 
   "cfg/BossMod.Dawntrail.Extreme.Ex4Zelenia.Ex4ZeleniaConfig/RoseTileColor/label": { "de": "Farbe gefährlicher Rosen-Felder:", "en": "Dangerous rose tile color:" },
-
-  "cfg/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig+LimitCutStrategy/Circle/label": { "de": "Abwechselnd an den Himmelsrichtungen (1 W/E)", "en": "Take turns at cardinals (1 W/E)" },
-  "cfg/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig+LimitCutStrategy/EvenNorth/label": { "de": "Gerade Zahlen nach Norden, ungerade nach Süden", "en": "Even numbers north, odd numbers south" },
   "cfg/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig/LimitCutHints/label": { "de": "Positionshinweise für Limit Cut", "en": "Limit cut positioning hints" },
 
   "cfg/BossMod.Dawntrail.Foray.ForkedTowerMagic.Normal.FTMN1TwoHeadedAevis.FTMN1TwoHeadedAevisConfig/ForceTargeting/label": { "de": "KI zwingen, den zugewiesenen Kopf anzuvisieren", "en": "Force AI to target assigned head" },
@@ -577,11 +529,6 @@
 
   "cfg/BossMod.Dawntrail.Savage.M07SBruteAbombinator.M07SBruteAbombinatorConfig/EnableLariatPrediction/label": { "de": "Lariat-Vorhersage aktivieren", "en": "Enable lariat prediction" },
   "cfg/BossMod.Dawntrail.Savage.M07SBruteAbombinator.M07SBruteAbombinatorConfig/EnableSeedPrediction/label": { "de": "Vorhersage der Seed-AoEs aktivieren", "en": "Enable seed AOE prediction" },
-
-  "cfg/BossMod.Dawntrail.Savage.M08SHowlingBlade.M08SHowlingBladeConfig+ReignStrategy/Any/label": { "de": "Beide Safespots der aktuellen Rolle anzeigen", "en": "Show both safespots for current role" },
-  "cfg/BossMod.Dawntrail.Savage.M08SHowlingBlade.M08SHowlingBladeConfig+ReignStrategy/Disabled/label": { "de": "Keine", "en": "None" },
-  "cfg/BossMod.Dawntrail.Savage.M08SHowlingBlade.M08SHowlingBladeConfig+ReignStrategy/Inverse/label": { "de": "G1 rechts, G2 links annehmen (Blick vom Arenazentrum auf den Boss)", "en": "Assume G1 right, G2 left when looking at boss from arena center" },
-  "cfg/BossMod.Dawntrail.Savage.M08SHowlingBlade.M08SHowlingBladeConfig+ReignStrategy/Standard/label": { "de": "G1 links, G2 rechts annehmen (Blick vom Arenazentrum auf den Boss)", "en": "Assume G1 left, G2 right when looking at boss from arena center" },
   "cfg/BossMod.Dawntrail.Savage.M08SHowlingBlade.M08SHowlingBladeConfig/LoneWolfsLamentHints/label": { "de": "Rinon-/Toxic-Friends-Turmplätze für Lone Wolf's Lament anzeigen", "en": "Show Rinon/Toxic Friends tower spots for Lone Wolf's Lament" },
   "cfg/BossMod.Dawntrail.Savage.M08SHowlingBlade.M08SHowlingBladeConfig/PlatformNumberColors/label": { "de": "Farben der Plattformnummern:", "en": "Platform number colors:" },
   "cfg/BossMod.Dawntrail.Savage.M08SHowlingBlade.M08SHowlingBladeConfig/PlatformNumberFontSize/label": { "de": "Schriftgröße der Plattformnummern", "en": "Platform number font size" },
@@ -614,22 +561,6 @@
   "cfg/BossMod.Dawntrail.Savage.M10STheXtremes.M10STheXtremesConfig/WaterAlleyOopAssignment/group.7": { "de": "", "en": "NW" },
   "cfg/BossMod.Dawntrail.Savage.M10STheXtremes.M10STheXtremesConfig/WaterAlleyOopAssignment/label": { "de": "Reihenfolge für Double/Reverse Alley-Oop (bossrelativ)", "en": "Order for Double/Reverse Alley-Oop (boss relative)" },
   "cfg/BossMod.Dawntrail.Savage.M10STheXtremes.M10STheXtremesConfig/WaterAlleyOopAssignment/preset.0": { "de": "", "en": "Default" },
-
-  "cfg/BossMod.Dawntrail.Savage.M10STheXtremes.Strategy/Hector/label": { "de": "", "en": "Hector (NA)" },
-  "cfg/BossMod.Dawntrail.Savage.M10STheXtremes.Strategy/game8/label": { "de": "", "en": "game8 (JP)" },
-
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Clockspot/E/label": { "de": "Osten", "en": "East" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Clockspot/N/label": { "de": "Norden", "en": "North" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Clockspot/NE/label": { "de": "Nordosten", "en": "Northeast" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Clockspot/NW/label": { "de": "Nordwesten", "en": "Northwest" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Clockspot/S/label": { "de": "Süden", "en": "South" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Clockspot/SE/label": { "de": "Südosten", "en": "Southeast" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Clockspot/SW/label": { "de": "Südwesten", "en": "Southwest" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Clockspot/W/label": { "de": "Westen", "en": "West" },
-
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig+Replication1Strategy/CloneRelative/label": { "de": "", "en": "Clone Relative" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig+Replication1Strategy/DN/label": { "de": "", "en": "DN" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig+Replication1Strategy/Static/label": { "de": "", "en": "Static" },
   "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig/IdyllicDreamAdjustToMistakes/label": { "de": "Turmlogik von Idyllic Dream an Fehler anzupassen versuchen", "en": "Attempt to adjust Idyllic Dream tower logic to mistakes" },
   "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig/Rep1Strategy/label": { "de": "Strategie für Replication 1", "en": "Replication 1 strategy" },
   "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig/Rep2Strategy/label": { "de": "Strategie für Replication 2", "en": "Replication 2 strategy" },
@@ -643,35 +574,6 @@
   "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig/Rep3Roles/group.7": { "de": "", "en": "NW" },
   "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig/Rep3Roles/label": { "de": "Replication 3: Clockspot → Mechanik-Rollen", "en": "Replication 3: clockspot → mechanic roles" },
   "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.M12S2LindwurmConfig/ShowLindwurmsPortentHints/label": { "de": "Positionshinweise für Lindwurm's Portent anhand der genommenen Türme anzeigen", "en": "Show Lindwurm's Portent positional hints based on towers taken" },
-
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Role/Boss/label": { "de": "", "en": "Boss" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Role/Cone1/label": { "de": "", "en": "Cone (CW)" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Role/Cone2/label": { "de": "", "en": "Cone (CCW)" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Role/Defam1/label": { "de": "", "en": "Defamation (CW)" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Role/Defam2/label": { "de": "", "en": "Defamation (CCW)" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Role/None/label": { "de": "Keine", "en": "None" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Role/Stack1/label": { "de": "", "en": "Stack (CW)" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Role/Stack2/label": { "de": "", "en": "Stack (CCW)" },
-
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Strategy/BananaCodex/label": { "de": "Banana Codex (Westen = Norden)", "en": "Banana Codex (west = north)" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication2Strategy/DN/label": { "de": "DN (echter Norden)", "en": "DN (true north)" },
-
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication3Role/Defam1/label": { "de": "", "en": "Defamation N1" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication3Role/Defam2/label": { "de": "", "en": "Defamation N2" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication3Role/Defam3/label": { "de": "", "en": "Defamation S1" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication3Role/Defam4/label": { "de": "", "en": "Defamation S2" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication3Role/Stack1/label": { "de": "", "en": "Stack N1" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication3Role/Stack2/label": { "de": "", "en": "Stack N2" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication3Role/Stack3/label": { "de": "", "en": "Stack S1" },
-  "cfg/BossMod.Dawntrail.Savage.M12S2Lindwurm.Replication3Role/Stack4/label": { "de": "", "en": "Stack S2" },
-
-  "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig+P1GravenImage2Strategy/GravenImage2Normal/label": { "de": "Graven Image 2 normal", "en": "Normal Graven Image 2" },
-  "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig+P1GravenImage2Strategy/GravenImage2Uptime/label": { "de": "Graven Image 2 mit Uptime", "en": "Uptime Graven Image 2" },
-  "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig+P1TeleTrouncingStrategy/Freaky_Arrow/label": { "de": "", "en": "Freaky arrow CW box (Merry Go Round)" },
-  "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig+P1TeleTrouncingStrategy/Modified_Xolo/label": { "de": "", "en": "Modified Xolo" },
-  "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig+P2ForsakenStrategy/Kroxy_Rinon_Melee_Flex/label": { "de": "", "en": "NA Kroxy-Rinon (341 Melee Flex)" },
-  "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig+P2ForsakenStrategy/Meow_DN_ZENITH_Markers/label": { "de": "EU-'meow'-Strategie mit DN-ZENITH-Markern", "en": "EU meow braindead strategy using DN ZENITH markers" },
-  "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig+P2ForsakenStrategy/Meow_Markerless/label": { "de": "EU-'meow'-Strategie ohne Marker", "en": "EU meow braindead strategy using markerless" },
   "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig/P1GravenImage2/label": { "de": "P1 Graven Image 2: Strategie", "en": "P1 Graven Image 2 strategy" },
   "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig/P1GravenImage3Static/label": { "de": "P1 Graven Image 3: feste Plätze", "en": "P1 Graven Image 3 Static Spots" },
   "cfg/BossMod.Dawntrail.Ultimate.DMU.DMUConfig/P1TeleTrouncing/label": { "de": "P1 TeleTrouncing: Strategie", "en": "P1 TeleTrouncing strategy" },
@@ -899,8 +801,6 @@
   "cfg/BossMod.Dawntrail.Ultimate.FRU.FRUConfig/P5PolarizingStrikesAssignments/label": { "de": "P5 Polarizing Strikes: Bait-Reihenfolge", "en": "P5 Polarizing Strikes: bait order" },
   "cfg/BossMod.Dawntrail.Ultimate.FRU.FRUConfig/P5PolarizingStrikesAssignments/preset.0": { "de": "", "en": "TMRH" },
   "cfg/BossMod.Dawntrail.Ultimate.FRU.FRUConfig/P5PolarizingStrikesAssignments/tooltip": { "de": "Wird nur von der KI genutzt", "en": "Only used by AI" },
-
-  "cfg/BossMod.Endwalker.Savage.P12S1Athena.P12S1AthenaConfig+EngravementOfSouls1Strategy/Default/label": { "de": "Supports CW ab Norden, erste passende Person am Endplatz suchen", "en": "Supports CW from N, look for first matching person in final spot" },
   "cfg/BossMod.Endwalker.Savage.P12S1Athena.P12S1AthenaConfig/Engravement1Hints/label": { "de": "Engravement of Souls 1: Auflösungshinweise", "en": "Engravement of Souls 1: resolution hints" },
 
   "cfg/BossMod.Endwalker.Savage.P12S2PallasAthena.P12S2PallasAthenaConfig/PangenesisFirstStack/combo.0": { "de": "2+0: die ersten Türme werden von der kurzen Farbe und 0 Unstable gesoakt; beide gehen danach für die zweiten Türme nach Norden", "en": "2+0: first towers are soaked by short color and 0 unstable; they both then go north for second towers" },
@@ -930,31 +830,7 @@
 
   "cfg/BossMod.Endwalker.Savage.P8S2.P8S2Config/HC1LongGoS/label": { "de": "High Concept 1: lange Debuffs nehmen die S-Türme", "en": "High concept 1: long debuffs take S towers" },
   "cfg/BossMod.Endwalker.Savage.P8S2.P8S2Config/LimitlessDesolationTHRight/label": { "de": "Limitless Desolation: Tanks/Heiler nutzen die rechte Seite", "en": "Limitless desolation: tanks/healers use right side" },
-
-  "cfg/BossMod.Endwalker.Ultimate.DSW1.DSW1Config+HeavensflameHints/LPDU/label": { "de": "LPDU-(Inter)Himmelsrichtungen: Kreuz=N/S, Quadrat=NE/SW, Kreis=E/W, Dreieck=SE/NW", "en": "LPDU (inter)cardinals: cross=N/S, square=NE/SW, circle=E/W, triangle=SE/NW" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW1.DSW1Config+HeavensflameHints/None/label": { "de": "Keine Hinweise anzeigen", "en": "Don't show any hints" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW1.DSW1Config+HeavensflameHints/Waymarks/label": { "de": "An Wegmarkenfarben orientieren: Kreis=rot, Dreieck=grün, Kreuz=blau, Quadrat=violett", "en": "Match waymark colors: circle=red, triangle=green, cross=blue, square=purple" },
   "cfg/BossMod.Endwalker.Ultimate.DSW1.DSW1Config/Heavensflame/label": { "de": "Auflösungshinweise für Heavensflame", "en": "Heavensflame resolution hints" },
-
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2InnerTowers/CW/label": { "de": "Den ersten CW-Turm zuweisen, der nicht schon jemandem Näheren zugewiesen ist", "en": "Assign first CW tower that is not assigned to someone closer" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2InnerTowers/Closest/label": { "de": "Den nächstgelegenen eindeutigen inneren Turm zuweisen", "en": "Assign closest unambiguous inner tower" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2InnerTowers/None/label": { "de": "Innere Türme nicht zuweisen", "en": "Don't try to assign inner towers" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2OuterTowers/AlwaysPreferred/label": { "de": "Immer die bevorzugte Richtung nutzen", "en": "Always use preferred direction" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2OuterTowers/Individual/label": { "de": "Prey-Ziele nutzen die Richtung mit dem besten Winkel; Spieler in Quadranten ohne Prey-Ziel nutzen weiter die bevorzugte Richtung", "en": "Prey targets use whatever direction gives the best angle; players in quadrants without prey targets still use preferred direction" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2OuterTowers/None/label": { "de": "Äußere Türme nicht zuweisen", "en": "Don't try to assign outer towers" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2OuterTowers/SynchronizedRole/label": { "de": "Beide Prey-Ziele nutzen eine gemeinsame Gegenrichtung, wenn der Winkel dadurch besser ist; Spieler in allen Quadranten nutzen dieselbe Richtung", "en": "Prey targets both use common opposite direction, if it gives better angle; players in all quadrants use same direction" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2OuterTowers/SynchronizedTargets/label": { "de": "Beide Prey-Ziele nutzen eine gemeinsame Gegenrichtung, wenn der Winkel dadurch besser ist; Spieler in Quadranten ohne Prey-Ziel nutzen weiter die bevorzugte Richtung", "en": "Prey targets both use common opposite direction, if it gives better angle; players in quadrants without prey targets still use preferred direction" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2PreyCardinals/AlwaysEW/label": { "de": "Immer E/W", "en": "E/W always" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2PreyCardinals/AlwaysNS/label": { "de": "Immer N/S", "en": "N/S always" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2PreyCardinals/PreferEW/label": { "de": "E/W, außer beide Preys starten bei N & S", "en": "E/W, unless both preys start at N & S" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2PreyCardinals/PreferNS/label": { "de": "N/S, außer beide Preys starten bei E & W", "en": "N/S, unless both preys start at E & W" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2PreySwapDirection/PairsNE/label": { "de": "Paarweise: N <-> E, S <-> W", "en": "Pairwise: N <-> E, S <-> W" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2PreySwapDirection/PairsNW/label": { "de": "Paarweise: N <-> W, S <-> E", "en": "Pairwise: N <-> W, S <-> E" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2PreySwapDirection/RotateCCW/label": { "de": "Alle Prey-Rollen rotieren gegen den Uhrzeigersinn", "en": "All prey roles rotate counterclockwise" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P2PreySwapDirection/RotateCW/label": { "de": "Alle Prey-Rollen rotieren im Uhrzeigersinn", "en": "All prey roles rotate clockwise" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P6MortalVow/None/label": { "de": "Keine Reihenfolge annehmen", "en": "Don't assume any order" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P6MortalVow/TanksMeleeR1/label": { "de": "LPDU: MT->OT->M1 (M2 als Ersatz)->R1", "en": "LPDU: MT->OT->M1 (M2 as fallback)->R1" },
-  "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config+P6MortalVow/TanksMeleeR2/label": { "de": "LPDU: MT->OT->M1 (M2 als Ersatz)->R2", "en": "LPDU: MT->OT->M1 (M2 as fallback)->R2" },
   "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config/P2Sanctity2AutomaticAntiKB/label": { "de": "P2 Sanctity of the Ward (Meteore): bei Bedarf automatisch Knockback-Immunität einsetzen", "en": "P2 Sanctity of the Ward (meteors): automatically use knockback immunity if needed" },
   "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config/P2Sanctity2ForcePreferredPrey/label": { "de": "P2 Sanctity of the Ward (Meteore): bevorzugte Himmelsrichtungen auch beim 120-Grad-Muster erzwingen (einfachere Swaps, aber schwierigere Bewegung)", "en": "P2 Sanctity of the Ward (meteors): force preferred cardinals even for 120-degree pattern (simpler swaps, but trickier movement)" },
   "cfg/BossMod.Endwalker.Ultimate.DSW2.DSW2Config/P2Sanctity2InnerTowers/label": { "de": "P2 Sanctity of the Ward (Meteore): Zuweisungsstrategie für die inneren Türme", "en": "P2 Sanctity of the Ward (meteors): inner tower assignment strategy" },
@@ -1088,11 +964,6 @@
   "cfg/BossMod.Endwalker.VariantCriterion.V2MountRokkon.V20ShishuChochin.V20ShishuChochinConfig/P12LanternAI/label": { "de": "KI für die Laternen auf Pfad 12 aktivieren", "en": "Enable path 12 lantern AI" },
 
   "cfg/BossMod.GNBConfig/ForbidEarlyLightningShot/label": { "de": "Einsatz von 'Lightning Shot' vor dem Pull zu früh verhindern", "en": "Prevent use of 'Lightning Shot' too early when in pre-pull" },
-
-  "cfg/BossMod.Global.DeepDungeon.AutoDDConfig+ClearBehavior/All/label": { "de": "Alles anvisieren", "en": "Target everything" },
-  "cfg/BossMod.Global.DeepDungeon.AutoDDConfig+ClearBehavior/Leveling/label": { "de": "Alles anvisieren, solange die Levelgrenze nicht erreicht ist, danach stoppen, sobald der Durchgang offen ist", "en": "Target everything if not at level cap, otherwise stop when passage opens" },
-  "cfg/BossMod.Global.DeepDungeon.AutoDDConfig+ClearBehavior/None/label": { "de": "Nicht automatisch anvisieren", "en": "Do not auto target" },
-  "cfg/BossMod.Global.DeepDungeon.AutoDDConfig+ClearBehavior/Passage/label": { "de": "Stoppen, sobald der Durchgang offen ist", "en": "Stop when passage opens" },
   "cfg/BossMod.Global.DeepDungeon.AutoDDConfig/AutoClear/label": { "de": "Verhalten beim automatischen Anvisieren von Gegnern", "en": "Automatic mob targeting behavior" },
   "cfg/BossMod.Global.DeepDungeon.AutoDDConfig/AutoLOS/label": { "de": "Gelände nutzen, um Angriffe per Sichtlinie zu blocken", "en": "Try to use terrain to LOS attacks" },
   "cfg/BossMod.Global.DeepDungeon.AutoDDConfig/AutoMoveTreasure/label": { "de": "Automatisch zu Truhen navigieren", "en": "Automatically navigate to coffers" },
@@ -1117,11 +988,6 @@
   "cfg/BossMod.OutOfCombatActionsConfig/Enabled/label": { "de": "Aktiviert", "en": "Enabled" },
 
   "cfg/BossMod.PCTConfig/AlignDashToCamera/label": { "de": "'Smudge' an der Kamerarichtung ausrichten", "en": "Align Smudge with camera direction" },
-
-  "cfg/BossMod.PLDConfig+WingsBehavior/CameraBackward/label": { "de": "Kamerarelativ, nach hinten", "en": "Camera-relative, backwards" },
-  "cfg/BossMod.PLDConfig+WingsBehavior/CameraForward/label": { "de": "Kamerarelativ, nach vorne", "en": "Camera-relative, forwards" },
-  "cfg/BossMod.PLDConfig+WingsBehavior/CharacterForward/label": { "de": "Charakterrelativ, nach vorne", "en": "Character-relative, forwards" },
-  "cfg/BossMod.PLDConfig+WingsBehavior/Default/label": { "de": "Spielstandard (charakterrelativ, nach hinten)", "en": "Game default (character-relative, backwards)" },
   "cfg/BossMod.PLDConfig/ForbidEarlyHolySpirit/label": { "de": "Einsatz von 'Holy Spirit' vor dem Pull zu früh verhindern", "en": "Prevent use of 'Holy Spirit' too early when in pre-pull" },
   "cfg/BossMod.PLDConfig/ForbidEarlyShieldLob/label": { "de": "Einsatz von 'Shield Lob' vor dem Pull zu früh verhindern (wenn 'Holy Spirit' noch nicht freigeschaltet ist)", "en": "Prevent use of 'Shield Lob' too early when in pre-pull (if Holy Spirit is not unlocked)" },
   "cfg/BossMod.PLDConfig/Wings/label": { "de": "Richtung von 'Passage of Arms'", "en": "Passage of Arms direction" },
@@ -1136,11 +1002,6 @@
 
   "cfg/BossMod.RPRConfig/AlignDashToCamera/label": { "de": "'Hell's Egress'/'Ingress' an der Kamerarichtung ausrichten", "en": "Align Hell's Egress/Ingress with camera direction" },
   "cfg/BossMod.RPRConfig/ForbidEarlyHarpe/label": { "de": "'Harpe' vor dem Pull zu früh verbieten", "en": "Forbid Harpe too early in prepull" },
-
-  "cfg/BossMod.ReplayLogFormat/BinaryCompressed/label": { "de": "Komprimiert binär", "en": "Compressed binary" },
-  "cfg/BossMod.ReplayLogFormat/BinaryUncompressed/label": { "de": "Roh binär", "en": "Raw binary" },
-  "cfg/BossMod.ReplayLogFormat/TextCondensed/label": { "de": "Kompakter Text", "en": "Condensed text" },
-  "cfg/BossMod.ReplayLogFormat/TextVerbose/label": { "de": "Ausführlicher Text", "en": "Verbose text" },
 
   "cfg/BossMod.ReplayManagementConfig/Anonymize/label": { "de": "Replays anonymisieren", "en": "Anonymize replays" },
   "cfg/BossMod.ReplayManagementConfig/Anonymize/tooltip": { "de": "Ist diese Option aus, enthalten Replays personenbezogene Daten deines Charakters und aller anderen Spieler, die während der Aufnahme zu sehen sind — konkret Namen und Content-IDs.", "en": "If this option is disabled, replays will contain personally identifying information for your character and any other player you see during the recording - specifically, names and content IDs." },
@@ -1160,10 +1021,6 @@
   "cfg/BossMod.Shadowbringers.Foray.DuelFarmConfig/MaxPullCount/label": { "de": "Höchstzahl gleichzeitig gepullter Gegner (0 = kein Limit)", "en": "Max number of mobs to pull at once (0 for no limit)" },
   "cfg/BossMod.Shadowbringers.Foray.DuelFarmConfig/MaxPullDistance/label": { "de": "Maximale Reichweite für die Suche nach neuen Gegnern", "en": "Max range to look for new mobs to pull" },
   "cfg/BossMod.Shadowbringers.Foray.DuelFarmConfig/ShowAutoFarmWindow/label": { "de": "Auto-Farm-Fenster anzeigen", "en": "Show auto farm window" },
-
-  "cfg/BossMod.Shadowbringers.Ultimate.TEA.TEAConfig+P2Intermission/AlwaysFirst/label": { "de": "Immer W->NE-Hinweise anzeigen", "en": "Always show W->NE hints" },
-  "cfg/BossMod.Shadowbringers.Ultimate.TEA.TEAConfig+P2Intermission/FirstForOddPairs/label": { "de": "", "en": "W->NE for 1/2/5/6, E->SW for 3/4/7/8" },
-  "cfg/BossMod.Shadowbringers.Ultimate.TEA.TEAConfig+P2Intermission/None/label": { "de": "Keine Hinweise anzeigen", "en": "Don't show any hints" },
   "cfg/BossMod.Shadowbringers.Ultimate.TEA.TEAConfig/P1DollAssignments/group.0": { "de": "", "en": "NW" },
   "cfg/BossMod.Shadowbringers.Ultimate.TEA.TEAConfig/P1DollAssignments/group.1": { "de": "", "en": "NE" },
   "cfg/BossMod.Shadowbringers.Ultimate.TEA.TEAConfig/P1DollAssignments/group.2": { "de": "", "en": "SE" },
@@ -1323,8 +1180,8 @@
   "enum/BossMod.DRGConfig+ElusiveJumpBehavior/Default/display": { "de": "Spielstandard (charakterrelativ, rückwärts)", "en": "Game default (character-relative, backwards)" },
   "enum/BossMod.DRGConfig+ElusiveJumpBehavior/Default/label": { "de": "Spielstandard (charakterrelativ, rückwärts)", "en": "Game default (character-relative, backwards)" },
 
-  "enum/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig+LimitCutStrategy/Circle/display": { "de": "Abwechselnd an den Kardinalpunkten (1 W/E)", "en": "Take turns at cardinals (1 W/E)" },
-  "enum/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig+LimitCutStrategy/Circle/label": { "de": "Abwechselnd an den Kardinalpunkten (1 W/E)", "en": "Take turns at cardinals (1 W/E)" },
+  "enum/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig+LimitCutStrategy/Circle/display": { "de": "Abwechselnd an den Himmelsrichtungen (1 W/E)", "en": "Take turns at cardinals (1 W/E)" },
+  "enum/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig+LimitCutStrategy/Circle/label": { "de": "Abwechselnd an den Himmelsrichtungen (1 W/E)", "en": "Take turns at cardinals (1 W/E)" },
   "enum/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig+LimitCutStrategy/EvenNorth/display": { "de": "Gerade Zahlen Norden, ungerade Zahlen Süden", "en": "Even numbers north, odd numbers south" },
   "enum/BossMod.Dawntrail.Extreme.Ex6GuardianArkveld.Ex6GuardianArkveldConfig+LimitCutStrategy/EvenNorth/label": { "de": "Gerade Zahlen Norden, ungerade Zahlen Süden", "en": "Even numbers north, odd numbers south" },
 

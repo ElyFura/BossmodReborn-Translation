@@ -96,6 +96,23 @@ quelltextgeschürfter Übersetzungsdateien aus: Schlüssel, die zur Laufzeit nie
 Nebeneffekt: der englische Text stammt aus der **installierten** BossMod-Version, nicht aus einem
 Arbeitsbaum, der davon abweichen kann.
 
+### Der Katalog ist die Wahrheit darüber, ob ein Schlüssel überhaupt greift
+
+Die statische Ableitung in `ShapeCheck` kann Schlüssel erzeugen, die es zur Laufzeit nicht gibt — und das
+merkt sie selbst nicht, weil sie beide Seiten des Vergleichs liefert. Genau das war passiert: die
+Ableitung lief über *alle* Typen der Assembly, und Enum-Member sind Felder mit `PropertyDisplay`. Also
+entstanden 119 Schlüssel der Form `cfg/<EnumTyp>/<Member>/label`. `ConfigMetadataPatcher` läuft aber über
+`GeneratedConfigMetadata`, und darin stehen Config-**Klassen**; ein Enum ist dort nie ein Schlüssel.
+
+Aufgefallen ist das erst beim Abgleich mit einem `/bmrtl extract`: 119 Schlüssel aus `de.json`, an denen
+die Patcher in einer echten Sitzung kein einziges Mal vorbeigekommen sind. Alle 119 hatten einen lebenden
+`enum/`-Zwilling, 57 davon mit **abweichender** Übersetzung — derselbe Text zweimal übersetzt, wobei die
+tote Variante nie sichtbar wurde und deshalb auch niemandem auffallen konnte.
+
+Die Ableitung überspringt Enums jetzt; die toten Schlüssel sind entfernt. Die Lehre ist allgemeiner: eine
+Prüfung, die ihre eigene Erwartung erzeugt, bestätigt nur sich selbst. Der Laufzeit-Katalog ist die
+einzige Quelle, die sagen kann, ob ein Schlüssel tatsächlich einen String erreicht.
+
 ## Milestone 2: Kampfhinweise
 
 Die einzige Ebene, die IL-Patching braucht. Hinweise sind String-Literale in über 800 Aufrufstellen und

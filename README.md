@@ -19,7 +19,7 @@ Kampfhinweise und Fenstertexte nicht: das sind String-Literale im Code und brauc
 | Autorotation (Modul-, Track- und Options-Namen) | `RotationModuleDefinition`, `StrategyConfig`, `StrategyOption` | ✅ |
 | Tab-Leiste des Einstellungsfensters | 5 Tabs | ✅ |
 | Statusfenster (Abdeckung, Drift, Export) | `/bmrtl` bzw. Zahnrad in der Plugin-Liste | ✅ |
-| Konfigurations-Übersetzung | 913 Schlüssel, alle entschieden | ✅ 542 deutsch, 371 bewusst englisch |
+| Konfigurations-Übersetzung | 794 Schlüssel, alle entschieden | ✅ 447 deutsch, 347 bewusst englisch |
 | Enum-Schlüssel (Combobox-Einträge) | 338 Schlüssel, alle entschieden | ✅ 208 deutsch, 130 bewusst englisch |
 | Autorotation-Texte (83 Module, 158 Tracks, 228 Optionen) | 2996 Schlüssel | ✅ 2539 deutsch, 457 Identität |
 | Kampfhinweise (`hints.Add(...)`) | 636 feste Literale | ✅ alle übersetzt (Harmony) |
@@ -27,7 +27,7 @@ Kampfhinweise und Fenstertexte nicht: das sind String-Literale im Code und brauc
 | Übrige UI-Literale (Fenster, Buttons, Tooltips) | 380 nutzerseitige | ✅ 259 deutsch, 121 Identität |
 | Debug- und Replay-UI | 1282 Literale | ⛔ bewusst ausgelassen |
 
-**Alle Ebenen sind abgearbeitet:** 5268 Schlüssel, davon 4189 übersetzt und 1079 bewusst englisch, 0
+**Alle Ebenen sind abgearbeitet:** 5149 Schlüssel, davon 4094 übersetzt und 1055 bewusst englisch, 0
 offen. Das umfasst die allgemeinen Einstellungen ebenso wie jeden Encounter, FRU und TOP und DSW
 eingeschlossen, und seit diesem Stand die vollständige Autorotation.
 
@@ -48,7 +48,7 @@ Zwei Kategorien, beide aus demselben Grund: deutsche Spieler kennen sie ausschli
 Guides, Partyfinder und Community-Sprache englisch sind. Eine Übersetzung würde den Abgleich mit einem
 Guide erschweren, nicht erleichtern.
 
-1. **Raid-Notation, Strategie- und Fähigkeitsnamen** (1079 Schlüssel) — `MT/R1 N, OT/R2 S`,
+1. **Raid-Notation, Strategie- und Fähigkeitsnamen** (1055 Schlüssel) — `MT/R1 N, OT/R2 S`,
    `LPDU (global): M1>M2>MT>OT>R1>R2>H1>H2`, Clockspots, `CW`/`CCW`, `Hector (NA)`, `Banana Codex`.
 2. **Fähigkeits- und Mechaniknamen** innerhalb übersetzter Sätze — `'Elusive Jump'`, `Cyclonic Break`,
    `Sanctity of the Ward`. Der Satz drumherum ist deutsch, der Name bleibt zitierfähig.
