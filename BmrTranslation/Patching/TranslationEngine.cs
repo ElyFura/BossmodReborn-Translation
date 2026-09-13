@@ -24,6 +24,10 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
     private UiPatcher? _uiTextPatcher;
     private DateTime _nextSweep;
     private string? _lastAttachError;
+    private readonly SingleInstance _instance = new();
+
+    // a second copy would read this copy's German as BossMod's English and, on unload, put German back
+    public bool Blocked => !_instance.IsPrimary();
 
     public bool Attached => _session != null;
     public bool Enabled { get; private set; } = true;
@@ -61,6 +65,18 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
 
     private void TryAttach()
     {
+        if (Blocked)
+        {
+            const string message = "another copy of BmrTranslation is already loaded - this one stays idle. "
+                + "Check for a dev-plugin path and a repository install of the same plugin.";
+            if (message != _lastAttachError)
+            {
+                _lastAttachError = message;
+                Service.Log.Warning(message);
+            }
+            return;
+        }
+
         var bmr = BmrHandle.TryResolve(out var error);
         if (bmr == null)
         {
@@ -229,7 +245,12 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
     public int AppliedCount => _session?.Applied ?? 0;
     public int MissingCount => _session?.Missing ?? 0;
     public int StaleCount => _session?.Stale ?? 0;
+    public int RecoveredCount => _session?.Recovered ?? 0;
     public int KeptEnglishCount => _session?.KeptEnglish ?? 0;
 
-    public void Dispose() => Revert();
+    public void Dispose()
+    {
+        Revert();
+        _instance.Dispose();
+    }
 }

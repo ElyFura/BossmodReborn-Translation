@@ -134,6 +134,11 @@ python tools/build-repo-json.py --check   # meldet Exit-Code 1, wenn repo.json v
 Ablauf: Version in der `.csproj` erhöhen → `build-repo-json.py` → `repo.json` committen → Tag `vX.Y.Z.W`
 pushen. Den Rest erledigt der Release-Workflow.
 
+Alle übrigen Metadaten — auch `IconUrl` (`res/bmrg.png`) — stehen **nur** in `BmrTranslation.json` und
+werden von dort nach `repo.json` durchgereicht. Zeigt `IconUrl` auf eine Datei in diesem Repository, prüft
+der Generator, dass sie existiert und eingecheckt ist: ein toter Raw-Link erscheint im Installer als
+kaputte Kachel, und das fällt sonst erst nach der Veröffentlichung auf.
+
 ### GitHub Actions
 
 | Workflow | Auslöser | Tut |
@@ -322,6 +327,17 @@ Der erste Lauf prüft als Schritt 0 die **echte** gebaute `BmrTranslation.dll`: 
 aufzählen kann, solange `0Harmony` noch nicht geladen ist. Der zweite stellt die Anordnung her, die im
 Spiel jeden Patch scheitern ließ. Beides gehört dazu: ein Prüfstand, der den Fehlerfall nicht mehr
 erzeugen kann, meldet irgendwann grün für die falsche Umgebung — genau das ist hier zweimal passiert.
+
+## Nur eine Kopie gleichzeitig
+
+Dalamud behandelt einen Dev-Plugin-Pfad und eine Installation aus dem Repository als **zwei** Plugins.
+Sind beide aktiv, hängen sich beide an dieselben BossMod-Objekte — und der Schaden ist nicht kosmetisch:
+die zweite Kopie liest das Deutsch der ersten und merkt es sich als „BossMods Englisch". Ihr Undo-Log
+stellt beim Entladen dann Deutsch wieder her, das englische Original ist bis zum Spielneustart weg.
+
+Sichtbar wird das an einem Fenster voller „veraltet". Das Plugin erkennt den Fall inzwischen über einen
+benannten Mutex: die zweite Kopie bleibt untätig und sagt im Statusfenster, warum. Entfernt man eine der
+beiden, greift die verbliebene beim nächsten Versuch von selbst wieder.
 
 ## Grenzen
 

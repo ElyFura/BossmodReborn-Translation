@@ -62,3 +62,17 @@ public sealed class FakeWindow
     private static string Emit(string s) => s;
     private static string Format(string f, object a) => string.Format(f, a);
 }
+
+// An abstract generic base whose concrete subclasses close it differently - BossMod's DuelFarm<Duel> and
+// EurekaZone<NM> shape. The translatable literal lives on the base, so the method the UI actually runs
+// belongs to the *closed* type, and the open definition has no code to patch at all.
+public abstract class Zone<T>
+{
+    public virtual List<string> DrawExtra() => ["Max mobs to pull"];
+}
+
+public sealed class BozjaZone : Zone<int>;
+
+public sealed class EurekaZone : Zone<string>;
+
+public sealed class ZadnorZone : Zone<int>; // deliberately the same instantiation as BozjaZone

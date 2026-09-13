@@ -119,6 +119,33 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
             yield break;
         }
 
+        // An open generic definition has no JITted code to patch - Harmony answers "Specified method is
+        // not supported". The literals still need translating, so the method is taken from each *closed*
+        // instantiation that actually exists in the assembly instead: DuelFarm<Duel> is abstract, but
+        // Bozja : DuelFarm<BozjaDuel> and Zadnor : DuelFarm<ZadnorDuel> are real, and their inherited
+        // DrawExtra is a real method. Several subclasses often share one instantiation (all four Eureka
+        // zones are EurekaZone<NotoriousMonster>), so the set is deduplicated.
+        if (type.ContainsGenericParameters)
+        {
+            var closed = ClosedVersionsOf(type);
+            if (closed.Count == 0)
+            {
+                Failures.Add($"generic type with no closed instantiation: {typeName}");
+                yield break;
+            }
+            foreach (var constructed in closed)
+            {
+                foreach (var method in constructed.GetMethods(Reflect.AllInstance | BindingFlags.Static))
+                {
+                    if (method.Name == methodName && !method.IsAbstract && method.DeclaringType == constructed)
+                    {
+                        yield return method;
+                    }
+                }
+            }
+            yield break;
+        }
+
         var found = false;
         // constructors are named ".ctor" and are not returned by GetMethods
         if (methodName is ".ctor" or ".cctor")
@@ -149,6 +176,38 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
         }
     }
 
+    // every distinct closed form of an open generic type that some concrete type in the assembly inherits
+    private List<Type> ClosedVersionsOf(Type definition)
+    {
+        var result = new List<Type>();
+        Type[] types;
+        try
+        {
+            types = bmr.Assembly.GetTypes();
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+            types = ex.Types.Where(t => t != null).Cast<Type>().ToArray();
+        }
+
+        foreach (var candidate in types)
+        {
+            if (candidate.IsAbstract || candidate.ContainsGenericParameters)
+            {
+                continue;
+            }
+            for (var baseType = candidate.BaseType; baseType != null; baseType = baseType.BaseType)
+            {
+                if (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == definition
+                    && !result.Contains(baseType))
+                {
+                    result.Add(baseType);
+                }
+            }
+        }
+        return result;
+    }
+
     // Builds a list instead of yielding. An iterator would compile to a state machine whose fields are
     // typed CodeInstruction - and a field type is resolved when its declaring type loads, which happens
     // during the Module.GetTypes() Dalamud runs before constructing the plugin. That one hidden type was
@@ -157,7 +216,15 @@ public sealed class UiPatcher(BmrHandle bmr, TranslationTable table) : IDisposab
     // Harmony materialises the sequence anyway, so nothing is lost by not streaming it.
     public static IEnumerable<CodeInstruction> Transpile(IEnumerable<CodeInstruction> instructions, MethodBase __originalMethod)
     {
-        var owner = (__originalMethod.DeclaringType?.FullName ?? "?") + "::" + __originalMethod.Name;
+        // A closed generic type reports an assembly-qualified name (Zone`1[[System.Int32, System...]]),
+        // which no key could ever spell. Keys come from IL, where the literal sits in the open definition,
+        // so the owner is normalised back to that definition before the lookup.
+        var declaring = __originalMethod.DeclaringType;
+        if (declaring is { IsGenericType: true })
+        {
+            declaring = declaring.GetGenericTypeDefinition();
+        }
+        var owner = (declaring?.FullName ?? "?") + "::" + __originalMethod.Name;
         var result = new List<CodeInstruction>();
         foreach (var instruction in instructions)
         {

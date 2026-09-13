@@ -40,6 +40,18 @@ public sealed class StatusWindow : Window
             ImGui.TextUnformatted("Übersetzung ist abgeschaltet — die englischen Originale sind wiederhergestellt.");
             return;
         }
+        if (_engine.Blocked)
+        {
+            // loud, because the symptom without this notice is a screen full of "veraltet" and,
+            // on unload, German text that never goes back to English
+            ImGui.TextColored(new System.Numerics.Vector4(1f, 0.4f, 0.4f, 1f), "Dieses Plugin ist doppelt geladen.");
+            ImGui.TextUnformatted("Diese Kopie bleibt untätig, damit sie nicht das Deutsch der anderen");
+            ImGui.TextUnformatted("für BossMods Englisch hält. Entferne eine der beiden:");
+            ImGui.BulletText("Dev-Plugin-Pfad unter /xlsettings → Experimental");
+            ImGui.BulletText("Installation aus dem Plugin-Repository");
+            ImGui.TextUnformatted("Danach greift diese Kopie von selbst wieder, ohne Neuladen.");
+            return;
+        }
         if (!_engine.Attached)
         {
             ImGui.TextUnformatted("Warte auf BossMod Reborn …");
@@ -49,6 +61,15 @@ public sealed class StatusWindow : Window
 
         ImGui.TextUnformatted($"BossMod Reborn {_engine.BossModVersion}  ·  Sprache '{_engine.Language}'  ·  {_engine.EntryCount} Einträge geladen");
         ImGui.TextUnformatted($"{_engine.AppliedCount} übersetzt  ·  {_engine.KeptEnglishCount} bewusst englisch  ·  {_engine.MissingCount} offen  ·  {_engine.StaleCount} veraltet");
+
+        if (_engine.RecoveredCount > 0)
+        {
+            // the user cannot see this any other way: the strings look right, but the English behind them
+            // was gone until this run put it back
+            ImGui.TextColored(new System.Numerics.Vector4(1f, 0.8f, 0.3f, 1f),
+                $"{_engine.RecoveredCount} Strings standen noch deutsch in BossMod — vermutlich war dieses Plugin einmal doppelt geladen.");
+            ImGui.TextUnformatted("Das englische Original ist daraus wiederhergestellt; beim Entladen kommt jetzt wieder Englisch zurück.");
+        }
 
         var total = _engine.Catalogue.Count;
         if (total > 0)

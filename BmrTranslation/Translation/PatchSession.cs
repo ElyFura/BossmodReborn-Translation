@@ -22,6 +22,8 @@ public sealed class PatchSession(TranslationTable table)
     public int Applied { get; private set; }
     public int Missing { get; private set; }
     public int Stale { get; private set; }
+    // strings a previous instance left German; see Original
+    public int Recovered { get; private set; }
     // keys with an explicit empty translation: decided to stay English, not an omission
     public int KeptEnglish { get; private set; }
 
@@ -35,10 +37,11 @@ public sealed class PatchSession(TranslationTable table)
             return;
         }
         var f = Reflect.InstanceField(owner.GetType(), fieldName);
-        if (f == null || f.GetValue(owner) is not string english || english.Length == 0)
+        if (f == null || f.GetValue(owner) is not string current || current.Length == 0)
         {
             return;
         }
+        var english = Original(key, current);
         var translated = Record(key, english, origin);
         if (translated == null)
         {
@@ -57,10 +60,11 @@ public sealed class PatchSession(TranslationTable table)
             return;
         }
         var p = owner.GetType().GetProperty(propertyName, Reflect.AllInstance);
-        if (p?.GetValue(owner) is not string english || english.Length == 0 || !p.CanWrite)
+        if (p?.GetValue(owner) is not string current || current.Length == 0 || !p.CanWrite)
         {
             return;
         }
+        var english = Original(key, current);
         var translated = Record(key, english, origin);
         if (translated == null)
         {
@@ -78,11 +82,12 @@ public sealed class PatchSession(TranslationTable table)
         {
             return;
         }
-        var english = array[index];
-        if (english.Length == 0)
+        var current = array[index];
+        if (current.Length == 0)
         {
             return;
         }
+        var english = Original(key, current);
         var translated = Record(key, english, origin);
         if (translated == null)
         {
@@ -117,6 +122,30 @@ public sealed class PatchSession(TranslationTable table)
         }
         _undo.Clear();
         _patched.Clear();
+    }
+
+    // Recovers the English original when a previous instance left its German behind.
+    //
+    // Two copies of this plugin loaded at once produce exactly that: the second one reads the first one's
+    // German, records it as the original, and writes it back on unload. BossMod builds this metadata once
+    // per process, so the German then sits there until the game restarts - and every key reports as stale,
+    // because the stored English no longer matches what is found.
+    //
+    // The repair is unambiguous, which is why it is safe to do automatically: only when the value found is
+    // *exactly* the translation this file would have written is the stored English treated as the original.
+    // That keeps the undo log honest - it restores English rather than cementing the German - and it costs
+    // one dictionary lookup that Record would perform anyway.
+    private string Original(string key, string current)
+    {
+        var entry = table.Lookup(key);
+        if (entry?.Text == null || entry.Source == null
+            || !string.Equals(current, entry.Text, StringComparison.Ordinal)
+            || string.Equals(current, entry.Source, StringComparison.Ordinal))
+        {
+            return current;
+        }
+        ++Recovered;
+        return entry.Source;
     }
 
     private bool Claim(object owner, string discriminator)

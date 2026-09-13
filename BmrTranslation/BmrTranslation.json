@@ -3,6 +3,7 @@
   "Name": "BossMod Reborn Translation",
   "InternalName": "BmrTranslation",
   "RepoUrl": "https://github.com/ElyFura/BossmodReborn-Translation",
+  "IconUrl": "https://raw.githubusercontent.com/ElyFura/BossmodReborn-Translation/refs/heads/main/res/bmrg.png",
   "Description": "Translates the BossMod Reborn user interface into German at runtime. Does not modify the BossMod Reborn plugin itself: all strings are swapped in memory and restored when this plugin is unloaded.",
   "Punchline": "BossMod Reborn auf Deutsch",
   "ApplicableVersion": "any",

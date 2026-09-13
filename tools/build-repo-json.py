@@ -17,6 +17,7 @@ Usage:
 import argparse
 import json
 import re
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -33,7 +34,7 @@ DOWNLOAD = "{repo}/releases/latest/download/latest.zip"
 # Copied verbatim from the plugin manifest into the repository entry.
 PASSTHROUGH = (
     "Author", "Name", "InternalName", "Description", "Punchline", "ApplicableVersion",
-    "RepoUrl", "Tags", "DalamudApiLevel", "LoadPriority", "LoadRequiredState", "LoadSync",
+    "RepoUrl", "IconUrl", "Tags", "DalamudApiLevel", "LoadPriority", "LoadRequiredState", "LoadSync",
     "CanUnloadAsync", "IsTestingExclusive", "AcceptsFeedback",
 )
 
@@ -62,12 +63,30 @@ def build():
     entry["DownloadLinkInstall"] = download
     entry["DownloadLinkUpdate"] = download
     entry["DownloadLinkTesting"] = download
-    # Only advertise an icon that exists - a 404 in IconUrl shows up as a broken tile in the installer,
-    # which looks worse than the default placeholder
-    icon = ROOT / "BmrTranslation" / "images" / "icon.png"
-    if icon.exists():
-        entry["IconUrl"] = f"{repo_url}/raw/main/BmrTranslation/images/icon.png"
+    check_icon(manifest.get("IconUrl"))
     return [entry]
+
+
+def check_icon(url):
+    """An IconUrl that 404s shows as a broken tile in the installer, worse than no icon at all.
+
+    Only a URL pointing back into this repository can be checked from here, and that is the case worth
+    checking: the file has to be committed, or the raw link resolves to nothing the moment it is published.
+    """
+    if not url:
+        return
+    marker = "raw.githubusercontent.com/"
+    if marker not in url:
+        return
+    tail = url.split(marker, 1)[1].split("/")
+    # <owner>/<repo>/refs/heads/<branch>/<path...> or <owner>/<repo>/<branch>/<path...>
+    rest = tail[5:] if tail[2:4] == ["refs", "heads"] else tail[3:]
+    local = ROOT.joinpath(*rest)
+    if not local.exists():
+        print(f"  warning: IconUrl points at {'/'.join(rest)}, which is not in this repository", file=sys.stderr)
+    elif subprocess.run(["git", "ls-files", "--error-unmatch", str(local.relative_to(ROOT)).replace("\\", "/")],
+                        cwd=ROOT, capture_output=True).returncode != 0:
+        print(f"  warning: {'/'.join(rest)} is not committed - the raw URL will 404 once published", file=sys.stderr)
 
 
 def main():

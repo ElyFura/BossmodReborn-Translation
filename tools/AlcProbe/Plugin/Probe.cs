@@ -111,6 +111,46 @@ public static class Probe
         Check("format string still formats after replacement", drawn[3] == "Boss: Zoraal Ja (DE)", drawn[3]);
         Check("exactly the 3 matching literals replaced", UiPatches.Lookups == 3, UiPatches.Lookups.ToString());
 
+        Console.WriteLine("\n-- 7. a literal on an abstract generic base (DuelFarm<Duel>, EurekaZone<NM>) --");
+        // In game this failed with "Specified method is not supported": UiPatcher handed Harmony the open
+        // generic definition, which has no code. The fix resolves each closed instantiation instead, so
+        // both halves are worth proving - that the open form is genuinely unpatchable, and that the closed
+        // one works and reaches every subclass sharing it.
+        var openZone = asm.GetType("ProbeTarget.Zone`1")!;
+        var openMethod = openZone.GetMethod("DrawExtra")!;
+        var refused = false;
+        try
+        {
+            harmony.Patch(openMethod, transpiler: new HarmonyMethod(typeof(UiPatches).GetMethod(nameof(UiPatches.Transpile))));
+        }
+        catch (Exception)
+        {
+            refused = true;
+        }
+        Check("open generic definition is refused, as in game", refused, refused ? "refused" : "unexpectedly accepted");
+
+        var closedForms = asm.GetTypes()
+            .Where(t => !t.IsAbstract && !t.ContainsGenericParameters)
+            .Select(t => t.BaseType)
+            .Where(b => b is { IsGenericType: true } && b.GetGenericTypeDefinition() == openZone)
+            .Distinct()
+            .ToList();
+        Check("closed instantiations discovered", closedForms.Count == 2, $"{closedForms.Count} ({string.Join(", ", closedForms.Select(t => t!.ToString()))})");
+
+        // the key names the open definition, exactly as the IL extractor writes it
+        UiPatches.Table["ProbeTarget.Zone`1::DrawExtra/Max mobs to pull"] = "Höchstzahl gepullter Gegner";
+        foreach (var closed in closedForms)
+        {
+            harmony.Patch(closed!.GetMethod("DrawExtra")!, transpiler: new HarmonyMethod(typeof(UiPatches).GetMethod(nameof(UiPatches.Transpile))));
+        }
+
+        foreach (var name in new[] { "BozjaZone", "EurekaZone", "ZadnorZone" })
+        {
+            var instance = Activator.CreateInstance(asm.GetType("ProbeTarget." + name)!)!;
+            var extra = (List<string>)instance.GetType().GetMethod("DrawExtra")!.Invoke(instance, null)!;
+            Check($"{name} translated through its closed base", extra[0] == "Höchstzahl gepullter Gegner", extra[0]);
+        }
+
         Console.WriteLine("\n-- 6. unpatch restores the original (needed for /bmrtl off and unload) --");
         harmony.UnpatchAll("bmrtl.probe");
         var restored = (IList)moduleType.GetMethod("CalculateGlobalHints")!.Invoke(module, ["Alice"])!;
@@ -137,7 +177,15 @@ static class UiPatches
 
     public static IEnumerable<CodeInstruction> Transpile(IEnumerable<CodeInstruction> instructions, MethodBase __originalMethod)
     {
-        var owner = __originalMethod.DeclaringType!.FullName + "::" + __originalMethod.Name;
+        // A closed generic type reports an assembly-qualified name (Zone`1[[System.Int32, System...]]),
+        // which no key could ever spell. Keys come from IL, where the literal sits in the open definition,
+        // so the owner is normalised back to that definition before the lookup.
+        var declaring = __originalMethod.DeclaringType;
+        if (declaring is { IsGenericType: true })
+        {
+            declaring = declaring.GetGenericTypeDefinition();
+        }
+        var owner = (declaring?.FullName ?? "?") + "::" + __originalMethod.Name;
         SeenOriginal = owner;
         foreach (var instruction in instructions)
         {
