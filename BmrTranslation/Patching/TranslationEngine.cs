@@ -52,6 +52,15 @@ public sealed class TranslationEngine(string language, DirectoryInfo configDir) 
             {
                 TryAttach();
             }
+            else if (BmrHandle.Live() is { } live && !ReferenceEquals(live, _bmr?.Assembly))
+            {
+                // BossMod was updated or toggled underneath us. Everything applied so far belongs to the
+                // old assembly and reaches nobody; without this the translation silently stops working
+                // until someone reloads this plugin by hand.
+                Service.Log.Information($"BossMod Reborn changed to {live.GetName().Version} - reattaching");
+                Revert();
+                TryAttach();
+            }
             else
             {
                 Sweep();
